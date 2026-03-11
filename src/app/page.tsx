@@ -33,10 +33,10 @@ const branches = [
     icon: Monitor,
     color: "from-teal-500/20 to-emerald-500/10",
     accent: "bg-teal-500",
-    students: 480,
-    faculty: 18,
+    students: 150,
+    faculty: 10,
     description:
-      "Cutting-edge programs in algorithms, AI, systems, and software engineering.",
+      "Cutting-edge knowledge in Computer Science Fundamentals.",
     href: "/branches/cse",
   },
   {
@@ -46,10 +46,10 @@ const branches = [
     icon: Cpu,
     color: "from-slate-500/20 to-teal-500/10",
     accent: "bg-slate-500",
-    students: 360,
-    faculty: 14,
+    students: 150,
+    faculty: 10,
     description:
-      "Networking, cybersecurity, cloud computing, and enterprise software solutions.",
+      "Cutting-edge knowledge in Information Technology Fundamentals,",
     href: "/branches/it",
   },
   {
@@ -59,10 +59,10 @@ const branches = [
     icon: Zap,
     color: "from-emerald-500/20 to-cyan-500/10",
     accent: "bg-emerald-600",
-    students: 320,
-    faculty: 16,
+    students: 150,
+    faculty: 9,
     description:
-      "VLSI, embedded systems, signal processing, and IoT technologies.",
+      "Cutting-edge knowledge in Electronics Fundamentals.",
     href: "/branches/elex",
   },
 ];
