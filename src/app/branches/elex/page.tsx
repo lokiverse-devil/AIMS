@@ -14,9 +14,9 @@ const elexData = {
   about:
     "The Department of Electronics Engineering at AIMS offers a comprehensive curriculum covering VLSI design, embedded systems, signal processing, communication systems, and IoT. Our state-of-the-art labs and industry partnerships ensure students are equipped for the rapidly evolving electronics industry.",
   highlights: [
-    { label: "Students Enrolled", value: "320" },
-    { label: "Faculty Members", value: "16" },
-    { label: "Labs", value: "4" },
+    { label: "Students Enrolled", value: "150" },
+    { label: "Faculty Members", value: "3" },
+    { label: "Labs", value: "2" },
     { label: "Years of Excellence" },
   ],
   programs: [

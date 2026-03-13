@@ -34,7 +34,7 @@ const branches = [
     color: "from-teal-500/20 to-emerald-500/10",
     accent: "bg-teal-500",
     students: 150,
-    faculty: 10,
+    faculty: 3,
     description:
       "Cutting-edge knowledge in Computer Science Fundamentals.",
     href: "/branches/cse",
@@ -47,7 +47,7 @@ const branches = [
     color: "from-slate-500/20 to-teal-500/10",
     accent: "bg-slate-500",
     students: 150,
-    faculty: 10,
+    faculty: 3,
     description:
       "Cutting-edge knowledge in Information Technology Fundamentals,",
     href: "/branches/it",
@@ -60,7 +60,7 @@ const branches = [
     color: "from-emerald-500/20 to-cyan-500/10",
     accent: "bg-emerald-600",
     students: 150,
-    faculty: 9,
+    faculty: 3,
     description:
       "Cutting-edge knowledge in Electronics Fundamentals.",
     href: "/branches/elex",
@@ -68,74 +68,66 @@ const branches = [
 ];
 
 const facilities = [
-  { icon: FlaskConical, label: "Research Labs", count: "12" },
+  { icon: FlaskConical, label: "Labs", count: "6" },
   { icon: Library, label: "Digital Library", count: "40K+ Books" },
   { icon: Wifi, label: "Campus WiFi", count: "100 Mbps" },
-  { icon: Building2, label: "Seminar Halls", count: "8" },
+  { icon: Building2, label: "Seminar Halls", count: "3" },
   { icon: Shield, label: "24×7 Security", count: "CCTV + Guards" },
-  { icon: Clock, label: "Support Hours", count: "8AM–8PM" },
 ];
 
 const labs = [
   {
-    name: "Computer Lab A",
-    capacity: 30,
-    equipment: "Intel i7, 16GB RAM",
+    name: "CSE LAB",
+    capacity: 23,
+    equipment: "Intel i5, 8GB RAM",
     available: true,
     wing: "Ground Floor",
   },
   {
-    name: "Computer Lab B",
-    capacity: 40,
-    equipment: "Intel i9, 32GB RAM",
-    available: false,
-    wing: "First Floor",
+    name: "IT LAB",
+    capacity: 32,
+    equipment: "Intel i5, 8GB RAM",
+    available: true,
+    wing: "Ground Floor",
   },
   {
     name: "Electronics Lab",
-    capacity: 25,
-    equipment: "Oscilloscopes, Signal Generators",
+    capacity: 2,
+    equipment: "Oscilloscopes, Signal Generators, IOT kits",
     available: true,
-    wing: "Second Floor",
+    wing: "First Floor",
   },
   {
-    name: "Networking Lab",
+    name: "IOT and innovation Lab",
     capacity: 20,
-    equipment: "Cisco Routers, Switches",
-    available: true,
+    equipment: "IoT kits, Raspberry Pi 5, 3d printer, Robotic Arm",
+    available: false,
     wing: "Ground Floor",
   },
 ];
 
 const facultyPreview = [
   {
-    name: "Dr. Anil Sharma",
+    name: "Manmohan",
     dept: "CSE",
-    subjects: "Data Structures, Algorithms",
+    subjects: "Internet Of Things, Operating Systems, Computer System And Organization, Data Mining and Warehouse",
     // TODO: Replace with actual asset /assets/faculty/sharma.jpg
     avatar: null,
-    initials: "AS",
+    initials: "MV",
   },
   {
-    name: "Prof. Sunita Rao",
+    name: "Jagdish Chandra Pandey",
     dept: "IT",
     subjects: "Database Systems, Cloud Computing",
     avatar: null,
-    initials: "SR",
+    initials: "JP",
   },
   {
-    name: "Dr. Mehul Patel",
+    name: "Manoj Rikhari",
     dept: "ELEX",
     subjects: "VLSI Design, Embedded Systems",
     avatar: null,
-    initials: "MP",
-  },
-  {
-    name: "Prof. Kavita Joshi",
-    dept: "CSE",
-    subjects: "Machine Learning, AI",
-    avatar: null,
-    initials: "KJ",
+    initials: "MR",
   },
 ];
 
@@ -163,14 +155,6 @@ const notices = [
     desc: "Students are reminded to clear pending dues before the deadline to avoid academic holds.",
     date: "Feb 12, 2026",
     urgent: true,
-  },
-  {
-    id: 4,
-    tag: "Research",
-    title: "PhD Admissions Open – 2026-27",
-    desc: "Applications are invited for full-time PhD programs in CSE, IT, and Electronics departments.",
-    date: "Feb 10, 2026",
-    urgent: false,
   },
 ];
 

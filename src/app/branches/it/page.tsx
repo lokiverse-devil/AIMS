@@ -14,9 +14,9 @@ const itData = {
   about:
     "The Department of Information Technology at AIMS bridges the gap between theoretical knowledge and real-world application. Specializing in networking, cybersecurity, enterprise systems, and cloud computing, our graduates are highly sought after by leading IT companies globally.",
   highlights: [
-    { label: "Students Enrolled", value: "360" },
-    { label: "Faculty Members", value: "14" },
-    { label: "Labs", value: "4" },
+    { label: "Students Enrolled", value: "150" },
+    { label: "Faculty Members", value: "3" },
+    { label: "Labs", value: "3" },
     { label: "Years of Excellence", value: "18+" },
   ],
   programs: [

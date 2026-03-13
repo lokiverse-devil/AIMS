@@ -30,7 +30,7 @@ const cseData = {
     // TODO: Replace with /assets/faculty/sharma.jpg
     photoPath: "/assets/faculty/sharma.jpg",
     cabin: "Left-hand side from the entrance, second room, Ground Floor, Academic IT Block",
-    officeHours: "Mon–Fri, 10:00 AM – 12:00 PM",
+    officeHours: "Mon–Fri, 10:00 AM – 5:00 PM",
   },
   faculty: [
     {
