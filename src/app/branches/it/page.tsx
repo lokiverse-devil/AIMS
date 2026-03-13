@@ -30,7 +30,7 @@ const itData = {
     bio:
       "Jagdish Chandra Pandey holds an M.Tech in Information Technology and brings 16+ years of teaching and research experience. He specializes in Database Systems, Cloud Computing, and Distributed Systems.",
     initials: "JP",
-    photoPath: "/assets/faculty/rao.jpg",
+    photoPath: "/assets/faculty/jagdish.jpg",
     cabin: "Right-hand side from the entrance, Ground Floor, Academic IT Block",
     officeHours: "Mon–Sat, 10:00 AM – 5:00 PM",
   },
@@ -67,7 +67,7 @@ const itData = {
       subjects: ["Computer Networks", "Cisco CCNA", "Routing & Switching"],
       experience: "8 years",
       initials: "NG",
-      photoPath: "/assets/faculty/gupta.jpg",
+      photoPath: "/assets/faculty/bora.jpg",
     },
   ],
 

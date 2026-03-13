@@ -25,7 +25,7 @@ const elexData = {
   ],
   hod: {
     name: "Manoj Rikhari",
-    designation: "Professor & Head of Department — ELEX",
+    designation: "Lecturer & Head of Department — ELEX",
     bio: "Manoj Rikhari 15 years of teaching and research experience. He is a pioneer in elecronics enineering. ",
     initials: "MP",
     // TODO: Replace with /assets/faculty/patel.jpg
@@ -33,13 +33,23 @@ const elexData = {
     cabin: "From the entrance, take the left staircase and reach in front of the cabin, 1st Floor, Academic IT Block.",
   },
   faculty: [
+     {
+      name: "Manoj Rikhari",
+      designation: "Lecturer & Head of Department — ELEX",
+      subjects: ["Internet Of Things", "Operating Systems", "Computer System And Organization", "Data Mining and Warehouse"],
+      experience: "15 years",
+      initials: "MR",
+      photoPath: "/assets/faculty/rikhari.jpg",
+      // TODO: Replace with Supabase Storage URL
+      // videoUrl: "https://PROJECT.supabase.co/storage/v1/object/public/faculty-videos/sharma_intro.mp4"
+    },
     {
       name: "Rashid",
       designation: "Lecturer",
       subjects: ["VLSI Design", "Embedded Systems", "Microcontrollers"],
       experience: "15 years",
       initials: "R",
-      photoPath: "/assets/faculty/patel.jpg",
+      photoPath: "/assets/faculty/rashid.jpg",
       // TODO: Replace with Supabase Storage URL
       // videoUrl: "https://PROJECT.supabase.co/storage/v1/object/public/faculty-videos/patel_intro.mp4"
     },
@@ -49,7 +59,7 @@ const elexData = {
       subjects: ["Digital Signal Processing", "MATLAB", "DSP Algorithms"],
       experience: "14 years",
       initials: "PK",
-      photoPath: "/assets/faculty/rane.jpg",
+      photoPath: "/assets/faculty/kumar.jpg",
     },
   ],
   labs: [

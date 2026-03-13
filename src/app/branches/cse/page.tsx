@@ -28,7 +28,7 @@ const cseData = {
     bio: "Manmohan is the lecturer and the HOD incharge of our department. He specializes in Internet Of Things, Operating Systems, Computer System And Organization, Data Mining and Warehouse. Under his leadership, the CSE department has achieved 100% placement for 5 consecutive years and established industry partnerships with Zenthium, VVDN, Anand Mahle.",
     initials: "MV",
     // TODO: Replace with /assets/faculty/sharma.jpg
-    photoPath: "/assets/faculty/sharma.jpg",
+    photoPath: "/assets/faculty/mannu.jpg",
     cabin: "Left-hand side from the entrance, second room, Ground Floor, Academic IT Block",
     officeHours: "Mon–Fri, 10:00 AM – 5:00 PM",
   },
@@ -39,7 +39,7 @@ const cseData = {
       subjects: ["Internet Of Things", "Operating Systems", "Computer System And Organization", "Data Mining and Warehouse"],
       experience: "15 years",
       initials: "MV",
-      photoPath: "/assets/faculty/sharma.jpg",
+      photoPath: "/assets/faculty/mannu.jpg",
       // TODO: Replace with Supabase Storage URL
       // videoUrl: "https://PROJECT.supabase.co/storage/v1/object/public/faculty-videos/sharma_intro.mp4"
     },
@@ -49,7 +49,7 @@ const cseData = {
       subjects: ["Computer Fundamentals", "Data Structures and Algorithms", "Relational Database Management System"],
       experience: "12 years",
       initials: "NA",
-      photoPath: "/assets/faculty/joshi.jpg",
+      photoPath: "/assets/faculty/arya.jpg",
     },
     {
       name: "Virendra Dharamasaktu",
@@ -57,7 +57,7 @@ const cseData = {
       subjects: ["Computer Network Security", "Computer Hardware Sytems", "Employbility Skills", "Multimedia System"],
       experience: "17 years",
       initials: "VD",
-      photoPath: "/assets/faculty/nair.jpg",
+      photoPath: "/assets/faculty/viren.jpg",
     },
   ],
   labs: [

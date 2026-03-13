@@ -143,9 +143,9 @@ const notices = [
   {
     id: 2,
     tag: "Event",
-    title: "Annual Tech Fest – IGNITE 2026",
+    title: "Skill Week",
     desc: "Register now for coding competitions, robotics showcase, and guest lecture series.",
-    date: "Feb 15, 2026",
+    date: "Feb 27, 2026",
     urgent: false,
   },
   {
@@ -199,7 +199,7 @@ export default function HomePage() {
         className="relative min-h-screen flex items-center overflow-hidden aims-grid-bg"
       >
         {/* Background Image Placeholder & Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/10 z-[1]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/10 z-[-1]" />
         <div className="absolute inset-0 aims-hero-overlay z-[2]" />
 
         {/* Decorative circles */}
@@ -265,9 +265,9 @@ export default function HomePage() {
               className="mt-16 flex flex-wrap gap-8"
             >
               {[
-                { value: "1,160+", label: "Students Enrolled" },
-                { value: "48", label: "Faculty Members" },
-                { value: "12", label: "Labs & Facilities" },
+                { value: "350", label: "Students Enrolled" },
+                { value: "9", label: "Faculty Members" },
+                { value: "6", label: "Labs & Facilities" },
                 { value: "3", label: "Engineering Branches" },
               ].map((stat) => (
                 <div key={stat.label} className="flex flex-col">
@@ -317,8 +317,8 @@ export default function HomePage() {
               <div className="grid grid-cols-2 gap-4">
                 {[
                   { icon: Building2, label: "2 Floors" },
-                  { icon: Users, label: "350+ Students" },
-                  { icon: FlaskConical, label: "7 Labs" },
+                  { icon: Users, label: "350 Students" },
+                  { icon: FlaskConical, label: "6 Labs" },
                 ].map(({ icon: Icon, label }) => (
                   <div
                     key={label}
@@ -448,28 +448,31 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── LABS OVERVIEW ─────────────────────────────────────── */}
-      <section className="py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4"
-          >
-            <div>
-              <SectionLabel>Labs & Workspaces</SectionLabel>
-              <h2 className="text-4xl font-bold text-foreground">Lab Overview</h2>
-              <p className="text-muted-foreground mt-2">Real-time lab availability at a glance.</p>
-            </div>
-            <Link
-              href="/login"
-              className="inline-flex items-center gap-2 text-sm text-primary font-medium hover:gap-3 transition-all"
-            >
-              Book a lab <ArrowRight size={14} />
-            </Link>
-          </motion.div>
+     {/* ─── LABS OVERVIEW ─────────────────────────────────────── */}
+<section className="py-24">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      viewport={{ once: true }}
+      className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4"
+    >
+      <div>
+        <SectionLabel>Labs & Workspaces</SectionLabel>
+        <h2 className="text-4xl font-bold text-foreground">Lab Overview</h2>
+        <p className="text-muted-foreground mt-2">
+          Real-time lab availability at a glance.
+        </p>
+      </div>
+
+      <Link
+        href="/login"
+        className="inline-flex items-center gap-2 text-sm text-primary font-medium hover:gap-3 transition-all"
+      >
+        Book a lab <ArrowRight size={14} />
+      </Link>
+    </motion.div>
 
           <div className="grid md:grid-cols-2 gap-5">
             {labs.map((lab, i) => (
