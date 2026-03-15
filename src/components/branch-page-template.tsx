@@ -237,10 +237,13 @@ export function BranchPageTemplate({
           >
             {/* HOD Photo */}
             <div className="flex-shrink-0">
-              {/* TODO: Replace with <img src={hod.photoPath || `/assets/faculty/${hod.name.split(' ').pop()?.toLowerCase()}.jpg`} alt={hod.name} className="w-24 h-24 rounded-2xl object-cover border-2 border-primary/20" /> */}
-              <div className="w-24 h-24 rounded-2xl bg-primary/15 flex items-center justify-center border-2 border-primary/20 relative">
-                <span className="text-2xl font-bold text-primary">{hod.initials}</span>
-                <div className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-primary flex items-center justify-center shadow-md" title="Head of Department">
+              <div className="w-24 h-24 rounded-2xl border-2 border-primary/20 relative overflow-hidden bg-primary/15 flex items-center justify-center">
+                {hod.photoPath ? (
+                  <img src={hod.photoPath} alt={hod.name} className="w-full h-full object-cover" />
+                ) : (
+                  <span className="text-2xl font-bold text-primary">{hod.initials}</span>
+                )}
+                <div className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-primary flex items-center justify-center shadow-md z-10" title="Head of Department">
                   <Crown size={14} className="text-primary-foreground" />
                 </div>
               </div>
@@ -314,9 +317,12 @@ export function BranchPageTemplate({
                 className="p-5 rounded-2xl border border-border bg-card hover:border-primary/30 hover:shadow-lg hover:shadow-primary/8 transition-all"
               >
                 <div className="flex items-start gap-4">
-                  {/* TODO: Replace placeholder with <img src={f.photoPath} alt={f.name} className="w-14 h-14 rounded-xl object-cover" /> */}
-                  <div className="w-14 h-14 rounded-xl bg-primary/15 flex items-center justify-center flex-shrink-0 border border-primary/20">
-                    <span className="text-lg font-bold text-primary">{f.initials}</span>
+                  <div className="w-14 h-14 rounded-xl border border-primary/20 relative overflow-hidden bg-primary/15 flex items-center justify-center flex-shrink-0">
+                    {f.photoPath ? (
+                      <img src={f.photoPath} alt={f.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-lg font-bold text-primary">{f.initials}</span>
+                    )}
                   </div>
                   <div className="flex-1 min-w-0">
                     <h4 className="font-semibold text-foreground">{f.name}</h4>

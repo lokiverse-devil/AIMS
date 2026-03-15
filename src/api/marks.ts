@@ -1,5 +1,7 @@
-// TODO: Connect to Supabase backend
 // Supabase table: unit_test_marks (columns: id, roll_no, subject, test_name, marks, max_marks, semester, uploaded_by, uploaded_at)
+// TODO: Replace fetchStudentMarks and deleteMark with Supabase queries after Supabase integration.
+
+import { uploadUnitTestCSV } from "@/services/csvService";
 
 export interface Mark {
     id: string;
@@ -15,7 +17,8 @@ export interface Mark {
 
 /**
  * Fetch all unit test marks for a given student roll number.
- * TODO: Replace with Supabase query: supabase.from('unit_test_marks').select('*').eq('roll_no', rollNo)
+ * TODO: Replace with Supabase query:
+ *   supabase.from('unit_test_marks').select('*').eq('roll_no', rollNo)
  */
 export async function fetchStudentMarks(rollNo: string): Promise<Mark[]> {
     // TODO: Connect to Supabase backend
@@ -25,8 +28,13 @@ export async function fetchStudentMarks(rollNo: string): Promise<Mark[]> {
 
 /**
  * Upload marks from a CSV file. CSV format: roll_no,subject,marks,semester
- * TODO: Parse CSV on server, insert rows into unit_test_marks table
- * TODO: Store CSV in Supabase Storage bucket: marks-uploads
+ *
+ * Calls the Python FastAPI backend (POST /upload/unit-test) via csvService.
+ * Set NEXT_PUBLIC_API_URL=http://localhost:8000 in .env.local to enable.
+ *
+ * After Supabase integration:
+ *   1. Upload file to storage: supabase.storage.from('marks-uploads').upload(path, file)
+ *   2. Insert validated rows: supabase.from('unit_test_marks').insert(rows)
  */
 export async function uploadMarksCSV(
     file: File,
@@ -34,12 +42,24 @@ export async function uploadMarksCSV(
     subject: string,
     testName: string
 ): Promise<{ success: boolean; message: string; rowsInserted?: number }> {
-    // TODO: Connect to Supabase backend
-    // 1. Upload file to storage: supabase.storage.from('marks-uploads').upload(path, file)
-    // 2. Parse CSV rows on server-side API route
-    // 3. Insert rows: supabase.from('unit_test_marks').insert(rows)
     console.log("uploadMarksCSV called:", file.name, teacherId, subject, testName);
-    return { success: false, message: "TODO: Connect to Supabase backend" };
+
+    const result = await uploadUnitTestCSV(file);
+
+    if (!result.success && result.inserted === 0 && result.errors.length > 0) {
+        // Configuration error or total failure
+        return { success: false, message: result.errors[0] };
+    }
+
+    const message = result.failed > 0
+        ? `Uploaded ${result.inserted} row(s). ${result.failed} row(s) skipped: ${result.errors.join("; ")}`
+        : `Successfully uploaded ${result.inserted} row(s).`;
+
+    return {
+        success: result.inserted > 0,
+        message,
+        rowsInserted: result.inserted,
+    };
 }
 
 /**

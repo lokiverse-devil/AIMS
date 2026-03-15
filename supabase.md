@@ -1,317 +1,167 @@
-# Supabase Integration Guide for AIMS
+# Supabase Setup Guide — AIMS
 
-## Overview
-
-This guide provides step-by-step instructions to manually integrate Supabase into the AIMS (Academic Infrastructure Management System) project.
-
----
-
-## 1. Create Supabase Project
-
-1. Go to [https://supabase.com](https://supabase.com) and sign in.
-2. Click **"New Project"**.
-3. Fill in:
-   - **Project name**: `aims-production`
-   - **Database password**: (generate a strong password)
-   - **Region**: Choose closest to your users
-4. Wait for the project to provision (~2 minutes).
+This guide explains how to manually configure Supabase for the AIMS project.
+The backend Python service (`backend/supabase_client.py`) is a placeholder — no connection is active until you complete these steps.
 
 ---
 
-## 2. Get API Keys
+## 1. Create a Supabase Project
 
-1. In your Supabase dashboard → **Project Settings → API**
-2. Copy:
-   - `NEXT_PUBLIC_SUPABASE_URL` — the Project URL
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY` — the anon/public key
-3. Add to your `.env.local`:
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
-```
+1. Go to [supabase.com](https://supabase.com) and sign in.
+2. Click **New Project**.
+3. Choose your organization, set a project name (e.g. `aims-db`), and choose a database password.
+4. Select the nearest region and click **Create new project**.
+5. Wait ~2 minutes for the project to provision.
 
 ---
 
-## 3. Install Supabase SDK
+## 2. Create Tables
 
-```bash
-bun add @supabase/supabase-js
-```
+In the Supabase dashboard, open **SQL Editor** and run the following:
 
----
-
-## 4. Initialize Supabase Client
-
-Edit `/src/lib/supabaseClient.ts`:
-
-```ts
-import { createClient } from '@supabase/supabase-js'
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
-```
-
----
-
-## 5. Set Up Authentication
-
-In Supabase Dashboard → **Authentication → Settings**:
-- Enable **Email/Password** provider
-- Set **Site URL**: `http://localhost:3000` (dev) or your production domain
-- Enable email confirmation if required
-
----
-
-## 6. Database Tables
-
-Run these SQL statements in **Supabase SQL Editor**:
-
-### Profiles Table
-```sql
-CREATE TABLE profiles (
-  id UUID PRIMARY KEY REFERENCES auth.users(id),
-  full_name TEXT,
-  role TEXT CHECK (role IN ('student', 'teacher')),
-  email TEXT UNIQUE,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-```
-
-### Students Table
+### `students` table
 ```sql
 CREATE TABLE students (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES profiles(id),
-  roll_number TEXT UNIQUE NOT NULL,
-  branch TEXT NOT NULL,
-  semester TEXT,
-  section TEXT,
-  year TEXT,
-  phone TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW()
+  id         uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  roll_no    text NOT NULL UNIQUE,
+  name       text NOT NULL,
+  year       text,
+  branch     text,
+  created_at timestamptz DEFAULT now()
 );
 ```
 
-### Teachers Table
-```sql
-CREATE TABLE teachers (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES profiles(id),
-  department TEXT NOT NULL,
-  designation TEXT,
-  subjects TEXT[],
-  access_key_used TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-```
-
-### Teacher Access Keys Table
-```sql
-CREATE TABLE teacher_keys (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  key TEXT UNIQUE NOT NULL,
-  is_used BOOLEAN DEFAULT FALSE,
-  used_by UUID REFERENCES profiles(id),
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-```
-
-### Timetable Table
-```sql
-CREATE TABLE timetable (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  day TEXT NOT NULL,
-  time_start TIME NOT NULL,
-  time_end TIME NOT NULL,
-  subject TEXT NOT NULL,
-  faculty_id UUID REFERENCES teachers(id),
-  room TEXT,
-  class_name TEXT,
-  branch TEXT,
-  semester TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-```
-
-### Resources Table
-```sql
-CREATE TABLE resources (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  title TEXT NOT NULL,
-  subject TEXT,
-  semester TEXT,
-  department TEXT,
-  file_path TEXT, -- Supabase Storage path
-  file_type TEXT,
-  file_size BIGINT,
-  uploaded_by UUID REFERENCES teachers(id),
-  download_count INTEGER DEFAULT 0,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-```
-
-### Labs Table
-```sql
-CREATE TABLE labs (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name TEXT NOT NULL,
-  floor TEXT,
-  capacity INTEGER,
-  equipment TEXT,
-  is_available BOOLEAN DEFAULT TRUE,
-  current_class TEXT,
-  updated_at TIMESTAMPTZ DEFAULT NOW()
-);
-```
-
-### Tickets Table
-```sql
-CREATE TABLE tickets (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  ticket_number TEXT UNIQUE NOT NULL,
-  student_id UUID REFERENCES students(id),
-  category TEXT,
-  subject TEXT,
-  description TEXT,
-  status TEXT DEFAULT 'Pending' CHECK (status IN ('Pending', 'In Progress', 'Resolved')),
-  assigned_to UUID REFERENCES teachers(id),
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
-);
-```
-
-### Notices Table
-```sql
-CREATE TABLE notices (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  title TEXT NOT NULL,
-  content TEXT,
-  audience TEXT,
-  priority TEXT DEFAULT 'Normal',
-  posted_by UUID REFERENCES teachers(id),
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-```
-
----
-
-## 7. Storage Buckets
-
-Create these buckets in **Supabase Storage** (Dashboard → Storage → New Bucket):
-
-| Bucket Name      | Public | Purpose                                  |
-|------------------|--------|------------------------------------------|
-| `faculty-videos` | ✅ Yes | Faculty intro videos (`.mp4`)           |
-| `guide-videos`   | ✅ Yes | Campus navigation videos (`.mp4`)       |
-| `resources`      | ❌ No  | Student PDFs, notes, lab manuals        |
-| `timetables`     | ❌ No  | Class and lab timetable files           |
-| `student-photos` | ❌ No  | Student ID card photos (`.jpg`, `.png`) |
-| `marks-uploads`  | ❌ No  | CSV archive for uploaded marks          |
-
-### Example public URLs after setup:
-```
-Faculty intro: https://PROJECT.supabase.co/storage/v1/object/public/faculty-videos/sharma_intro.mp4
-Navigation:    https://PROJECT.supabase.co/storage/v1/object/public/guide-videos/cse_lab_navigation.mp4
-Student photo: https://PROJECT.supabase.co/storage/v1/object/public/student-photos/CSE2022047.jpg
-```
-
----
-
-## 7a. Additional Database Tables (Companion Features)
-
-### Unit Test Marks Table
+### `unit_test_marks` table
 ```sql
 CREATE TABLE unit_test_marks (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  roll_no TEXT NOT NULL,
-  subject TEXT NOT NULL,
-  test_name TEXT NOT NULL,
-  marks INTEGER NOT NULL,
-  max_marks INTEGER DEFAULT 20,
-  semester TEXT,
-  uploaded_by UUID REFERENCES teachers(id),
-  uploaded_at TIMESTAMPTZ DEFAULT NOW()
+  id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  roll_no     text NOT NULL,
+  subject     text NOT NULL,
+  marks       integer NOT NULL,
+  semester    text NOT NULL,
+  uploaded_by text,
+  uploaded_at timestamptz DEFAULT now()
 );
+```
 
--- Index for fast student mark lookups
-CREATE INDEX idx_marks_roll_no ON unit_test_marks(roll_no);
+### `users` table (for auth)
+```sql
+CREATE TABLE users (
+  id          uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  role        text NOT NULL CHECK (role IN ('student', 'teacher', 'admin')),
+  roll_no     text UNIQUE,
+  branch      text,
+  created_at  timestamptz DEFAULT now()
+);
+```
+
+### `notices` table
+```sql
+CREATE TABLE notices (
+  id         uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  title      text NOT NULL,
+  content    text,
+  audience   text,
+  priority   text DEFAULT 'Normal',
+  posted_by  uuid REFERENCES users(id),
+  created_at timestamptz DEFAULT now()
+);
+```
+
+### `tickets` table
+```sql
+CREATE TABLE tickets (
+  id         uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  student_id uuid REFERENCES users(id),
+  category   text,
+  subject    text NOT NULL,
+  status     text DEFAULT 'Pending' CHECK (status IN ('Pending', 'In Progress', 'Resolved')),
+  created_at timestamptz DEFAULT now()
+);
 ```
 
 ---
 
+## 3. Create Storage Buckets
 
-## 8. Storage Bucket Policies
+In the Supabase dashboard → **Storage** → **New bucket**:
 
-For the `resources` bucket, add an RLS policy in Supabase:
+| Bucket name     | Public | Purpose                          |
+|-----------------|--------|----------------------------------|
+| `guide-videos`  | ✅ Yes | Chatbot navigation video files   |
+| `marks-uploads` | ❌ No  | Raw CSV files uploaded by teachers |
+| `resources`     | ✅ Yes | PDFs, slides, lab manuals        |
+| `timetables`    | ✅ Yes | Timetable PDFs/images            |
+
+For `guide-videos` and `resources`, set the bucket to **public** so the frontend can construct direct URLs.
+
+### Video URL format (chatbot)
+After uploading a video to `guide-videos`, the URL will be:
+```
+https://<project-ref>.supabase.co/storage/v1/object/public/guide-videos/<filename>
+```
+Update `public/assets/chatbot/chatbotData.json` to reference this full URL in the `video` field.
+
+---
+
+## 4. Row Level Security (RLS)
+
+Enable RLS on sensitive tables and add policies. Example for `unit_test_marks`:
 
 ```sql
--- Allow authenticated users to read resources
-CREATE POLICY "Authenticated users can view resources"
-ON storage.objects FOR SELECT
-USING (bucket_id = 'resources' AND auth.role() = 'authenticated');
+-- Enable RLS
+ALTER TABLE unit_test_marks ENABLE ROW LEVEL SECURITY;
 
--- Allow teachers to upload resources
-CREATE POLICY "Teachers can upload resources"
-ON storage.objects FOR INSERT
-WITH CHECK (bucket_id = 'resources' AND auth.role() = 'authenticated');
+-- Students can only see their own marks
+CREATE POLICY "Students see own marks"
+ON unit_test_marks FOR SELECT
+USING (roll_no = (SELECT roll_no FROM users WHERE id = auth.uid()));
+
+-- Teachers (service role) can insert marks
+-- Use the service role key in the Python backend to bypass RLS.
 ```
 
 ---
 
-## 9. Connect API Files
+## 5. Add Environment Variables
 
-After setup, update each file in `/src/api/`:
-
-### `src/api/auth.ts`
-```ts
-import { supabase } from '@/lib/supabaseClient'
-
-export async function loginUser(credentials) {
-  const { data, error } = await supabase.auth.signInWithPassword(credentials)
-  return { data, error }
-}
+### Python Backend (`backend/.env`)
+Create `backend/.env` with:
 ```
-
-### `src/api/resources.ts`
-```ts
-import { supabase } from '@/lib/supabaseClient'
-import { STORAGE_BUCKETS, SUPABASE_STORAGE_BASE } from '@/lib/supabaseClient'
-
-export async function uploadResource(file, metadata) {
-  const { data, error } = await supabase.storage
-    .from(STORAGE_BUCKETS.RESOURCES)
-    .upload(file.name, file)
-  return { data, error }
-}
+SUPABASE_URL=https://<project-ref>.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=<your-service-role-key>
 ```
+Find these in **Project Settings → API**. Use the **service_role** key (not anon) for server-side inserts.
+
+### Next.js Frontend (`.env.local`)
+Copy `.env.local.example` to `.env.local` and fill in:
+```
+NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_SUPABASE_URL=https://<project-ref>.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-anon-public-key>
+```
+Use the **anon** key for frontend (it respects RLS policies).
 
 ---
 
-## 10. Enable Realtime (Optional)
+## 6. Activate Supabase in the Backend
 
-For live notifications and timetable updates:
-
-```sql
-ALTER PUBLICATION supabase_realtime ADD TABLE notices;
-ALTER PUBLICATION supabase_realtime ADD TABLE tickets;
-```
+Open `backend/supabase_client.py` and follow the inline instructions:
+1. Install: `pip install supabase`
+2. Uncomment the initialization block.
+3. Import `supabase` in `csv_processor.py` and call `.insert()` after validation.
 
 ---
 
-## Summary Checklist
+## 7. Activate Supabase in the Frontend
 
-- [ ] Supabase project created
-- [ ] API keys added to `.env.local`
-- [ ] `@supabase/supabase-js` installed
-- [ ] `supabaseClient.ts` initialized
-- [ ] Auth enabled (Email/Password)
-- [ ] All database tables created
-- [ ] Storage buckets created
-- [ ] Bucket policies configured
-- [ ] API files connected
-- [ ] Test authentication flow
-- [ ] Test file upload/download
+Open `src/lib/supabaseClient.ts` (existing file) and uncomment/configure the client using:
+```typescript
+import { createClient } from "@supabase/supabase-js";
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
+export default supabase;
+```
+Then wire `src/api/auth.ts`, `src/api/marks.ts`, etc. to use this client.

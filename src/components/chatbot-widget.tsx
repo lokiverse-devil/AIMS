@@ -55,6 +55,33 @@ function getResponse(input: string): BotResponse {
   return { text: chatbotData.defaultResponse };
 }
 
+/**
+ * Fetch a response from the Python FastAPI backend (POST /chat).
+ * Returns null on any error so the caller can fall back to getResponse().
+ * Requires NEXT_PUBLIC_API_URL to be set in .env.local.
+ */
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
+
+async function fetchBotResponse(message: string): Promise<BotResponse | null> {
+  if (!API_URL) return null;
+  try {
+    const res = await fetch(`${API_URL}/chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message }),
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return {
+      text: data.answer ?? chatbotData.defaultResponse,
+      video: data.video_url ?? undefined,
+      link: data.navigation_link ?? undefined,
+    };
+  } catch {
+    return null;
+  }
+}
+
 function formatTime() {
   return new Date().toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" });
 }
@@ -183,16 +210,19 @@ export function ChatbotWidget() {
     setTyping(true);
     setShowSuggestions(false);
 
-    setTimeout(() => {
+    // Try Python backend first; fall back to local engine if unavailable.
+    const delay = 800 + Math.random() * 400;
+    setTimeout(async () => {
+      const apiResponse = await fetchBotResponse(msgText);
       const botMsg: Message = {
         id: (Date.now() + 1).toString(),
         role: "bot",
-        response: getResponse(msgText),
+        response: apiResponse ?? getResponse(msgText),
         time: formatTime(),
       };
       setMessages((prev) => [...prev, botMsg]);
       setTyping(false);
-    }, 800 + Math.random() * 400);
+    }, delay);
   };
 
   const handleKey = (e: React.KeyboardEvent) => {

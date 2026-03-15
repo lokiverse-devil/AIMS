@@ -1,297 +1,90 @@
-# AIMS — System Architecture & Implementation Guide
+# AIMS — Implementation Guide
 
-## Overview
-
-AIMS (Academic Infrastructure Management System) is a Next.js 15 web application using the App Router. It is designed as a role-based academic management portal with clean architecture, ready for Supabase backend integration.
-
----
-
-## Tech Stack
-
-| Layer | Technology |
-|-------|------------|
-| Framework | Next.js 15 (App Router) |
-| Language | TypeScript |
-| Styling | Tailwind CSS v4 |
-| Animations | Framer Motion |
-| Icons | Lucide React |
-| Theme | next-themes (Light/Dark) |
-| Forms | React state (ready for react-hook-form) |
-| Backend (future) | Supabase (Auth + DB + Storage) |
+**Academic Infrastructure Management System**
+Full-stack architecture: Next.js 14 frontend + Python FastAPI backend + Supabase (future).
 
 ---
 
-## Project Structure
+## System Architecture
 
 ```
-/src
-├── app/                      # Next.js App Router pages
-│   ├── page.tsx              # Landing page
-│   ├── login/                # Login page
-│   ├── signup/               # Signup page (role-based)
-│   ├── branches/
-│   │   ├── cse/              # CSE branch page
-│   │   ├── it/               # IT branch page
-│   │   └── elex/             # Electronics branch page
-│   └── dashboard/
-│       ├── student/          # Student dashboard
-│       └── teacher/          # Teacher dashboard
-│
-├── components/               # Reusable UI components
-│   ├── navbar.tsx            # Top navigation bar
-│   ├── theme-toggle.tsx      # Light/Dark theme toggle
-│   ├── theme-provider.tsx    # next-themes provider
-│   ├── chatbot-widget.tsx    # Floating chatbot
-│   └── branch-page-template.tsx  # Shared branch page layout
-│
-├── api/                      # API placeholder modules
-│   ├── auth.ts               # Auth operations
-│   ├── users.ts              # User profile operations
-│   ├── faculty.ts            # Faculty data operations
-│   ├── timetable.ts          # Timetable operations
-│   ├── resources.ts          # Resource upload/download
-│   ├── labs.ts               # Lab availability/booking
-│   └── tickets.ts            # Support tickets/complaints
-│
-├── lib/
-│   └── supabaseClient.ts     # Supabase client (placeholder)
-│
-└── services/
-    ├── authService.ts        # Auth service abstraction
-    └── resourceService.ts    # Resource service abstraction
-
-/public
-└── assets/                   # Static assets (served from CDN)
-    ├── college/              # College/block images
-    │   ├── it_block.jpg      # IT Block hero image
-    │   └── campus.jpg        # Campus overview
-    ├── faculty/              # Faculty profile photos
-    │   ├── sharma.jpg
-    │   ├── rao.jpg
-    │   └── ...
-    ├── ui/                   # UI assets
-    │   └── logo.png
-    ├── illustrations/        # Section illustrations
-    └── chatbot/
-        └── chatbotData.json  # FAQ data for chatbot
+┌─────────────────────────────────────────────────────────────────────┐
+│                        Browser / Client                             │
+│                                                                     │
+│   Next.js 14 App (src/)                                             │
+│   ┌──────────────┐   ┌──────────────┐   ┌───────────────────────┐  │
+│   │  Landing /   │   │  Branch      │   │  Dashboards           │  │
+│   │  Home Page   │   │  Pages       │   │  /dashboard/student   │  │
+│   │  /page.tsx   │   │  /branches/* │   │  /dashboard/teacher   │  │
+│   └──────────────┘   └──────────────┘   └───────────────────────┘  │
+│                                                                     │
+│   ┌──────────────────────────────────────────────────────────────┐  │
+│   │  Components layer  (src/components/)                         │  │
+│   │  ChatbotWidget · BranchPageTemplate · Navbar · ThemeToggle   │  │
+│   └──────────────────────────────────────────────────────────────┘  │
+│                                                                     │
+│   ┌──────────────────────────────────────────────────────────────┐  │
+│   │  Services / API layer  (src/services/, src/api/)             │  │
+│   │  csvService.ts · authService.ts · marks.ts · resources.ts   │  │
+│   └─────────────────────────────┬────────────────────────────────┘  │
+└─────────────────────────────────┼────────────────────────────────────┘
+                                  │ HTTP (fetch)
+                                  ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                    Python FastAPI Backend  (backend/)               │
+│                                                                     │
+│   main.py                                                           │
+│   ├── GET  /health          → "ok"                                  │
+│   ├── POST /chat            → chatbot.py → chatbotData.json         │
+│   ├── POST /upload/students → csv_processor.process_students_csv()  │
+│   └── POST /upload/unit-test→ csv_processor.process_unit_test_csv() │
+│                                                                     │
+│   supabase_client.py  ← PLACEHOLDER (no connection yet)            │
+└─────────────────────────────────────────────────────────────────────┘
+                                  │  (future)
+                                  ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                    Supabase (not yet connected)                     │
+│   Tables: students, unit_test_marks, users, notices, tickets        │
+│   Storage: guide-videos, marks-uploads, resources, timetables      │
+└─────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Role-Based System
+## Frontend Structure
 
-### User Roles
+### Pages (`src/app/`)
+| Route | File | Description |
+|---|---|---|
+| `/` | `page.tsx` | Landing page with hero, features, notice board |
+| `/branches/cse` | `branches/cse/page.tsx` | CSE department page |
+| `/branches/it` | `branches/it/page.tsx` | IT department page |
+| `/branches/elex` | `branches/elex/page.tsx` | ELEX department page |
+| `/login` | `login/page.tsx` | Login page |
+| `/signup` | `signup/page.tsx` | Signup page |
+| `/dashboard/student` | `dashboard/student/page.tsx` | Student dashboard |
+| `/dashboard/teacher` | `dashboard/teacher/page.tsx` | Teacher dashboard |
 
-| Role | Access |
-|------|--------|
-| `student` | Student Dashboard, Resources, Labs, Complaints, ID Card, Timetable |
-| `teacher` | Teacher Dashboard, Upload Resources, Student List, Notices, Tickets |
-| `admin` | (Future) Full access to all management features |
+### Key Components (`src/components/`)
+- **`chatbot-widget.tsx`** — Floating chat widget. Uses local keyword matching by default. When `NEXT_PUBLIC_API_URL` is set, sends queries to `POST /chat` and falls back to local if the backend is unreachable.
+- **`branch-page-template.tsx`** — Shared template for all branch pages.
+- **`navbar.tsx`** — Top navigation bar.
 
-### Authentication Flow
-
-```
-User visits /login or /signup
-    │
-    ├── /signup → Role selection (student/teacher)
-    │       ├── Student: name, roll, branch, semester, email, password
-    │       └── Teacher: name, dept, subjects, email, password, teacherAccessKey
-    │
-    ├── Login → email + password → Supabase Auth
-    │       └── On success → redirect based on role
-    │               ├── student → /dashboard/student
-    │               └── teacher → /dashboard/teacher
-    │
-    └── Protected routes → check auth → redirect to /login if unauthenticated
-```
-
-### Teacher Access Key Logic
-
-- A `teacher_keys` table in Supabase stores pre-issued unique keys.
-- When a teacher signs up, the `teacherAccessKey` is validated against this table.
-- If valid and unused → mark as used, create teacher account.
-- If invalid or already used → reject signup.
-- Keys are generated and distributed by the admin/faculty office.
-
-```
-Admin generates key → Stores in teacher_keys table
-Teacher receives key → Enters during signup
-System validates → Marks as used → Creates account
-```
-
----
-
-## Asset Strategy
-
-### Static Assets → `/public/assets/`
-
-All static UI images are stored locally for performance:
-
-| Path | Purpose |
-|------|---------|
-| `/assets/college/it_block.jpg` | Hero section background |
-| `/assets/college/campus.jpg` | Campus overview |
-| `/assets/faculty/sharma.jpg` | Dr. Anil Sharma photo |
-| `/assets/faculty/*.jpg` | All faculty photos |
-| `/assets/ui/logo.png` | AIMS logo |
-
-**Why local?** Faster load, CDN caching, no API calls.
-
-### Dynamic Media → Supabase Storage
-
-| Bucket | Content | Access |
-|--------|---------|--------|
-| `faculty-videos` | Faculty intro MP4 videos | Public |
-| `guide-videos` | Campus/navigation guide videos | Public |
-| `resources` | PDFs, notes, assignments | Authenticated |
-
-**Why Supabase Storage?** Handles large files, user uploads, access control.
-
----
-
-## Theme System
-
-### Implementation
-
-- Uses `next-themes` with `ThemeProvider` wrapping the app in `layout.tsx`.
-- `attribute="class"` — adds `.dark` class to `<html>`.
-- `ThemeToggle` component handles switching with animated Moon/Sun icons.
-- Preference persisted in `localStorage`.
-
-### Color Palette
-
-| Token | Light | Dark |
-|-------|-------|------|
-| Background | Warm Ivory | Deep Charcoal |
-| Primary | Muted Teal | Bright Teal |
-| Accent | Soft Teal | Dark Teal |
-| Foreground | Deep Graphite | Warm Ivory |
+### Service Layer (`src/services/`, `src/api/`)
+- **`csvService.ts`** — Typed `fetch()` wrappers for the Python backend CSV endpoints.
+- **`marks.ts`** — `uploadMarksCSV()` calls `csvService.uploadUnitTestCSV()`.
+- **`authService.ts`** — Auth stubs ready for Supabase wiring.
+- **`resourceService.ts`** — Resource stubs ready for Supabase wiring.
 
 ---
 
 ## Chatbot Logic
 
-### Current Implementation
+### Knowledge Base
+Located at: `public/assets/chatbot/chatbotData.json`
 
-The chatbot uses simple keyword matching against a FAQ dataset:
-
-```
-User message → lowercase → keyword scan → match found → return answer
-                                        → no match → default response
-```
-
-FAQ data location: `/public/assets/chatbot/chatbotData.json`
-
-### Future Enhancement
-
-```
-// TODO: Load from chatbotData.json dynamically
-// TODO: Integrate LLM API (e.g., OpenAI, Gemini) for natural language understanding
-// TODO: Connect to Supabase for FAQ management
-```
-
----
-
-## Dashboard Architecture
-
-### Student Dashboard Modules
-
-| Module | Description |
-|--------|-------------|
-| Timetable | Weekly schedule by day |
-| Resources | View/download study materials |
-| Labs | Check availability, request booking |
-| Complaints | Raise tickets, track status |
-| Digital ID Card | QR-enabled virtual ID |
-| Notifications | System alerts |
-| Profile | View/edit personal info |
-
-### Teacher Dashboard Modules
-
-| Module | Description |
-|--------|-------------|
-| Timetable | Teaching schedule with class info |
-| Upload Resources | Upload PDFs/PPTs to Supabase |
-| Student List | Filterable by year, searchable |
-| Notices | Post announcements |
-| Tickets | View/resolve student complaints |
-| Profile | Faculty profile management |
-
----
-
-## API Module Pattern
-
-All API files follow this pattern:
-
-```ts
-// TODO: Connect to Supabase
-export async function fetchXxx(params) {
-  // import { supabase } from '@/lib/supabaseClient'
-  // const { data, error } = await supabase.from('table').select('*')
-  return null
-}
-```
-
-This ensures:
-- Clear TODO comments for integration points
-- TypeScript type safety
-- Easy find & replace when connecting Supabase
-
----
-
-## Branch Page Architecture
-
-All three branch pages (CSE/IT/ELEX) use the shared `BranchPageTemplate` component:
-
-```
-/branches/cse/page.tsx → data object → <BranchPageTemplate {...cseData} />
-/branches/it/page.tsx  → data object → <BranchPageTemplate {...itData} />
-/branches/elex/page.tsx → data object → <BranchPageTemplate {...elexData} />
-```
-
-Each data object includes:
-- Department info, highlights, programs
-- Faculty list (with photo path TODOs + video URL TODOs)
-- Lab list
-- Achievements
-
----
-
-## Adding Faculty Photos
-
-1. Place photos in `/public/assets/faculty/`
-2. Find the `photoPath` TODO comments in branch pages
-3. Replace avatar placeholder with `<img src={f.photoPath} ... />`
-
----
-
-## Security Considerations (for Supabase integration)
-
-- Use RLS (Row Level Security) on all Supabase tables
-- Never expose `SUPABASE_SERVICE_ROLE_KEY` to the client
-- Validate teacher access keys server-side only
-- Use Supabase Auth middleware to protect dashboard routes
-- Rate-limit signup to prevent abuse
-
----
-
-## Future Roadmap
-
-- [ ] Complete Supabase Auth integration
-- [ ] Real-time notifications via Supabase Realtime
-- [ ] PDF generation for Digital ID Card
-- [ ] Faculty video player with Supabase Storage
-- [ ] Admin dashboard for super-user management
-- [ ] Email notifications via Supabase Edge Functions
-- [ ] PWA support for mobile access
-- [ ] Advanced chatbot with LLM integration
-
----
-
-## Chatbot Architecture (Enhanced — Companion Features)
-
-### Data Source: `chatbotData.json`
-
+Structure:
 ```json
 {
   "faqs": [
@@ -299,167 +92,158 @@ Each data object includes:
       "id": "cse_lab",
       "keywords": ["cse lab", "computer science lab", ...],
       "question": "Where is CSE Lab?",
-      "answer": "...",
-      "video": "cse_lab_navigation.mp4",      // → guide-videos bucket
-      "videoLabel": "▶ Navigate to CSE Lab",
-      "link": "/branches/cse",
-      "linkLabel": "Open CSE Department"
+      "answer": "The CSE Computer Lab A is on the Ground Floor...",
+      "video": "cse_lab_navigation.mp4",
+      "link": "/branches/cse"
     }
   ],
-  "suggestions": ["Where is CSE Lab?", "Who is IT HOD?", ...],
   "defaultResponse": "...",
-  "greeting": "..."
+  "greeting": "...",
+  "suggestions": [...]
 }
 ```
 
-### Response Types
-Each chatbot response can include:
-- **Answer text** — always shown
-- **Navigation video button** → expands to show video placeholder (Supabase `guide-videos` bucket TODO)
-- **Department link button** → navigates to branch page or dashboard
+### Matching Flow (Python backend)
 
-### Keyword Matching Engine
 ```
-User input → .toLowerCase() → scan all `keywords[]` arrays → first match → return response
-```
-
-### Suggestion Chips
-On first open, before any message is sent, suggestion chips are shown:
-- Pre-built from `chatbotData.suggestions[]`
-- Clicking a chip is equivalent to typing and sending that question
-
-### UI Features
-- Minimize/expand toggle (retains chat history)
-- Typing indicator animation (3 bouncing dots)
-- Pulse ring on FAB when chat is closed
-
----
-
-## CSV Ingestion System (Teacher Features)
-
-### Marks CSV Upload
-Format: `roll_no,subject,marks,semester`
-
-Flow:
-```
-Teacher selects subject + test name
-→ uploads CSV file
-→ API route: /api/marks/upload
-→ TODO: Parse CSV rows
-→ TODO: insert into unit_test_marks table
-→ TODO: archive CSV in Supabase marks-uploads bucket
+User message
+    │
+    ▼
+chatbot.py :: get_bot_response()
+    │
+    ├── For each FAQ entry:
+    │     RapidFuzz.token_set_ratio(user_message, keyword)
+    │     RapidFuzz.partial_ratio(user_message, question_text)
+    │
+    ├── Best score ≥ 60 → return matched FAQ answer + video_url + navigation_link
+    │
+    └── Best score < 60 → return defaultResponse
 ```
 
-### Student List CSV Upload
-Format: `roll_no,name,year,branch`
+### Frontend Fallback Flow
 
-Flow:
 ```
-Teacher uploads CSV
-→ API route: /api/students/upload
-→ TODO: upsert into students table
-→ TODO: archive in timetables bucket (CSV folder)
+sendMessage(text)
+    │
+    ├── fetchBotResponse(text)   ← calls POST /chat if NEXT_PUBLIC_API_URL is set
+    │       │ success → use API response
+    │       │ error / no URL → return null
+    │
+    └── null → getResponse(text)  ← local keyword matching from chatbotData.json
 ```
 
 ---
 
-## Campus Navigation Video System
+## CSV Upload Workflow
 
-Videos stored in Supabase `guide-videos` bucket:
+### Student List
+1. Teacher opens Dashboard → Upload Center → **Student List CSV** tab.
+2. Selects a `.csv` file with columns: `roll_no, name, year, branch`.
+3. Frontend calls `csvService.uploadStudentCSV(file)` → `POST /upload/students`.
+4. Python backend validates each row and returns `{inserted, failed, errors}`.
+5. *(Future)* After Supabase setup: backend inserts valid rows into `students` table.
 
-| Video Filename | Covers |
-|----------------|--------|
-| `cse_lab_navigation.mp4` | How to reach CSE Lab A & B |
-| `it_lab_navigation.mp4` | How to reach IT Networking Lab |
-| `elex_lab_navigation.mp4` | How to reach Electronics Lab |
-| `hod_cabin_navigation.mp4` | How to reach HOD cabins by floor |
-| `seminar_hall_navigation.mp4` | How to reach Seminar Hall |
-
-To add a video:
-1. Upload to `guide-videos` bucket in Supabase
-2. Add entry in `chatbotData.json` with `"video": "filename.mp4"`
-3. The chatbot widget will show a [▶ Play] button automatically
-
----
-
-## Unit Test Marks Architecture
-
-### Student View
-- Student Dashboard → "Unit Test Marks" tab
-- Shows all marks for the student's roll number
-- Filter by subject using dropdown
-- Progress bar per mark (green ≥80%, amber ≥60%, red <60%)
-- TODO: Call `fetchStudentMarks(rollNo)` from `/src/api/marks.ts`
-
-### Teacher Upload
-- Teacher Dashboard → "Upload / CSV" → "Marks CSV" tab
-- CSV format guide displayed inline
-- TODO: Call `uploadMarksCSV(file, teacherId, subject, testName)` from `/src/api/marks.ts`
-
-### Complaint Resolution Rule
-- **Students** can mark their own complaints as Resolved
-- **Teachers** can only Acknowledge a ticket → sets status to "In Progress"
-- Enforced in UI (teacher view has no "Resolved" button)
-- TODO: Enforce with Supabase RLS once backend is connected
+### Unit Test Marks
+1. Teacher opens Dashboard → Upload Center → **Marks CSV** tab.
+2. Selects a `.csv` file with columns: `roll_no, subject, marks, semester`.
+3. Frontend calls `marks.ts::uploadMarksCSV()` → `csvService.uploadUnitTestCSV()` → `POST /upload/unit-test`.
+4. Python backend validates marks values (must be non-negative integers) and returns results.
+5. *(Future)* After Supabase setup: backend inserts valid rows into `unit_test_marks` table.
 
 ---
 
-## Semester Results Architecture
+## Running Locally
 
-AIMS does **not** store university marksheets. The Semester Results section:
-1. Explains this clearly with an info card
-2. Shows a semester selector (1st–8th) for context
-3. Provides a prominent CTA: **"View Official University Result →"**
-4. TODO: Replace `href="#"` with actual university portal URL
+### 1. Start the Python Backend
 
----
-
-## Branch Page Architecture (Updated)
-
-Each branch page now has 6 sections:
-
-```
-1. Hero             — Name, tagline, about, highlights grid
-2. HOD Section      — Photo/initials + Crown badge, bio, cabin, office hours
-3. Programs         — All offered programs
-4. Faculty Grid     — Photo + name + subjects + "View Intro Video" button
-5. Labs             — Availability by lab with seat count
-6. Achievements     — Accreditations, awards, stats
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload
 ```
 
-### HOD Data Shape
-```ts
+The API will be available at `http://localhost:8000`.
+Interactive API docs: `http://localhost:8000/docs`
+
+### 2. Configure the Frontend
+
+```bash
+# In the project root:
+cp .env.local.example .env.local
+# Edit .env.local and set:
+# NEXT_PUBLIC_API_URL=http://localhost:8000
+```
+
+### 3. Start the Next.js Frontend
+
+```bash
+npm run dev
+# or
+bun dev
+```
+
+Frontend at `http://localhost:3000`.
+
+---
+
+## API Reference
+
+### `GET /health`
+```json
+{ "status": "ok", "service": "AIMS API" }
+```
+
+### `POST /chat`
+**Request:** `{ "message": "Where is CSE Lab?" }`
+
+**Response:**
+```json
 {
-  name: "Dr. Anil Sharma",
-  designation: "Professor & Head of Department — CSE",
-  bio: "...",
-  initials: "AS",
-  photoPath: "/assets/faculty/sharma.jpg",  // TODO: local asset
-  cabin: "Room 301, 3rd Floor",
-  officeHours: "Mon–Fri, 10:00 AM – 12:00 PM"
+  "answer": "The CSE Computer Lab A is on the Ground Floor...",
+  "video_url": "cse_lab_navigation.mp4",
+  "navigation_link": "/branches/cse"
 }
 ```
 
-### Faculty Intro Video Modal
-- "View Intro Video" button per faculty card opens animated modal overlay
-- Modal shows: faculty avatar, name, designation, subjects
-- Video placeholder (aspect-video container) with TODO Supabase URL comment:
-  ```
-  // TODO: https://PROJECT.supabase.co/storage/v1/object/public/faculty-videos/{name}_intro.mp4
-  ```
+### `POST /upload/students`
+**Request:** multipart/form-data with `file` field (`.csv`)
+
+**CSV format:** `roll_no, name, year, branch`
+
+**Response:**
+```json
+{
+  "success": true,
+  "inserted": 3,
+  "failed": 1,
+  "errors": ["Row 4 skipped — name is empty"]
+}
+```
+
+### `POST /upload/unit-test`
+**Request:** multipart/form-data with `file` field (`.csv`)
+
+**CSV format:** `roll_no, subject, marks, semester`
+
+**Response:**
+```json
+{
+  "success": true,
+  "inserted": 5,
+  "failed": 1,
+  "errors": ["Row 3 skipped — marks must be an integer, got 'N/A'"]
+}
+```
 
 ---
 
-## Asset Management Summary
+## Next Steps: Supabase Integration
 
-| Asset Type | Location | Notes |
-|-----------|----------|-------|
-| Faculty photos | `/public/assets/faculty/` | Local `.jpg` files |
-| College logo | `/public/assets/ui/logo.png` | Used in ID card PDF |
-| Chatbot data | `/public/assets/chatbot/chatbotData.json` | Navigation Q&A |
-| Navigation videos | Supabase `guide-videos` | Public bucket |
-| Faculty intro videos | Supabase `faculty-videos` | Public bucket |
-| Student PDFs/notes | Supabase `resources` | Auth-gated |
-| Timetable files | Supabase `timetables` | Auth-gated |
-| Student photos | Supabase `student-photos` | Auth-gated |
-| Marks CSV archive | Supabase `marks-uploads` | Auth-gated |
+See `supabase.md` for full step-by-step instructions.
+
+1. Create Supabase project and run table SQL schemas.
+2. Create storage buckets (`guide-videos`, `marks-uploads`, `resources`, `timetables`).
+3. Add env variables to `backend/.env` and `.env.local`.
+4. Uncomment code in `backend/supabase_client.py`.
+5. In `backend/csv_processor.py`, import `supabase` and call `.insert()` after validation.
+6. Wire `src/lib/supabaseClient.ts` for frontend auth and data queries.

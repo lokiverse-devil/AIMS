@@ -108,25 +108,24 @@ const labs = [
 
 const facultyPreview = [
   {
-    name: "Manmohan",
+    name: "MANMOHAN",
     dept: "CSE",
     subjects: "Internet Of Things, Operating Systems, Computer System And Organization, Data Mining and Warehouse",
-    // TODO: Replace with actual asset /assets/faculty/sharma.jpg
-    avatar: null,
+    avatar: "/assets/faculty/mannu.jpg",
     initials: "MV",
   },
   {
-    name: "Jagdish Chandra Pandey",
+    name: "JAGDISH CHANDRA PANDEY",
     dept: "IT",
     subjects: "Database Systems, Cloud Computing",
-    avatar: null,
+    avatar: "/assets/faculty/pandey.jpg",
     initials: "JP",
   },
   {
-    name: "Manoj Rikhari",
+    name: "MANOJ RIKHARI",
     dept: "ELEX",
     subjects: "VLSI Design, Embedded Systems",
-    avatar: null,
+    avatar: "/assets/faculty/pandey.jpg",
     initials: "MR",
   },
 ];
@@ -214,7 +213,7 @@ export default function HomePage() {
             className="max-w-4xl"
           >
             <motion.div variants={fadeUp} custom={0}>
-              <SectionLabel>Academic Infrastructure Management</SectionLabel>
+              <SectionLabel>IT BLOCK X AIMS</SectionLabel>
             </motion.div>
 
             <motion.h1
@@ -224,7 +223,7 @@ export default function HomePage() {
             >
               Welcome to{" "}
               <span className="relative inline-block">
-                <span className="text-primary">AIMS</span>
+                <span className="text-primary">IT BLOCK: GP KASHIPUR</span>
                 <span className="absolute -bottom-1 left-0 right-0 h-0.5 aims-accent-bar rounded-full" />
               </span>
             </motion.h1>
@@ -234,7 +233,7 @@ export default function HomePage() {
               custom={2}
               className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mb-10"
             >
-              A centralized platform for managing academic block infrastructure,
+              A part of government polytechnic kashipur with collboration of aims a centralized platform for managing academic block infrastructure,
               faculty information, student services, labs, resources, scheduling,
               and visitor assistance — all in one elegant system.
             </motion.p>
@@ -285,7 +284,7 @@ export default function HomePage() {
           transition={{ repeat: Infinity, duration: 2 }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
         >
-          <span className="text-xs text-muted-foreground">Scroll to explore</span>
+          <span className="text-xs text-muted-foreground">DIVE IN</span>
           <div className="w-0.5 h-8 rounded-full bg-gradient-to-b from-primary/60 to-transparent" />
         </motion.div>
       </section>
@@ -306,7 +305,7 @@ export default function HomePage() {
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-6">
                 The state-of-the-art IT block houses the CSE, IT, and Electronics
-                departments across four floors, equipped with modern labs,
+                departments across two floors, equipped with modern labs,
                 seminar halls, faculty cabins, and a digitally-enabled learning
                 environment.
               </p>
@@ -340,19 +339,18 @@ export default function HomePage() {
               viewport={{ once: true }}
               className="relative"
             >
-              {/* IT Block image placeholder */}
-              {/* TODO: Replace with <img src="/assets/college/it_block.jpg" alt="IT Block" /> */}
-              <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-primary/20 via-accent/30 to-secondary/40 border border-border shadow-2xl flex items-center justify-center">
-                <div className="text-center">
-                  <Building2 size={64} className="text-primary/40 mx-auto mb-3" />
-                  <p className="text-sm text-muted-foreground font-medium">IT Block — Academic Campus</p>
-                  <p className="text-xs text-muted-foreground/60 mt-1">
-                    {/* TODO: Asset from /assets/college/it_block.jpg */}
-                    Image: /assets/college/it_block.jpg
-                  </p>
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-muted border border-border shadow-2xl relative group">
+                <img src="/assets/college/it_block.jpg" alt="IT Block" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
+                <div className="absolute bottom-6 left-6 right-6">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Building2 size={16} className="text-white/80" />
+                    <p className="text-sm text-white/90 font-medium">IT Block</p>
+                  </div>
+                  <p className="text-xs text-white/70">Academic Campus</p>
                 </div>
               </div>
-              <div className="absolute -bottom-4 -right-4 w-32 h-32 rounded-2xl bg-primary/10 border border-primary/20 flex flex-col items-center justify-center shadow-lg">
+              <div className="absolute -bottom-4 -right-4 w-32 h-32 rounded-2xl bg-primary/10 border border-primary/20 flex flex-col items-center justify-center shadow-lg backdrop-blur-md">
                 <span className="text-2xl font-bold text-primary">Est.</span>
                 <span className="text-xl font-bold text-foreground">2005</span>
               </div>
@@ -462,7 +460,7 @@ export default function HomePage() {
         <SectionLabel>Labs & Workspaces</SectionLabel>
         <h2 className="text-4xl font-bold text-foreground">Lab Overview</h2>
         <p className="text-muted-foreground mt-2">
-          Real-time lab availability at a glance.
+          Lab preview at a glance.
         </p>
       </div>
 
@@ -470,7 +468,7 @@ export default function HomePage() {
         href="/login"
         className="inline-flex items-center gap-2 text-sm text-primary font-medium hover:gap-3 transition-all"
       >
-        Book a lab <ArrowRight size={14} />
+        Connect with IT Block <ArrowRight size={14} />
       </Link>
     </motion.div>
 
@@ -544,9 +542,12 @@ export default function HomePage() {
                 viewport={{ once: true }}
                 className="p-5 rounded-2xl border border-border bg-card hover:border-primary/30 hover:shadow-lg hover:shadow-primary/8 transition-all duration-300 text-center"
               >
-                {/* TODO: Replace with <img src={`/assets/faculty/${f.name.toLowerCase().split(' ').pop()}.jpg`} alt={f.name} /> */}
-                <div className="w-16 h-16 rounded-full bg-primary/15 flex items-center justify-center mx-auto mb-3 border-2 border-primary/20">
-                  <span className="text-lg font-bold text-primary">{f.initials}</span>
+                <div className="w-16 h-16 rounded-full bg-primary/15 flex items-center justify-center mx-auto mb-3 border-2 border-primary/20 overflow-hidden relative">
+                  {f.avatar ? (
+                    <img src={f.avatar} alt={f.name} className="w-full h-full object-cover" />
+                  ) : (
+                    <span className="text-lg font-bold text-primary">{f.initials}</span>
+                  )}
                 </div>
                 <h4 className="font-semibold text-foreground text-sm">{f.name}</h4>
                 <span className="inline-block mt-1 px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-semibold">

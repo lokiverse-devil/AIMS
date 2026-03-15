@@ -26,7 +26,7 @@ const itData = {
 
   hod: {
     name: "Jagdish Chandra Pandey",
-    designation: "Professor & Head of Department — IT",
+    designation: "Head of Department — IT",
     bio:
       "Jagdish Chandra Pandey holds an M.Tech in Information Technology and brings 16+ years of teaching and research experience. He specializes in Database Systems, Cloud Computing, and Distributed Systems.",
     initials: "JP",
@@ -36,6 +36,16 @@ const itData = {
   },
 
   faculty: [
+     {
+      name: "Jagdish Chandra Pandey",
+    designation: "Head of Department — IT",
+      subjects: ["Programming In C", "Concepts of .NET Technology", "Android Application Development", "Java Programming"],
+      experience: "15 years",
+      initials: "JP",
+      photoPath: "/assets/faculty/jagdish.jpg",
+      // TODO: Replace with Supabase Storage URL
+      // videoUrl: "https://PROJECT.supabase.co/storage/v1/object/public/faculty-videos/sharma_intro.mp4"
+    },
     {
       name: "Neha Bora",
       designation: "Lecturer",
@@ -46,7 +56,7 @@ const itData = {
       ],
       experience: "16 years",
       initials: "NB",
-      photoPath: "/assets/faculty/rao.jpg",
+      photoPath: "/assets/faculty/bora.jpg",
     },
     {
       name: "Ashok Kumar",
@@ -59,15 +69,7 @@ const itData = {
       ],
       experience: "13 years",
       initials: "AK",
-      photoPath: "/assets/faculty/tiwari.jpg",
-    },
-    {
-      name: "Prof. Neha Gupta",
-      designation: "Assistant Professor",
-      subjects: ["Computer Networks", "Cisco CCNA", "Routing & Switching"],
-      experience: "8 years",
-      initials: "NG",
-      photoPath: "/assets/faculty/bora.jpg",
+      photoPath: "/assets/faculty/ashok.jpg",
     },
   ],
 
