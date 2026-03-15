@@ -237,7 +237,7 @@ export function BranchPageTemplate({
           >
             {/* HOD Photo */}
             <div className="flex-shrink-0">
-              <div className="w-24 h-24 rounded-2xl border-2 border-primary/20 relative overflow-hidden bg-primary/15 flex items-center justify-center">
+              <div className="w-24 h-24 rounded-3xl border-2 border-primary/20 relative overflow-hidden bg-primary/15 flex items-center justify-center">
                 {hod.photoPath ? (
                   <img src={hod.photoPath} alt={hod.name} className="w-full h-full object-cover" />
                 ) : (

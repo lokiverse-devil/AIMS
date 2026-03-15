@@ -16,7 +16,7 @@ const itData = {
     "The Department of Information Technology at AIMS bridges the gap between theoretical knowledge and real-world application. Specializing in networking, cybersecurity, enterprise systems, and cloud computing, our graduates are highly sought after by leading IT companies globally.",
 
   highlights: [
-    { label: "Students Enrolled", value: "150" },
+    { label: "Students Enrolled", value: "122" },
     { label: "Faculty Members", value: "3" },
     { label: "Labs", value: "3" },
     { label: "Years of Excellence", value: "18+" },
@@ -42,7 +42,7 @@ const itData = {
       subjects: ["Programming In C", "Concepts of .NET Technology", "Android Application Development", "Java Programming"],
       experience: "15 years",
       initials: "JP",
-      photoPath: "/assets/faculty/jagdish.jpg",
+      photoPath: "/assets/faculty/pandey.jpg",
       // TODO: Replace with Supabase Storage URL
       // videoUrl: "https://PROJECT.supabase.co/storage/v1/object/public/faculty-videos/sharma_intro.mp4"
     },
@@ -50,6 +50,8 @@ const itData = {
       name: "Neha Bora",
       designation: "Lecturer",
       subjects: [
+        "Data Communication",
+        "Digital Technology",
         "Internet and Web Technology",
         "Computer Hardware and Systems",
         "Employability Skills",

@@ -14,7 +14,7 @@ const cseData = {
   about:
     "The Department of Computer Science Engineering at AIMS is dedicated to nurturing future-ready engineers through a rigorous curriculum blending theoretical foundations with hands-on project experience. With cutting-edge labs and experienced faculty, CSE students excel in software engineering, artificial intelligence, data science, and systems programming.",
   highlights: [
-    { label: "Students Enrolled", value: "150" },
+    { label: "Students Enrolled", value: "132" },
     { label: "Faculty Members", value: "3" },
     { label: "Labs", value: "2" },
     { label: "Years of Excellence", value: "20+" },
@@ -49,7 +49,7 @@ const cseData = {
       subjects: ["Computer Fundamentals", "Data Structures and Algorithms", "Relational Database Management System"],
       experience: "12 years",
       initials: "NA",
-      photoPath: "/assets/faculty/arya.jpg",
+      photoPath: "/assets/faculty/arya.jpeg",
     },
     {
       name: "Virendra Dharamasaktu",

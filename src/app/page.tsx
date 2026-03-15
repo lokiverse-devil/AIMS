@@ -125,7 +125,7 @@ const facultyPreview = [
     name: "MANOJ RIKHARI",
     dept: "ELEX",
     subjects: "VLSI Design, Embedded Systems",
-    avatar: "/assets/faculty/pandey.jpg",
+    avatar: "/assets/faculty/pandey .jpg",
     initials: "MR",
   },
 ];
@@ -340,8 +340,10 @@ export default function HomePage() {
               className="relative"
             >
               <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-muted border border-border shadow-2xl relative group">
-                <img src="/assets/college/it_block.jpg" alt="IT Block" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
+                
+                <img src="/assets/college/it_block.mp4" alt="IT Block" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+               
+               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
                 <div className="absolute bottom-6 left-6 right-6">
                   <div className="flex items-center gap-2 mb-1">
                     <Building2 size={16} className="text-white/80" />
