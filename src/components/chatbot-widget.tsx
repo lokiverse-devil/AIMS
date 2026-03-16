@@ -237,7 +237,7 @@ export function ChatbotWidget() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-6 right-6 z-50 flex flex-col-reverse items-end gap-4">
       {/* Chat Window */}
       <AnimatePresence>
         {open && (
@@ -246,7 +246,7 @@ export function ChatbotWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.92 }}
             transition={{ duration: 0.22 }}
-            className="mb-4 w-80 sm:w-96 rounded-2xl overflow-hidden shadow-2xl border border-border aims-glass-card flex flex-col"
+            className="w-80 sm:w-96 rounded-2xl overflow-hidden shadow-2xl border border-border bg-card/80 backdrop-blur-2xl flex flex-col"
             style={{ height: minimized ? "auto" : "520px" }}
           >
             {/* Header */}

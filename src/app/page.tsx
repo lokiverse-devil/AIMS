@@ -19,7 +19,14 @@ import {
   Clock,
   Award,
   ArrowRight,
+  Crown,
+  Database,
+  FolderOpen,
+  FileText,
+  Cloud,
+  Code,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Navbar } from "@/components/navbar";
 import { ChatbotWidget } from "@/components/chatbot-widget";
 
@@ -184,6 +191,142 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
       <div className="h-0.5 w-8 aims-accent-bar rounded-full" />
     </div>
   );
+}
+
+// ── Role → Icon map ────────────────────────────────────────────
+
+const roleIconMap: Record<string, LucideIcon> = {
+  frontend: Monitor,
+  backend: Cpu,
+  database: Database,
+  awssetup: Cloud,
+  assetmanagement: FolderOpen,
+  documentation: FileText,
+  code: Code,
+};
+
+// ── Role → Color scheme map ────────────────────────────────────
+
+interface RoleColorScheme {
+  bg: string;
+  border: string;
+  hoverBorder: string;
+  shadow: string;
+  ring: string;
+  gradient: string;
+  badge: string;
+  badgeText: string;
+  accentBg: string;
+  accentText: string;
+}
+
+const roleColorMap: Record<string, RoleColorScheme> = {
+  leader: {
+    bg: "bg-teal-500/[0.04] dark:bg-teal-500/[0.08]",
+    border: "border-teal-500/40",
+    hoverBorder: "hover:border-teal-500/60",
+    shadow: "shadow-teal-500/10 hover:shadow-teal-500/20",
+    ring: "ring-teal-500/15",
+    gradient: "from-teal-500/8 to-emerald-500/5",
+    badge: "bg-teal-500/10",
+    badgeText: "text-teal-600 dark:text-teal-400",
+    accentBg: "bg-teal-500",
+    accentText: "text-white",
+  },
+  frontend: {
+    bg: "bg-cyan-500/[0.04] dark:bg-cyan-500/[0.08]",
+    border: "border-cyan-500/30",
+    hoverBorder: "hover:border-cyan-500/50",
+    shadow: "shadow-cyan-500/10 hover:shadow-cyan-500/20",
+    ring: "ring-cyan-500/15",
+    gradient: "from-cyan-500/8 to-sky-500/5",
+    badge: "bg-cyan-500/10",
+    badgeText: "text-cyan-600 dark:text-cyan-400",
+    accentBg: "bg-cyan-500",
+    accentText: "text-white",
+  },
+  backend: {
+    bg: "bg-indigo-500/[0.04] dark:bg-indigo-500/[0.08]",
+    border: "border-indigo-500/30",
+    hoverBorder: "hover:border-indigo-500/50",
+    shadow: "shadow-indigo-500/10 hover:shadow-indigo-500/20",
+    ring: "ring-indigo-500/15",
+    gradient: "from-indigo-500/8 to-blue-500/5",
+    badge: "bg-indigo-500/10",
+    badgeText: "text-indigo-600 dark:text-indigo-400",
+    accentBg: "bg-indigo-500",
+    accentText: "text-white",
+  },
+  database: {
+    bg: "bg-violet-500/[0.04] dark:bg-violet-500/[0.08]",
+    border: "border-violet-500/30",
+    hoverBorder: "hover:border-violet-500/50",
+    shadow: "shadow-violet-500/10 hover:shadow-violet-500/20",
+    ring: "ring-violet-500/15",
+    gradient: "from-violet-500/8 to-purple-500/5",
+    badge: "bg-violet-500/10",
+    badgeText: "text-violet-600 dark:text-violet-400",
+    accentBg: "bg-violet-500",
+    accentText: "text-white",
+  },
+  awssetup: {
+    bg: "bg-amber-500/[0.04] dark:bg-amber-500/[0.08]",
+    border: "border-amber-500/30",
+    hoverBorder: "hover:border-amber-500/50",
+    shadow: "shadow-amber-500/10 hover:shadow-amber-500/20",
+    ring: "ring-amber-500/15",
+    gradient: "from-amber-500/8 to-orange-500/5",
+    badge: "bg-amber-500/10",
+    badgeText: "text-amber-600 dark:text-amber-400",
+    accentBg: "bg-amber-500",
+    accentText: "text-white",
+  },
+  assetmanagement: {
+    bg: "bg-rose-500/[0.04] dark:bg-rose-500/[0.08]",
+    border: "border-rose-500/30",
+    hoverBorder: "hover:border-rose-500/50",
+    shadow: "shadow-rose-500/10 hover:shadow-rose-500/20",
+    ring: "ring-rose-500/15",
+    gradient: "from-rose-500/8 to-pink-500/5",
+    badge: "bg-rose-500/10",
+    badgeText: "text-rose-600 dark:text-rose-400",
+    accentBg: "bg-rose-500",
+    accentText: "text-white",
+  },
+  documentation: {
+    bg: "bg-emerald-500/[0.04] dark:bg-emerald-500/[0.08]",
+    border: "border-emerald-500/30",
+    hoverBorder: "hover:border-emerald-500/50",
+    shadow: "shadow-emerald-500/10 hover:shadow-emerald-500/20",
+    ring: "ring-emerald-500/15",
+    gradient: "from-emerald-500/8 to-green-500/5",
+    badge: "bg-emerald-500/10",
+    badgeText: "text-emerald-600 dark:text-emerald-400",
+    accentBg: "bg-emerald-500",
+    accentText: "text-white",
+  },
+};
+
+const defaultColors: RoleColorScheme = {
+  bg: "bg-card",
+  border: "border-border",
+  hoverBorder: "hover:border-primary/40",
+  shadow: "shadow-primary/10 hover:shadow-primary/15",
+  ring: "ring-primary/10",
+  gradient: "from-primary/5 to-accent/5",
+  badge: "bg-primary/10",
+  badgeText: "text-primary",
+  accentBg: "bg-primary",
+  accentText: "text-primary-foreground",
+};
+
+function getMemberColors(role: string): RoleColorScheme {
+  const allRoles = role.toLowerCase().split(",").map((r) => r.trim().replace(/[-\s]/g, ""));
+  // Priority: leader > first role with a color
+  for (const r of allRoles) {
+    if (roleColorMap[r]) return roleColorMap[r];
+  }
+  return defaultColors;
 }
 
 // ── Types ──────────────────────────────────────────────────────
@@ -713,47 +856,85 @@ export default function HomePage() {
           </motion.div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
-            {teamMembers.map((member, i) => (
-              <motion.div
-                key={member.id}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.09, duration: 0.5 }}
-                viewport={{ once: true }}
-                className="group relative p-6 rounded-2xl border border-border bg-card hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 text-center flex flex-col items-center"
-              >
-                {/* Subtle gradient glow behind card on hover */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            {teamMembers.map((member, i) => {
+              const isLeader = member.data.role
+                .toLowerCase()
+                .split(",")
+                .some((r) => r.trim() === "leader");
 
-                {/* Avatar */}
-                <div className="relative w-20 h-20 rounded-full border-2 border-primary/20 overflow-hidden mb-4 group-hover:border-primary/50 transition-colors duration-300">
-                  <img
-                    src={`/assets/team/${member.data.image}`}
-                    alt={member.data.name}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              const roles = member.data.role
+                .split(",")
+                .filter((r) => r.trim().toLowerCase() !== "leader");
+
+              const colors = getMemberColors(member.data.role);
+
+              return (
+                <motion.div
+                  key={member.id}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.09, duration: 0.5 }}
+                  viewport={{ once: true }}
+                  className={`group relative p-6 rounded-2xl border transition-all duration-300 text-center flex flex-col items-center shadow-md hover:shadow-xl ring-1 ${colors.bg} ${colors.border} ${colors.hoverBorder} ${colors.shadow} ${colors.ring}`}
+                >
+                  {/* Gradient glow behind card */}
+                  <div
+                    className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${colors.gradient} via-transparent pointer-events-none transition-opacity duration-500 opacity-60 group-hover:opacity-100`}
                   />
-                  {/* Ring glow on hover */}
-                  <div className="absolute inset-0 rounded-full ring-2 ring-primary/0 group-hover:ring-primary/30 transition-all duration-300" />
-                </div>
 
-                {/* Name */}
-                <h4 className="relative font-semibold text-foreground text-sm mb-2">
-                  {member.data.name}
-                </h4>
+                  {/* Leader crown badge */}
+                  {isLeader && (
+                    <div className={`absolute -top-3 -right-3 w-8 h-8 rounded-full ${colors.accentBg} flex items-center justify-center shadow-lg z-10`}>
+                      <Crown size={14} className={colors.accentText} />
+                    </div>
+                  )}
 
-                {/* Role badges */}
-                <div className="relative flex flex-wrap justify-center gap-1.5">
-                  {member.data.role.split(",").map((role) => (
-                    <span
-                      key={role}
-                      className="inline-block px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-semibold capitalize"
-                    >
-                      {role.trim().replace(/-/g, " ")}
+                  {/* Colored accent bar at top */}
+                  <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-12 h-1 rounded-b-full ${colors.accentBg} opacity-60 group-hover:opacity-100 group-hover:w-16 transition-all duration-300`} />
+
+                  {/* Avatar */}
+                  <div
+                    className={`relative w-20 h-20 rounded-full border-2 overflow-hidden mb-4 transition-all duration-300 ${colors.border} group-hover:shadow-lg`}
+                  >
+                    <img
+                      src={`/assets/team/${member.data.image}`}
+                      alt={member.data.name}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                  </div>
+
+                  {/* Name */}
+                  <h4 className="relative font-semibold text-foreground text-sm mb-2">
+                    {member.data.name}
+                  </h4>
+
+                  {/* Leader accent label */}
+                  {isLeader && (
+                    <span className={`relative inline-block mb-2 px-3 py-0.5 rounded-full ${colors.accentBg} ${colors.accentText} text-[10px] font-bold uppercase tracking-wider`}>
+                      Team Lead
                     </span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
+                  )}
+
+                  {/* Role badges with icons */}
+                  <div className="relative flex flex-wrap justify-center gap-1.5">
+                    {roles.map((role) => {
+                      const key = role.trim().toLowerCase().replace(/[-\s]/g, "");
+                      const RoleIcon = roleIconMap[key] || Award;
+                      const roleBadgeColors = roleColorMap[key] || colors;
+                      return (
+                        <span
+                          key={role}
+                          className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full ${roleBadgeColors.badge} ${roleBadgeColors.badgeText} text-[10px] font-semibold capitalize`}
+                        >
+                          <RoleIcon size={10} />
+                          {role.trim().replace(/-/g, " ")}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
