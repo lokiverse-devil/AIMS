@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import {
@@ -186,9 +186,32 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
+// ── Types ──────────────────────────────────────────────────────
+
+interface TeamMember {
+  name: string;
+  role: string;
+  image: string;
+}
+
 // ── Page ───────────────────────────────────────────────────────
 
 export default function HomePage() {
+  const [teamMembers, setTeamMembers] = useState<
+    { id: string; data: TeamMember }[]
+  >([]);
+
+  useEffect(() => {
+    fetch("/assets/team/detailes.json")
+      .then((res) => res.json())
+      .then((data: Record<string, TeamMember>) => {
+        setTeamMembers(
+          Object.entries(data).map(([id, member]) => ({ id, data: member }))
+        );
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -666,6 +689,72 @@ export default function HomePage() {
               </Link>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* ─── MEET THE TEAM ─────────────────────────────────────── */}
+      <section className="py-24 bg-muted/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="text-center mb-14"
+          >
+            <SectionLabel>Behind AIMS</SectionLabel>
+            <h2 className="text-4xl font-bold text-foreground">
+              Meet the Team
+            </h2>
+            <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
+              The talented individuals who designed, built, and maintain this
+              platform.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
+            {teamMembers.map((member, i) => (
+              <motion.div
+                key={member.id}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.09, duration: 0.5 }}
+                viewport={{ once: true }}
+                className="group relative p-6 rounded-2xl border border-border bg-card hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 text-center flex flex-col items-center"
+              >
+                {/* Subtle gradient glow behind card on hover */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+                {/* Avatar */}
+                <div className="relative w-20 h-20 rounded-full border-2 border-primary/20 overflow-hidden mb-4 group-hover:border-primary/50 transition-colors duration-300">
+                  <img
+                    src={`/assets/team/${member.data.image}`}
+                    alt={member.data.name}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  {/* Ring glow on hover */}
+                  <div className="absolute inset-0 rounded-full ring-2 ring-primary/0 group-hover:ring-primary/30 transition-all duration-300" />
+                </div>
+
+                {/* Name */}
+                <h4 className="relative font-semibold text-foreground text-sm mb-2">
+                  {member.data.name}
+                </h4>
+
+                {/* Role badges */}
+                <div className="relative flex flex-wrap justify-center gap-1.5">
+                  {member.data.role.split(",").map((role) => (
+                    <span
+                      key={role}
+                      className="inline-block px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-semibold capitalize"
+                    >
+                      {role.trim().replace(/-/g, " ")}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
