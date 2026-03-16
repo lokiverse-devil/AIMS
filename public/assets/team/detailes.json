@@ -1,0 +1,27 @@
+{
+    "om-pandey": {
+        "name": "Om Pandey",
+        "role":"Leader,frontend",
+        "image":"om.jpg"
+    },
+    "ashish-sharma": {
+        "name": "Ashish Sharma",
+        "role":"backend,aws-setup",
+        "image":"ashish.png"
+    },
+    "tanuja-kurya":{
+        "name":"Tanuja Kurya",
+        "role":"asset-management,documentation",
+        "image":"tanuja-kurya.jpg"
+    },
+    "pushpanjali-rawat":{
+        "name":"Pushpanjali Rawat",
+        "role":"database,documentation",
+        "image":"pushpanjali-rawat.jpg"
+    },
+    "anshika-gulati":{
+        "name":"Anshika Gulati",
+        "role":"database,asset-management",
+        "image":"anshika-gulati.jpg"
+    }
+}
