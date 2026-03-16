@@ -1,0 +1,281 @@
+{
+  "faqs": [
+    {
+      "id": "cse_lab",
+      "keywords": [
+        "cse lab",
+        "computer science lab",
+        "lab a",
+        "lab b",
+        "computer lab"
+      ],
+      "question": "Where is CSE Lab?",
+      "answer": "The CSE Computer Lab A is on the Ground Floor of the IT Block (30 systems, Intel i7). Lab B is on the First Floor (40 systems, Intel i9). Both are open 8 AM–6 PM on weekdays.",
+      "video": "cse_lab_navigation.mp4",
+      "videoLabel": "▶ Navigate to CSE Lab",
+      "link": "/branches/cse",
+      "linkLabel": "Open CSE Department"
+    },
+    {
+      "id": "it_lab",
+      "keywords": [
+        "it lab",
+        "networking lab",
+        "network lab",
+        "it department lab"
+      ],
+      "question": "Where is IT Lab?",
+      "answer": "The IT Networking Lab is on the Ground Floor of the IT Block with Cisco routers and 20 workstations. The AI/ML Research Lab (IT) is on the 2nd Floor.",
+      "video": "it_lab_navigation.mp4",
+      "videoLabel": "▶ Navigate to IT Lab",
+      "link": "/branches/it",
+      "linkLabel": "Open IT Department"
+    },
+    {
+      "id": "elex_lab",
+      "keywords": [
+        "elex lab",
+        "electronics lab",
+        "electronic lab",
+        "elex department"
+      ],
+      "question": "Where is Electronics Lab?",
+      "answer": "The Electronics Lab is on the Second Floor of the IT Block, equipped with oscilloscopes, signal generators, and 25 workstations.",
+      "video": "elex_lab_navigation.mp4",
+      "videoLabel": "▶ Navigate to Electronics Lab",
+      "link": "/branches/elex",
+      "linkLabel": "Open ELEX Department"
+    },
+    {
+      "id": "hod_cabin",
+      "keywords": [
+        "hod cabin",
+        "hod office",
+        "head of department",
+        "hod room",
+        "hod"
+      ],
+      "question": "Where is the HOD Cabin?",
+      "answer": "CSE HOD Cabin → 3rd Floor, Room 301. IT HOD Cabin → 2nd Floor, Room 201. ELEX HOD Cabin → 4th Floor, Room 401. Look for nameplates near the staircase landing on each floor.",
+      "video": "hod_cabin_navigation.mp4",
+      "videoLabel": "▶ Navigate to HOD Cabin"
+    },
+    {
+      "id": "seminar_hall",
+      "keywords": [
+        "seminar hall",
+        "seminar room",
+        "conference hall",
+        "auditorium",
+        "seminar"
+      ],
+      "question": "Where is the Seminar Hall?",
+      "answer": "The main Seminar Hall is on the Ground Floor near the main entrance. It seats 150 students with projector and sound system. There are 8 seminar halls across the campus.",
+      "video": "seminar_hall_navigation.mp4",
+      "videoLabel": "▶ Navigate to Seminar Hall"
+    },
+    {
+      "id": "cse_hod",
+      "keywords": [
+        "cse hod",
+        "who is cse hod",
+        "cse head",
+        "computer science head"
+      ],
+      "question": "Who is the CSE HOD?",
+      "answer": "Dr. Anil Sharma is the CSE Head of Department, specializing in Data Structures & Algorithms. Cabin: 3rd Floor, Room 301. Office hours: Mon–Fri, 10 AM–12 PM.",
+      "link": "/branches/cse",
+      "linkLabel": "View CSE Department"
+    },
+    {
+      "id": "it_hod",
+      "keywords": [
+        "it hod",
+        "who is it hod",
+        "it head",
+        "information technology head"
+      ],
+      "question": "Who is the IT HOD?",
+      "answer": "Prof. Sunita Rao is the IT Head of Department, specializing in Database Systems and Cloud Computing. Cabin: 2nd Floor, Room 201. Office hours: Mon–Fri, 11 AM–1 PM.",
+      "link": "/branches/it",
+      "linkLabel": "View IT Department"
+    },
+    {
+      "id": "elex_hod",
+      "keywords": [
+        "elex hod",
+        "who is elex hod",
+        "electronics head",
+        "electronics hod"
+      ],
+      "question": "Who is the ELEX HOD?",
+      "answer": "Dr. Mehul Patel is the ELEX Head of Department, specializing in VLSI Design and Embedded Systems. Cabin: 4th Floor, Room 401.",
+      "link": "/branches/elex",
+      "linkLabel": "View ELEX Department"
+    },
+    {
+      "id": "lab_count",
+      "keywords": [
+        "how many labs",
+        "total labs",
+        "number of labs",
+        "labs count",
+        "all labs"
+      ],
+      "question": "How many labs are there?",
+      "answer": "There are 12 labs in the IT Block: Computer Lab A & B (CSE), Networking Lab, AI/ML Research Lab, Electronics Lab (×2), IoT Lab, Robotics Lab, Communication Lab, and 2 Project Labs. Open 8 AM–6 PM weekdays."
+    },
+    {
+      "id": "timetable",
+      "keywords": [
+        "timetable",
+        "schedule",
+        "class",
+        "timing",
+        "class timing"
+      ],
+      "question": "How do I view my timetable?",
+      "answer": "Log in to your Student Dashboard and click 'Timetable' to see your full weekly class and lab schedule by semester and branch.",
+      "link": "/login",
+      "linkLabel": "Go to Dashboard"
+    },
+    {
+      "id": "marks",
+      "keywords": [
+        "marks",
+        "unit test",
+        "test marks",
+        "grades",
+        "score"
+      ],
+      "question": "Where can I view my unit test marks?",
+      "answer": "Go to Student Dashboard → 'Unit Test Marks'. You'll see marks for all subjects by test and semester. Marks are uploaded by faculty via CSV.",
+      "link": "/login",
+      "linkLabel": "View Marks"
+    },
+    {
+      "id": "semester_result",
+      "keywords": [
+        "semester result",
+        "exam result",
+        "university result",
+        "board result"
+      ],
+      "question": "Where can I view semester exam results?",
+      "answer": "AIMS does not store university marksheets. Go to Dashboard → 'Semester Results' for the direct link to the official university result portal.",
+      "link": "/login",
+      "linkLabel": "Go to Dashboard"
+    },
+    {
+      "id": "complaint",
+      "keywords": [
+        "complaint",
+        "ticket",
+        "issue",
+        "report",
+        "problem",
+        "wifi",
+        "projector"
+      ],
+      "question": "How do I raise a complaint?",
+      "answer": "Log in → Student Dashboard → 'Complaints' → click '+ New Ticket'. Report infrastructure, academic, or facility issues. You'll get a unique ticket ID to track status.",
+      "link": "/login",
+      "linkLabel": "Go to Dashboard"
+    },
+    {
+      "id": "resources",
+      "keywords": [
+        "resource",
+        "notes",
+        "pdf",
+        "study material",
+        "lab manual"
+      ],
+      "question": "Where can I find study resources?",
+      "answer": "Study materials are in 'Resources' in your Student Dashboard. Faculty upload PDFs, slides, and lab manuals. Filter by subject and semester.",
+      "link": "/login",
+      "linkLabel": "Go to Dashboard"
+    },
+    {
+      "id": "id_card",
+      "keywords": [
+        "id card",
+        "identity card",
+        "digital id",
+        "student id"
+      ],
+      "question": "How do I get my digital ID card?",
+      "answer": "Your Digital ID Card is in Student Dashboard → 'ID Card'. Upload your photo, view the card with roll number and branch, and download a PDF copy.",
+      "link": "/login",
+      "linkLabel": "Access ID Card"
+    },
+    {
+      "id": "departments",
+      "keywords": [
+        "branch",
+        "department",
+        "cse",
+        "it",
+        "elex",
+        "engineering branches",
+        "show"
+      ],
+      "question": "Which departments are in the IT Block?",
+      "answer": "The IT Block has 3 engineering departments: CSE (480 students), IT (360 students), and ELEX (320 students). Each has dedicated labs, faculty, and an HOD cabin.",
+      "link": "/branches/cse",
+      "linkLabel": "Explore Departments"
+    },
+    {
+      "id": "signup",
+      "keywords": [
+        "signup",
+        "register",
+        "create account",
+        "join",
+        "new account"
+      ],
+      "question": "How do I create an AIMS account?",
+      "answer": "Click 'Create Account' on the homepage. Choose Student or Teacher. Students need roll number + branch. Teachers need a special access key from the administration office.",
+      "link": "/signup",
+      "linkLabel": "Create Account"
+    },
+    {
+      "id": "notice",
+      "keywords": [
+        "notice",
+        "announcement",
+        "news",
+        "update",
+        "circular"
+      ],
+      "question": "Where can I find notices?",
+      "answer": "Notices are on the homepage Notice Board. After login, personalized notices and notifications appear in your dashboard.",
+      "link": "/login",
+      "linkLabel": "Go to Dashboard"
+    },
+    {
+      "id": "greeting",
+      "keywords": [
+        "hello",
+        "hi",
+        "hey",
+        "good morning",
+        "good evening",
+        "namaste",
+        "help",
+        "start"
+      ],
+      "question": "Hello!",
+      "answer": "Hello! Welcome to AIMS — the Academic Infrastructure Management System. I can help you find labs, locate HOD cabins, navigate the IT Block, or learn about faculty, timetables, and student services. What would you like to know?"
+    }
+  ],
+  "suggestions": [
+    "Where is CSE Lab?",
+    "Who is IT HOD?",
+    "Show IT Department",
+    "How many labs?",
+    "View my marks"
+  ],
+  "defaultResponse": "I'm not sure about that. Try asking about: labs, HOD cabin, faculty, timetables, marks, complaints, or ID cards. Or contact the admin office for further help.",
+  "greeting": "Hi! I'm the AIMS Assistant — your campus navigation guide. Ask me where anything is, or about student services!"
+}

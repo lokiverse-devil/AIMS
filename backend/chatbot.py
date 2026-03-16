@@ -1,33 +1,27 @@
 """
 AIMS Chatbot — NLP response engine
-Loads knowledge from /public/assets/chatbot/chatbotData.json
+Loads knowledge from chatbotData.json in the same directory.
 Uses RapidFuzz token_set_ratio for fuzzy keyword matching.
 """
 
 from __future__ import annotations
 
 import json
-import os
 from pathlib import Path
 from typing import Optional
 
 from rapidfuzz import fuzz
 
+
 # ─── Load knowledge base at startup ──────────────────────────────────────────
 
 def _load_knowledge() -> dict:
     """
-    Resolve path to chatbotData.json relative to the project root.
-    The backend/ folder sits at project_root/backend/, so we go up one level
-    to find public/assets/chatbot/chatbotData.json.
+    Load chatbotData.json from the same directory as this script.
     """
-    backend_dir = Path(__file__).parent
-    project_root = backend_dir.parent
-    data_path = project_root / "public" / "assets" / "chatbot" / "chatbotData.json"
 
-    if not data_path.exists():
-        # Fallback: try src/lib/chatbotData.json (the other copy in the project)
-        data_path = project_root / "src" / "lib" / "chatbotData.json"
+    base_dir = Path(__file__).resolve().parent
+    data_path = base_dir / "chatbotData.json"
 
     if not data_path.exists():
         raise FileNotFoundError(
@@ -46,11 +40,10 @@ DEFAULT_RESPONSE: str = _knowledge.get(
     "I'm not sure about that. Please contact the admin office for help."
 )
 
-# Minimum fuzzy score (0–100) to consider a keyword a match
 MATCH_THRESHOLD = 60
 
 
-# ─── Response Engine ──────────────────────────────────────────────────────────
+# ─── Matching Logic ──────────────────────────────────────────────────────────
 
 def _score_faq(user_input: str, faq: dict) -> float:
     """
@@ -65,23 +58,31 @@ def _score_faq(user_input: str, faq: dict) -> float:
         if score > best:
             best = score
 
-    # Also check the question text itself (partial match)
-    question_score = fuzz.partial_ratio(lower_input, faq.get("question", "").lower())
+    question_score = fuzz.partial_ratio(
+        lower_input,
+        faq.get("question", "").lower()
+    )
+
     if question_score > best:
         best = question_score
 
     return best
 
 
+# ─── Public Chatbot Function ─────────────────────────────────────────────────
+
 def get_bot_response(user_message: str) -> dict:
     """
     Find the best matching FAQ for a user message.
 
-    Returns a dict with:
-        answer         (str)           — always present
-        video_url      (str or None)   — filename for navigation video
-        navigation_link (str or None)  — internal frontend route e.g. /branches/cse
+    Returns:
+        {
+            "answer": str,
+            "video_url": str | None,
+            "navigation_link": str | None
+        }
     """
+
     if not user_message or not user_message.strip():
         return {
             "answer": DEFAULT_RESPONSE,
@@ -101,8 +102,8 @@ def get_bot_response(user_message: str) -> dict:
     if best_faq and best_score >= MATCH_THRESHOLD:
         return {
             "answer": best_faq.get("answer", DEFAULT_RESPONSE),
-            "video_url": best_faq.get("video"),          # e.g. "cse_lab_navigation.mp4"
-            "navigation_link": best_faq.get("link"),     # e.g. "/branches/cse"
+            "video_url": best_faq.get("video"),
+            "navigation_link": best_faq.get("link"),
         }
 
     return {
