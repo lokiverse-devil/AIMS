@@ -635,22 +635,19 @@ export default function HomePage() {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       viewport={{ once: true }}
-      className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4"
+      className="text-center mb-14"
     >
-      <div>
         <SectionLabel>Labs & Workspaces</SectionLabel>
         <h2 className="text-4xl font-bold text-foreground">Lab Overview</h2>
-        <p className="text-muted-foreground mt-2">
+        <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
           Lab preview at a glance.
         </p>
-      </div>
-
-      <Link
-        href="/login"
-        className="inline-flex items-center gap-2 text-sm text-primary font-medium hover:gap-3 transition-all"
-      >
-        Connect with IT Block <ArrowRight size={14} />
-      </Link>
+        <Link
+          href="/login"
+          className="inline-flex items-center gap-2 text-sm text-primary font-medium hover:gap-3 transition-all mt-4"
+        >
+          Connect with IT Block <ArrowRight size={14} />
+        </Link>
     </motion.div>
 
           <div className="grid md:grid-cols-2 gap-5">
@@ -699,15 +696,13 @@ export default function HomePage() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4"
+            className="text-center mb-14"
           >
-            <div>
-              <SectionLabel>Our Educators</SectionLabel>
-              <h2 className="text-4xl font-bold text-foreground">Faculty Preview</h2>
-            </div>
+            <SectionLabel>Our Educators</SectionLabel>
+            <h2 className="text-4xl font-bold text-foreground">Faculty Preview</h2>
             <Link
               href="/branches/cse"
-              className="inline-flex items-center gap-2 text-sm text-primary font-medium hover:gap-3 transition-all"
+              className="inline-flex items-center gap-2 text-sm text-primary font-medium hover:gap-3 transition-all mt-4"
             >
               View all faculty <ArrowRight size={14} />
             </Link>
@@ -751,13 +746,11 @@ export default function HomePage() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4"
+            className="text-center mb-14"
           >
-            <div>
-              <SectionLabel>Announcements</SectionLabel>
-              <h2 className="text-4xl font-bold text-foreground">Notice Board</h2>
-            </div>
-            <div className="flex items-center gap-2">
+            <SectionLabel>Announcements</SectionLabel>
+            <h2 className="text-4xl font-bold text-foreground">Notice Board</h2>
+            <div className="flex items-center justify-center gap-2 mt-3">
               <Bell size={16} className="text-primary" />
               <span className="text-sm text-muted-foreground">Latest announcements</span>
             </div>
