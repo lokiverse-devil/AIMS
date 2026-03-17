@@ -132,7 +132,7 @@ const facultyPreview = [
     name: "MANOJ RIKHARI",
     dept: "ELEX",
     subjects: "VLSI Design, Embedded Systems",
-    avatar: "/assets/faculty/pandey .jpg",
+    avatar: "/assets/faculty/manoj.jpg",
     initials: "MR",
   },
 ];
