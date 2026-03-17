@@ -29,7 +29,7 @@ const itData = {
     name: "Jagdish Chandra Pandey",
     designation: "Head of Department — IT",
     bio:
-      "Jagdish Chandra Pandey holds an M.Tech in Information Technology and brings 16+ years of teaching and research experience. He specializes in Database Systems, Cloud Computing, and Distributed Systems.",
+      "Jagdish Chandra Pandey holds an M.Tech in Information Technology and brings 16+ years of teaching and research experience. He specializes in Programming In C, Concepts of .NET Technology, Android Application Development, Java Programming. Under his leadership, the IT department has achieved 100% placement for 5 consecutive years and established industry partnerships with Zenthium, VVDN, Anand Mahle.",
     initials: "JP",
     photoPath: "/assets/faculty/jagdish.jpg",
     cabin: "Right-hand side from the entrance, Ground Floor, Academic IT Block",

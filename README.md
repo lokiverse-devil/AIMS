@@ -39,7 +39,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ### todays fixes (16-03-2026)
 
 1. fixed chatbot button
-2. added alighnment to teh hieadings
+2. added alignment to the headings
 3. fixed backend to work better 
 4. added team section
 5. fixed team tile design

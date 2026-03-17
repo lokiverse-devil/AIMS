@@ -1,17 +1,17 @@
 {
     "om-pandey": {
         "name": "Om Pandey",
-        "role":"Leader,frontend",
+        "role":"Leader,System Architect,Frontend",
         "image":"om.jpg"
     },
     "ashish-sharma": {
         "name": "Ashish Sharma",
-        "role":"backend,aws-setup",
+        "role":"Chatbot,Backend",
         "image":"ashish.jpg"
     },
     "tanuja-kurya":{
         "name":"Tanuja Kurya",
-        "role":"asset-management,documentation",
+        "role":"Asset-management,documentation,Supabase",
         "image":"tanuja-kurya.jpg"
     },
     "pushpanjali-rawat":{

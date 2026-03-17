@@ -55,7 +55,7 @@ const cseData = {
     {
       name: "Virendra Dharamasaktu",
       designation: "Lecturer",
-      subjects: ["Computer Network Security", "Computer Hardware Sytems", "Employbility Skills", "Multimedia System"],
+      subjects: ["Computer Network Security", "Computer Hardware Systems", "Employbility Skills", "Multimedia System"],
       experience: "17 years",
       initials: "VD",
       photoPath: "/assets/faculty/viren.jpg",

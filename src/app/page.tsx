@@ -124,7 +124,7 @@ const facultyPreview = [
   {
     name: "JAGDISH CHANDRA PANDEY",
     dept: "IT",
-    subjects: "Database Systems, Cloud Computing",
+    subjects: "Programming In C, Concepts of .NET Technology, Android Application Development, Java Programming",
     avatar: "/assets/faculty/pandey.jpg",
     initials: "JP",
   },

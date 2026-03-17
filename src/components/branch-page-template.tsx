@@ -161,10 +161,10 @@ export function BranchPageTemplate({
         {/* Background Base */}
         <div className="absolute inset-0 bg-background/90 z-0" />
         {/* Translucent Image */}
-        <img src={heroBg} alt={`${name} Block`} className="absolute inset-0 w-full h-full object-cover object-[center_30%] opacity-60 mix-blend-luminosity z-[1]" />
+        <img src={heroBg} alt={`${name} Block`} className="absolute inset-0 w-full h-full object-cover object-[center_30%] opacity-90 mix-blend-luminosity z-[1]" />
         
         {/* Frosted Glass Overlay */}
-        <div className="absolute inset-0 bg-background/40 backdrop-blur-[3px] z-[2]" />
+        <div className="absolute inset-0 bg-background/40 backdrop-blur-[1px] z-[2]" />
 
         {/* Gradient & grid overlays to maintain theme integration */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-transparent to-accent/20 z-[3]" />

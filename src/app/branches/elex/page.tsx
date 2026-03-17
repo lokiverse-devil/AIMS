@@ -27,7 +27,7 @@ const elexData = {
   hod: {
     name: "Manoj Rikhari",
     designation: "Lecturer & Head of Department — ELEX",
-    bio: "Manoj Rikhari 15 years of teaching and research experience. He is a pioneer in elecronics enineering. ",
+    bio: "Manoj Rikhari 15 years of teaching and research experience. He is a pioneer in elecronics enineering.Under his leadership, the ELEX department has achieved 100% placement for 5 consecutive years and established industry partnerships with Zenthium, Anand Mahle, Minda. ",
     initials: "MP",
     // TODO: Replace with /assets/faculty/patel.jpg
     photoPath: "/assets/faculty/patel.jpg",
