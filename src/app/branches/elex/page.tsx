@@ -27,8 +27,8 @@ const elexData = {
   hod: {
     name: "Manoj Rikhari",
     designation: "Lecturer & Head of Department — ELEX",
-    bio: "Manoj Rikhari 15 years of teaching and research experience. He is a pioneer in Mobile Communication, PLC, NFTL.Under his leadership, the ELEX department has achieved 100% placement for 5 consecutive years and established industry partnerships with Zenthium, Anand Mahle, Minda. ",
-    initials: "MP",
+    bio: "Manoj Rikhari 15 years of teaching and research experience. He is a pioneer in elecronics enineering.Under his leadership, the ELEX department has achieved 100% placement for 5 consecutive years and established industry partnerships with Zenthium, Anand Mahle, Minda. ",
+    initials: "MR",
     // TODO: Replace with /assets/faculty/patel.jpg
     photoPath: "/assets/faculty/manoj.jpg",
     cabin: "From the entrance, take the left staircase and reach in front of the cabin, 1st Floor, Academic IT Block.",
@@ -41,7 +41,7 @@ const elexData = {
       subjects: [" Mobile Communication", "PLC", "NFTL"],
       experience: "15 years",
       initials: "MR",
-      photoPath: "/assets/faculty/rikhari.jpg",
+      photoPath: "/assets/faculty/manoj.jpg",
       // TODO: Replace with Supabase Storage URL
       // videoUrl: "https://PROJECT.supabase.co/storage/v1/object/public/faculty-videos/sharma_intro.mp4"
     },
