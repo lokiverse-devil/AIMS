@@ -1,0 +1,201 @@
+{
+  "bot": {
+    "name": "AcademicITBlockBot",
+    "language": "en",
+    "fallback_message": "Sorry, I couldn’t understand your request. Please ask about HODs, lecturers, labs, or classrooms."
+  },
+
+  "intents": [
+
+    {
+      "intent": "hod_it_info",
+      "training_phrases": [
+        "Who is the HOD of IT?",
+        "HOD IT",
+        "Head of IT department",
+        "IT HOD name"
+      ],
+      "response": {
+        "text": "The HOD of the IT Department is Mr. Jagdhish Chandra Pandey.",
+        "location": "Right-hand side from the entrance, Ground Floor, Academic IT Block"
+      }
+    },
+
+    {
+      "intent": "hod_cse_info",
+      "training_phrases": [
+        "Who is the HOD of CSE?",
+        "HOD CSE",
+        "Head of CSE department",
+        "CSE HOD name"
+      ],
+      "response": {
+        "text": "The HOD of the CSE Department is Mr. Manmohan.",
+        "location": "Left-hand side from the entrance, second room, Ground Floor, Academic IT Block"
+      }
+    },
+
+    {
+      "intent": "hod_elex_info",
+      "training_phrases": [
+        "Who is the HOD of Electronics?",
+        "HOD ELEX",
+        "Head of ELEX department",
+        "Electronics HOD name"
+      ],
+      "response": {
+        "text": "The HOD of the ELEX Department is Mr. Manoj Rikhari.",
+        "location": "From the entrance, take the left staircase and reach in front of the cabin, 1st Floor, Academic IT Block"
+      }
+    },
+
+    {
+      "intent": "lecturer_cse_info",
+      "training_phrases": [
+        "Who are the CSE lecturers?",
+        "CSE faculty",
+        "CSE lecturers information",
+        "CSE teachers list"
+      ],
+      "response": {
+        "text": "CSE lecturers are Mr.Virendra Dharamshaktu and Mr. Neeraj Arya.",
+        "location": "Left-hand side from the entrance, second room, Ground Floor, Academic IT Block"
+      }
+    },
+
+    {
+      "intent": "lecturer_it_info",
+      "training_phrases": [
+        "Who are the IT lecturers?",
+        "IT faculty",
+        "IT lecturers information",
+        "IT teachers list"
+      ],
+      "response": {
+        "text": "IT lecturers are Ms.Neha Bohra and Mr.Ashok Kumar.",
+        "location": "Left-hand side from the entrance, third room, Ground Floor, Academic IT Block"
+      }
+    },
+
+    {
+      "intent": "lecturer_elex_info",
+      "training_phrases": [
+        "Who are the ELEX lecturers?",
+        "ELEX faculty",
+        "Electronics lecturers information",
+        "ELEX teachers list"
+      ],
+      "response": {
+        "text": "ELEX lecturers are Mr.Pankaj Kumar and Mr.Rashid",
+        "location": "1st Floor, Academic IT Block"
+      }
+    },
+
+    {
+      "intent": "lecturer_cabin_cse",
+      "training_phrases": [
+        "Where is the CSE lecturer cabin?",
+        "CSE staff room location",
+        "CSE lecturer office",
+        "Lecturer cabin CSE"
+      ],
+      "response": {
+        "text": "CSE lecturers' cabins are located on the Ground Floor.",
+        "location": "Left-hand side from the entrance, second room, Academic IT Block"
+      }
+    },
+
+    {
+      "intent": "lecturer_cabin_it",
+      "training_phrases": [
+        "Where is the IT lecturer cabin?",
+        "IT staff room location",
+        "IT lecturer office",
+        "IT lecturer cabin"
+      ],
+      "response": {
+        "text": "IT lecturers' cabins are located on the Ground Floor.",
+        "location": "Left-hand side from the entrance, third room, Academic IT Block"
+      }
+    },
+
+    {
+      "intent": "lecturer_cabin_elex",
+      "training_phrases": [
+        "Where is the ELEX lecturer cabin?",
+        "ELEX staff room location",
+        "ELEX lecturer office"
+      ],
+      "response": {
+        "text": "ELEX lecturers' cabins are located on the 1st Floor.",
+        "location": "From the entrance, take the left staircase and reach the cabins on the left second and third room, Academic IT Block"
+      }
+    },
+
+    {
+      "intent": "cse_lab_location",
+      "training_phrases": [
+        "Where is the CSE lab?",
+        "CSE laboratory location",
+        "CSE computer lab",
+        "CSE lab"
+      ],
+      "response": {
+        "text": "The CSE Lab is located on the Ground Floor.",
+        "location": "From the entrance, walk straight; the CSE Lab is on the right-hand side, Academic IT Block"
+      }
+    },
+
+    {
+      "intent": "it_lab_location",
+      "training_phrases": [
+        "Where is the IT lab?",
+        "IT laboratory location",
+        "IT computer lab",
+        "IT lab"
+      ],
+      "response": {
+        "text": "The IT Lab is located on the 3rd Floor.",
+        "location": "From the entrance, walk straight and take the stairs; the IT Lab is on the left-hand side, Academic IT Block"
+      }
+    },
+
+    {
+      "intent": "elex_lab_location",
+      "training_phrases": [
+        "Where is the ELEX lab?",
+        "ELEX laboratory location",
+        "Electronics lab",
+        "ELEX lab"
+      ],
+      "response": {
+        "text": "The ELEX Lab is located on the 1st Floor.",
+        "location": "From the entrance, take the left staircase, turn left, walk straight; the lab is on the right-hand side, Academic IT Block"
+      }
+    },
+
+    {
+      "intent": "classroom_locations",
+      "training_phrases": [
+        "Where are the IT classrooms?",
+        "Where are the CSE classrooms?",
+        "Where are the ELEX classrooms?",
+        "2nd year IT classroom",
+        "3rd year CSE classroom",
+        "2nd year ELEX classroom"
+      ],
+      "response": {
+        "text": "Classrooms are arranged department-wise and year-wise.",
+        "details": {
+          "IT 2nd Year": "Ground Floor - Room 1",
+          "CSE 2nd Year": "Ground Floor - Room 1",
+          "ELEX 2nd Year": "1st Floor - Drone Lab",
+          "IT 3rd Year": "Ground Floor - Room 4",
+          "CSE 3rd Year": "Ground Floor - Room 4",
+          "ELEX 3rd Year": "1st Floor - Room 6"
+        }
+      }
+    }
+
+  ]
+}

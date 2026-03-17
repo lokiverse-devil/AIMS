@@ -25,6 +25,7 @@ import {
   FileText,
   Cloud,
   Code,
+  Bot,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Navbar } from "@/components/navbar";
@@ -203,6 +204,7 @@ const roleIconMap: Record<string, LucideIcon> = {
   assetmanagement: FolderOpen,
   documentation: FileText,
   code: Code,
+  chatbot: Bot,
 };
 
 // ── Role → Color scheme map ────────────────────────────────────
@@ -256,6 +258,18 @@ const roleColorMap: Record<string, RoleColorScheme> = {
     badgeText: "text-indigo-600 dark:text-indigo-400",
     accentBg: "bg-indigo-500",
     accentText: "text-white",
+  },
+  chatbot: {
+    bg: "bg-gray-500/[0.04] dark:bg-gray-400/[0.08]",
+    border: "border-gray-600/30 dark:border-gray-400/30",
+    hoverBorder: "hover:border-gray-600/50 dark:hover:border-gray-300/50",
+    shadow: "shadow-gray-500/10 hover:shadow-gray-500/20",
+    ring: "ring-gray-500/15",
+    gradient: "from-gray-600/8 to-gray-400/5 dark:from-gray-400/8 dark:to-gray-300/5",
+    badge: "bg-gray-600/10 dark:bg-gray-400/10",
+    badgeText: "text-gray-700 dark:text-gray-300",
+    accentBg: "bg-gray-600 dark:bg-gray-400",
+    accentText: "text-white dark:text-gray-900",
   },
   database: {
     bg: "bg-violet-500/[0.04] dark:bg-violet-500/[0.08]",
@@ -335,6 +349,7 @@ interface TeamMember {
   name: string;
   role: string;
   image: string;
+  github?: string;
 }
 
 // ── Page ───────────────────────────────────────────────────────
@@ -865,14 +880,14 @@ export default function HomePage() {
 
               const colors = getMemberColors(member.data.role);
 
-              return (
+              const tileContent = (
                 <motion.div
                   key={member.id}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1, duration: 0.5, type: "spring", stiffness: 100 }}
                   viewport={{ once: true }}
-                  className={`group relative rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-2 flex flex-col items-center shadow-lg hover:shadow-2xl bg-card border ${colors.border} ${colors.hoverBorder}`}
+                  className={`group relative rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-2 flex flex-col items-center shadow-lg hover:shadow-2xl bg-card border h-full ${colors.border} ${colors.hoverBorder} ${member.data.github ? "cursor-pointer" : ""}`}
                 >
                   {/* Shimmer effect on hover */}
                   <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:animate-shimmer z-10 pointer-events-none" />
@@ -941,6 +956,22 @@ export default function HomePage() {
                     </div>
                   </div>
                 </motion.div>
+              );
+
+              return member.data.github ? (
+                <a
+                  key={member.id}
+                  href={member.data.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="no-underline block h-full"
+                >
+                  {tileContent}
+                </a>
+              ) : (
+                <React.Fragment key={member.id}>
+                  {tileContent}
+                </React.Fragment>
               );
             })}
           </div>

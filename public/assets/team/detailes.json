@@ -2,12 +2,14 @@
     "om-pandey": {
         "name": "Om Pandey",
         "role":"Leader,System Architect,Frontend",
-        "image":"om.jpg"
+        "image":"om.jpg",
+        "github":"https://github.com/lokiverse-devil" 
     },
     "ashish-sharma": {
         "name": "Ashish Sharma",
         "role":"Chatbot,Backend",
-        "image":"ashish.jpg"
+        "image":"ashish.jpg",
+        "github":"https://github.com/rexcode0"
     },
     "tanuja-kurya":{
         "name":"Tanuja Kurya",
