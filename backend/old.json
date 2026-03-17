@@ -10,7 +10,7 @@
         "computer lab"
       ],
       "question": "Where is CSE Lab?",
-      "answer": "The CSE Lab is located on the Ground Floor. From the entrance, walk straight; the CSE Lab is on the right-hand side, Academic IT Block.",
+      "answer": "The CSE Computer Lab A is on the Ground Floor of the IT Block (30 systems, Intel i7). Lab B is on the First Floor (40 systems, Intel i9). Both are open 8 AM–6 PM on weekdays.",
       "video": "cse_lab_navigation.mp4",
       "videoLabel": "▶ Navigate to CSE Lab",
       "link": "/branches/cse",
@@ -22,12 +22,10 @@
         "it lab",
         "networking lab",
         "network lab",
-        "it department lab",
-        "it computer lab",
-        "it laboratory"
+        "it department lab"
       ],
       "question": "Where is IT Lab?",
-      "answer": "The IT Lab is located on the 3rd Floor. From the entrance, walk straight and take the stairs; the IT Lab is on the left-hand side, Academic IT Block.",
+      "answer": "The IT Networking Lab is on the Ground Floor of the IT Block with Cisco routers and 20 workstations. The AI/ML Research Lab (IT) is on the 2nd Floor.",
       "video": "it_lab_navigation.mp4",
       "videoLabel": "▶ Navigate to IT Lab",
       "link": "/branches/it",
@@ -42,11 +40,25 @@
         "elex department"
       ],
       "question": "Where is Electronics Lab?",
-      "answer": "The ELEX Lab is located on the 1st Floor. From the entrance, take the left staircase, turn left, walk straight; the lab is on the right-hand side, Academic IT Block.",
+      "answer": "The Electronics Lab is on the Second Floor of the IT Block, equipped with oscilloscopes, signal generators, and 25 workstations.",
       "video": "elex_lab_navigation.mp4",
       "videoLabel": "▶ Navigate to Electronics Lab",
       "link": "/branches/elex",
       "linkLabel": "Open ELEX Department"
+    },
+    {
+      "id": "hod_cabin",
+      "keywords": [
+        "hod cabin",
+        "hod office",
+        "head of department",
+        "hod room",
+        "hod"
+      ],
+      "question": "Where is the HOD Cabin?",
+      "answer": "CSE HOD Cabin → 3rd Floor, Room 301. IT HOD Cabin → 2nd Floor, Room 201. ELEX HOD Cabin → 4th Floor, Room 401. Look for nameplates near the staircase landing on each floor.",
+      "video": "hod_cabin_navigation.mp4",
+      "videoLabel": "▶ Navigate to HOD Cabin"
     },
     {
       "id": "seminar_hall",
@@ -68,13 +80,10 @@
         "cse hod",
         "who is cse hod",
         "cse head",
-        "computer science head",
-        "head of cse",
-        "hod cse",
-        "cse hod name"
+        "computer science head"
       ],
       "question": "Who is the CSE HOD?",
-      "answer": "The HOD of the CSE Department is Mr. Manmohan. Cabin: Left-hand side from the entrance, second room, Ground Floor, Academic IT Block.",
+      "answer": "Dr. Anil Sharma is the CSE Head of Department, specializing in Data Structures & Algorithms. Cabin: 3rd Floor, Room 301. Office hours: Mon–Fri, 10 AM–12 PM.",
       "link": "/branches/cse",
       "linkLabel": "View CSE Department"
     },
@@ -84,13 +93,10 @@
         "it hod",
         "who is it hod",
         "it head",
-        "information technology head",
-        "head of it",
-        "hod it",
-        "it hod name"
+        "information technology head"
       ],
       "question": "Who is the IT HOD?",
-      "answer": "The HOD of the IT Department is Mr. Jagdhish Chandra Pandey. Cabin: Right-hand side from the entrance, Ground Floor, Academic IT Block.",
+      "answer": "Prof. Sunita Rao is the IT Head of Department, specializing in Database Systems and Cloud Computing. Cabin: 2nd Floor, Room 201. Office hours: Mon–Fri, 11 AM–1 PM.",
       "link": "/branches/it",
       "linkLabel": "View IT Department"
     },
@@ -100,88 +106,12 @@
         "elex hod",
         "who is elex hod",
         "electronics head",
-        "electronics hod",
-        "head of elex",
-        "hod elex",
-        "electronics hod name"
+        "electronics hod"
       ],
       "question": "Who is the ELEX HOD?",
-      "answer": "The HOD of the ELEX Department is Mr. Manoj Rikhari. Cabin: From the entrance, take the left staircase and reach in front of the cabin, 1st Floor, Academic IT Block.",
+      "answer": "Dr. Mehul Patel is the ELEX Head of Department, specializing in VLSI Design and Embedded Systems. Cabin: 4th Floor, Room 401.",
       "link": "/branches/elex",
       "linkLabel": "View ELEX Department"
-    },
-    {
-      "id": "cse_lecturers",
-      "keywords": [
-        "cse lecturers",
-        "cse faculty",
-        "cse teachers",
-        "cse teachers list",
-        "who are cse lecturers",
-        "cse lecturers information",
-        "cse lecturer cabin",
-        "cse staff room",
-        "cse lecturer office",
-        "cse cabin"
-      ],
-      "question": "Who are the CSE lecturers?",
-      "answer": "CSE lecturers are Mr. Virendra Dharamshaktu and Mr. Neeraj Arya. Cabin: Left-hand side from the entrance, second room, Ground Floor, Academic IT Block.",
-      "link": "/branches/cse",
-      "linkLabel": "View CSE Department"
-    },
-    {
-      "id": "it_lecturers",
-      "keywords": [
-        "it lecturers",
-        "it faculty",
-        "it teachers",
-        "it teachers list",
-        "who are it lecturers",
-        "it lecturers information",
-        "it lecturer cabin",
-        "it staff room",
-        "it lecturer office",
-        "it cabin"
-      ],
-      "question": "Who are the IT lecturers?",
-      "answer": "IT lecturers are Ms. Neha Bohra and Mr. Ashok Kumar. Cabin: Left-hand side from the entrance, third room, Ground Floor, Academic IT Block.",
-      "link": "/branches/it",
-      "linkLabel": "View IT Department"
-    },
-    {
-      "id": "elex_lecturers",
-      "keywords": [
-        "elex lecturers",
-        "elex faculty",
-        "electronics lecturers",
-        "elex teachers",
-        "elex teachers list",
-        "who are elex lecturers",
-        "elex lecturer cabin",
-        "elex staff room",
-        "elex lecturer office",
-        "elex cabin"
-      ],
-      "question": "Who are the ELEX lecturers?",
-      "answer": "ELEX lecturers are Mr. Pankaj Kumar and Mr. Rashid. Cabin: 1st Floor. From the entrance, take the left staircase and reach the cabins on the left second and third room, Academic IT Block.",
-      "link": "/branches/elex",
-      "linkLabel": "View ELEX Department"
-    },
-    {
-      "id": "classroom_locations",
-      "keywords": [
-        "classroom",
-        "classrooms",
-        "it classroom",
-        "cse classroom",
-        "elex classroom",
-        "2nd year classroom",
-        "3rd year classroom",
-        "class room",
-        "room"
-      ],
-      "question": "Where are the classrooms?",
-      "answer": "Classrooms are arranged department-wise and year-wise. IT 2nd Year: Ground Floor - Room 1. CSE 2nd Year: Ground Floor - Room 1. ELEX 2nd Year: 1st Floor - Drone Lab. IT 3rd Year: Ground Floor - Room 4. CSE 3rd Year: Ground Floor - Room 4. ELEX 3rd Year: 1st Floor - Room 6."
     },
     {
       "id": "lab_count",
