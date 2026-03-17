@@ -954,7 +954,7 @@ export default function HomePage() {
             <div className="w-6 h-6 rounded-md bg-primary flex items-center justify-center">
               <BookOpen size={12} className="text-primary-foreground" />
             </div>
-            <span className="text-sm font-semibold text-foreground">AIMS</span>
+            <span className="text-sm font-semibold text-foreground">AIMS X IT BLOCK</span>
             <span className="text-sm text-muted-foreground">— Academic Infrastructure Management System</span>
           </div>
           <p className="text-xs text-muted-foreground">© 2026 AIMS. All rights reserved.</p>

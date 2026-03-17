@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   title: "AIMS – Academic Infrastructure Management System",
   description:
     "A centralized platform for managing academic block infrastructure, faculty, student services, labs, scheduling, and more.",
-  keywords: ["AIMS", "Academic", "Infrastructure", "Management", "University"],
+  keywords: ["AIMS X IT BLOCK", "Academic", "Infrastructure", "Management", "University"],
 };
 
 export default function RootLayout({
