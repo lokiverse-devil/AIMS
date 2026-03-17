@@ -17,8 +17,9 @@ const elexData = {
     { label: "Students Enrolled", value: "122" },
     { label: "Faculty Members", value: "3" },
     { label: "Labs", value: "2" },
-    { label: "Years of Excellence" },
+    { label: "Years of Excellence", value: "15+" },
   ],
+  heroBg: "/assets/college/elex.jpg",
   programs: [
     
     "Diploma in Electronics"
@@ -31,6 +32,7 @@ const elexData = {
     // TODO: Replace with /assets/faculty/patel.jpg
     photoPath: "/assets/faculty/patel.jpg",
     cabin: "From the entrance, take the left staircase and reach in front of the cabin, 1st Floor, Academic IT Block.",
+    officeHours: "Mon-Sat, 9:00 AM - 4:00 PM",
   },
   faculty: [
      {

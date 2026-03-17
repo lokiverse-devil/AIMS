@@ -829,26 +829,30 @@ export default function HomePage() {
       </section>
 
       {/* ─── MEET THE TEAM ─────────────────────────────────────── */}
-      <section className="py-24 bg-muted/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-24 bg-muted/20 relative overflow-hidden">
+        {/* Decorative background elements */}
+        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-primary/5 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-accent/5 blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="text-center mb-14"
+            className="text-center mb-16"
           >
             <SectionLabel>Behind AIMS</SectionLabel>
-            <h2 className="text-4xl font-bold text-foreground">
-              Meet the Team
+            <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-foreground via-foreground to-muted-foreground mb-4">
+              Meet the Visionaries
             </h2>
-            <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
-              The talented individuals who designed, built, and maintain this
+            <p className="text-muted-foreground text-lg mt-3 max-w-2xl mx-auto">
+              The talented minds who designed, built, and maintain this
               platform.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 justify-center">
             {teamMembers.map((member, i) => {
               const isLeader = member.data.role
                 .toLowerCase()
@@ -864,66 +868,77 @@ export default function HomePage() {
               return (
                 <motion.div
                   key={member.id}
-                  initial={{ opacity: 0, y: 24 }}
+                  initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.09, duration: 0.5 }}
+                  transition={{ delay: i * 0.1, duration: 0.5, type: "spring", stiffness: 100 }}
                   viewport={{ once: true }}
-                  className={`group relative p-6 rounded-2xl border transition-all duration-300 text-center flex flex-col items-center shadow-md hover:shadow-xl ring-1 ${colors.bg} ${colors.border} ${colors.hoverBorder} ${colors.shadow} ${colors.ring}`}
+                  className={`group relative rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-2 flex flex-col items-center shadow-lg hover:shadow-2xl bg-card border ${colors.border} ${colors.hoverBorder}`}
                 >
-                  {/* Gradient glow behind card */}
+                  {/* Shimmer effect on hover */}
+                  <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:animate-shimmer z-10 pointer-events-none" />
+
+                  {/* Glassmorphism Background Base */}
+                  <div className="absolute inset-0 bg-background/40 backdrop-blur-md z-0" />
+
+                  {/* Glowing gradient blob behind card content */}
                   <div
-                    className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${colors.gradient} via-transparent pointer-events-none transition-opacity duration-500 opacity-60 group-hover:opacity-100`}
+                    className={`absolute inset-0 bg-gradient-to-br ${colors.gradient} opacity-40 group-hover:opacity-100 transition-opacity duration-500 z-0`}
                   />
+
+                  {/* Top accent bar */}
+                  <div className={`absolute top-0 left-0 w-full h-1.5 ${colors.accentBg} z-10`} />
 
                   {/* Leader crown badge */}
                   {isLeader && (
-                    <div className={`absolute -top-3 -right-3 w-8 h-8 rounded-full ${colors.accentBg} flex items-center justify-center shadow-lg z-10`}>
-                      <Crown size={14} className={colors.accentText} />
+                    <div className={`absolute top-4 right-4 w-9 h-9 rounded-full ${colors.accentBg} flex items-center justify-center shadow-lg shadow-${colors.accentBg}/30 z-20`}>
+                      <Crown size={16} className={colors.accentText} />
                     </div>
                   )}
 
-                  {/* Colored accent bar at top */}
-                  <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-12 h-1 rounded-b-full ${colors.accentBg} opacity-60 group-hover:opacity-100 group-hover:w-16 transition-all duration-300`} />
+                  <div className="relative z-10 w-full p-8 flex flex-col items-center">
+                    {/* Avatar Container with pulse ring on hover */}
+                    <div className="relative mb-6">
+                      <div className={`absolute inset-0 rounded-full bg-gradient-to-tr ${colors.gradient} blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500 scale-110`} />
+                      <div
+                        className={`relative w-28 h-28 rounded-full border-[3px] overflow-hidden transition-all duration-300 ${colors.border} group-hover:border-transparent bg-background shadow-inner`}
+                      >
+                        <img
+                          src={`/assets/team/${member.data.image}`}
+                          alt={member.data.name}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                      </div>
+                    </div>
 
-                  {/* Avatar */}
-                  <div
-                    className={`relative w-20 h-20 rounded-full border-2 overflow-hidden mb-4 transition-all duration-300 ${colors.border} group-hover:shadow-lg`}
-                  >
-                    <img
-                      src={`/assets/team/${member.data.image}`}
-                      alt={member.data.name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                  </div>
+                    {/* Name */}
+                    <h4 className="font-bold text-foreground text-lg mb-2 text-center group-hover:text-primary transition-colors duration-300">
+                      {member.data.name}
+                    </h4>
 
-                  {/* Name */}
-                  <h4 className="relative font-semibold text-foreground text-sm mb-2">
-                    {member.data.name}
-                  </h4>
+                    {/* Leader accent label */}
+                    {isLeader && (
+                      <span className={`inline-block mb-3 px-3.5 py-1 rounded-full ${colors.accentBg} ${colors.accentText} text-[10px] font-bold uppercase tracking-widest shadow-sm`}>
+                        Team Lead
+                      </span>
+                    )}
 
-                  {/* Leader accent label */}
-                  {isLeader && (
-                    <span className={`relative inline-block mb-2 px-3 py-0.5 rounded-full ${colors.accentBg} ${colors.accentText} text-[10px] font-bold uppercase tracking-wider`}>
-                      Team Lead
-                    </span>
-                  )}
-
-                  {/* Role badges with icons */}
-                  <div className="relative flex flex-wrap justify-center gap-1.5">
-                    {roles.map((role) => {
-                      const key = role.trim().toLowerCase().replace(/[-\s]/g, "");
-                      const RoleIcon = roleIconMap[key] || Award;
-                      const roleBadgeColors = roleColorMap[key] || colors;
-                      return (
-                        <span
-                          key={role}
-                          className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full ${roleBadgeColors.badge} ${roleBadgeColors.badgeText} text-[10px] font-semibold capitalize`}
-                        >
-                          <RoleIcon size={10} />
-                          {role.trim().replace(/-/g, " ")}
-                        </span>
-                      );
-                    })}
+                    {/* Role badges */}
+                    <div className="flex flex-wrap justify-center gap-2 mt-auto">
+                      {roles.map((role) => {
+                        const key = role.trim().toLowerCase().replace(/[-\s]/g, "");
+                        const RoleIcon = roleIconMap[key] || Award;
+                        const roleBadgeColors = roleColorMap[key] || colors;
+                        return (
+                          <div
+                            key={role}
+                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl ${roleBadgeColors.badge} ${roleBadgeColors.badgeText} text-xs font-semibold capitalize border border-[color:var(--tw-border-opacity)] ${roleBadgeColors.border} backdrop-blur-sm transition-colors group-hover:bg-opacity-20`}
+                          >
+                            <RoleIcon size={12} />
+                            <span>{role.trim().replace(/-/g, " ")}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 </motion.div>
               );

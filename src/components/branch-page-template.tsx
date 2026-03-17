@@ -148,6 +148,7 @@ export function BranchPageTemplate({
   faculty,
   labs,
   achievements,
+  heroBg = "/assets/college/it_block.jpeg",
 }: BranchPageProps) {
   const [videoModalFaculty, setVideoModalFaculty] = useState<FacultyMember | null>(null);
 
@@ -157,10 +158,16 @@ export function BranchPageTemplate({
 
       {/* Hero */}
       <section className="relative pt-32 pb-20 overflow-hidden aims-grid-bg">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-background to-accent/15" />
-        <div className="absolute -top-20 -right-20 w-[400px] h-[400px] rounded-full bg-primary/5 blur-3xl" />
+        {/* Background Image */}
+        <img src={heroBg} alt={`${name} Block`} className="absolute inset-0 w-full h-full object-cover z-0" />
+        {/* Dark Translucent Overlay */}
+        <div className="absolute inset-0 bg-black/60 z-[1]" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Gradient & grid overlays to maintain theme integration */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/20 z-[2]" />
+        <div className="absolute -top-20 -right-20 w-[400px] h-[400px] rounded-full bg-primary/10 blur-3xl z-[2]" />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
             href="/"
             className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors mb-8"

@@ -21,6 +21,7 @@ const itData = {
     { label: "Labs", value: "3" },
     { label: "Years of Excellence", value: "18+" },
   ],
+  heroBg: "/assets/college/it.jpg",
 
   programs: ["Diploma in IT"],
 

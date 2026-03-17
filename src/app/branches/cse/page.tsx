@@ -19,6 +19,7 @@ const cseData = {
     { label: "Labs", value: "2" },
     { label: "Years of Excellence", value: "20+" },
   ],
+  heroBg: "/assets/college/cse.jpg",
   programs: [
     "Diploma In Computer Science and Engineering"
   ],
