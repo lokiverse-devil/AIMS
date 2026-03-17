@@ -31,7 +31,7 @@ const itData = {
     bio:
       "Jagdish Chandra Pandey holds an M.Tech in Information Technology and brings 16+ years of teaching and research experience. He specializes in Programming In C, Concepts of .NET Technology, Android Application Development, Java Programming. Under his leadership, the IT department has achieved 100% placement for 5 consecutive years and established industry partnerships with Zenthium, VVDN, Anand Mahle.",
     initials: "JP",
-    photoPath: "/assets/faculty/jagdish.jpg",
+    photoPath: "/assets/faculty/pandey.jpg",
     cabin: "Right-hand side from the entrance, Ground Floor, Academic IT Block",
     officeHours: "Mon–Sat, 10:00 AM – 5:00 PM",
   },
