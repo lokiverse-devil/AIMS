@@ -157,17 +157,20 @@ export function BranchPageTemplate({
       <Navbar />
 
       {/* Hero */}
-      <section className="relative pt-32 pb-20 overflow-hidden aims-grid-bg">
-        {/* Background Image */}
-        <img src={heroBg} alt={`${name} Block`} className="absolute inset-0 w-full h-full object-cover z-0" />
-        {/* Dark Translucent Overlay */}
-        <div className="absolute inset-0 bg-black/60 z-[1]" />
+      <section className="relative min-h-[60vh] flex flex-col justify-center pt-32 pb-20 overflow-hidden aims-grid-bg">
+        {/* Background Base */}
+        <div className="absolute inset-0 bg-background/90 z-0" />
+        {/* Translucent Image */}
+        <img src={heroBg} alt={`${name} Block`} className="absolute inset-0 w-full h-full object-cover object-[center_30%] opacity-40 mix-blend-luminosity z-[1]" />
+        
+        {/* Frosted Glass Overlay */}
+        <div className="absolute inset-0 bg-background/40 backdrop-blur-[3px] z-[2]" />
 
         {/* Gradient & grid overlays to maintain theme integration */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/20 z-[2]" />
-        <div className="absolute -top-20 -right-20 w-[400px] h-[400px] rounded-full bg-primary/10 blur-3xl z-[2]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-transparent to-accent/20 z-[3]" />
+        <div className="absolute -top-20 -right-20 w-[400px] h-[400px] rounded-full bg-primary/20 blur-3xl z-[3]" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
             href="/"
             className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors mb-8"
