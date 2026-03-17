@@ -27,10 +27,10 @@ const elexData = {
   hod: {
     name: "Manoj Rikhari",
     designation: "Lecturer & Head of Department — ELEX",
-    bio: "Manoj Rikhari 15 years of teaching and research experience. He is a pioneer in elecronics enineering.Under his leadership, the ELEX department has achieved 100% placement for 5 consecutive years and established industry partnerships with Zenthium, Anand Mahle, Minda. ",
+    bio: "Manoj Rikhari 15 years of teaching and research experience. He is a pioneer in Mobile Communication, PLC, NFTL.Under his leadership, the ELEX department has achieved 100% placement for 5 consecutive years and established industry partnerships with Zenthium, Anand Mahle, Minda. ",
     initials: "MP",
     // TODO: Replace with /assets/faculty/patel.jpg
-    photoPath: "/assets/faculty/patel.jpg",
+    photoPath: "/assets/faculty/manoj.jpg",
     cabin: "From the entrance, take the left staircase and reach in front of the cabin, 1st Floor, Academic IT Block.",
     officeHours: "Mon-Sat, 9:00 AM - 4:00 PM",
   },
@@ -38,7 +38,7 @@ const elexData = {
      {
       name: "Manoj Rikhari",
       designation: "Lecturer & Head of Department — ELEX",
-      subjects: ["Internet Of Things", "Operating Systems", "Computer System And Organization", "Data Mining and Warehouse"],
+      subjects: [" Mobile Communication", "PLC", "NFTL"],
       experience: "15 years",
       initials: "MR",
       photoPath: "/assets/faculty/rikhari.jpg",
@@ -48,7 +48,7 @@ const elexData = {
     {
       name: "Rashid",
       designation: "Lecturer",
-      subjects: ["VLSI Design", "Embedded Systems", "Microcontrollers"],
+      subjects: ["Optical Fibre Communication", "Electronic Measurement", "Signal Sensing"],
       experience: "15 years",
       initials: "R",
       photoPath: "/assets/faculty/rashid.jpg",
@@ -58,7 +58,7 @@ const elexData = {
     {
       name: "Pankaj Kumar",
       designation: "Lecturer",
-      subjects: ["Digital Signal Processing", "MATLAB", "DSP Algorithms"],
+      subjects: ["Microprocessor and App", "Microcontroller and embedded systems", "Electronic Circuits"],
       experience: "14 years",
       initials: "PK",
       photoPath: "/assets/faculty/kumar.jpg",
@@ -68,7 +68,7 @@ const elexData = {
     { name: "Electronics Lab", capacity: 25, description: "Oscilloscopes, function generators, multimeters, component kits", available: true },
 
    
-    { name: "Drone Lab", capacity: 20, description: "Spectrum analyzers, RF transceivers, signal modules", available: true },
+    { name: "Drone Lab", capacity: 20, description: "Spectrum analyzers, RF transceivers, signal modules,8086 Microprocessor", available: true },
   ],
   achievements: [
     "100% placement record for the past few years"
