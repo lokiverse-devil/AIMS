@@ -38,7 +38,7 @@ const elexData = {
      {
       name: "Manoj Rikhari",
       designation: "Lecturer & Head of Department — ELEX",
-      subjects: ["Internet Of Things", "Operating Systems", "Computer System And Organization", "Data Mining and Warehouse"],
+      subjects: [" Mobile Communication", "PLC", "NFTL"],
       experience: "15 years",
       initials: "MR",
       photoPath: "/assets/faculty/manoj.jpg",
@@ -48,7 +48,7 @@ const elexData = {
     {
       name: "Rashid",
       designation: "Lecturer",
-      subjects: ["VLSI Design", "Embedded Systems", "Microcontrollers"],
+      subjects: ["Optical Fibre Communication", "Electronic Measurement", "Signal Sensing"],
       experience: "15 years",
       initials: "R",
       photoPath: "/assets/faculty/rashid.jpg",
@@ -58,7 +58,7 @@ const elexData = {
     {
       name: "Pankaj Kumar",
       designation: "Lecturer",
-      subjects: ["Digital Signal Processing", "MATLAB", "DSP Algorithms"],
+      subjects: ["Microprocessor and App", "Microcontroller and embedded systems", "Electronic Circuits"],
       experience: "14 years",
       initials: "PK",
       photoPath: "/assets/faculty/kumar.jpg",
@@ -68,7 +68,7 @@ const elexData = {
     { name: "Electronics Lab", capacity: 25, description: "Oscilloscopes, function generators, multimeters, component kits", available: true },
 
    
-    { name: "Drone Lab", capacity: 20, description: "Spectrum analyzers, RF transceivers, signal modules", available: true },
+    { name: "Drone Lab", capacity: 20, description: "Spectrum analyzers, RF transceivers, signal modules,8086 Microprocessor", available: true },
   ],
   achievements: [
     "100% placement record for the past few years"

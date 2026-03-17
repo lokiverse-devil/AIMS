@@ -41,7 +41,7 @@ export function Navbar() {
             <GraduationCap size={16} className="text-primary-foreground" />
           </div>
           <div className="flex flex-col leading-none">
-            <span className="text-sm font-bold tracking-wide text-foreground">AIMS</span>
+            <span className="text-sm font-bold tracking-wide text-foreground">AIMS X IT BLOCK</span>
             <span className="text-[9px] font-medium text-muted-foreground uppercase tracking-widest hidden sm:block">
               Academic Infrastructure
             </span>
