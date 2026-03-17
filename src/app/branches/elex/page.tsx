@@ -21,8 +21,15 @@ const elexData = {
   ],
   heroBg: "/assets/college/elex.jpg",
   programs: [
-    
     "Diploma in Electronics"
+  ],
+  syllabusLinks: [
+    { semester: "Semester 1", url: "https://www.irdtuttarakhand.org.in/ubter/Course.aspx?code=05" },
+    { semester: "Semester 2", url: "https://www.irdtuttarakhand.org.in/ubter/Course.aspx?code=05" },
+    { semester: "Semester 3", url: "https://irdtuttarakhand.org.in/Upload/Electronics%20Engineering%20%20-III%20Sem%20New%20Syllabus.pdf" },
+    { semester: "Semester 4", url: "https://irdtuttarakhand.org.in/Upload/Electrical%20Engineering%20(08)-%20IV%20SEM.pdf" },
+    { semester: "Semester 5", url: "https://irdtuttarakhand.org.in/Upload/Electronics%20Engineering%20-V%20Sem%20New%20Syllabus.pdf" },
+    { semester: "Semester 6", url: "https://irdtuttarakhand.org.in/Upload/Electronics%20Engineering%20VI%20Sem-%20New%20Syllabus.pdf" }
   ],
   hod: {
     name: "Manoj Rikhari",

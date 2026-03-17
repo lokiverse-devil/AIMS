@@ -23,6 +23,14 @@ const cseData = {
   programs: [
     "Diploma In Computer Science and Engineering"
   ],
+  syllabusLinks: [
+    { semester: "Semester 1", url: "https://www.irdtuttarakhand.org.in/ubter/Course.aspx?code=05" },
+    { semester: "Semester 2", url: "https://www.irdtuttarakhand.org.in/ubter/Course.aspx?code=05" },
+    { semester: "Semester 3", url: "https://irdtuttarakhand.org.in/Upload/Computer%20Science%20&%20Engineering%20-%20III%20Sem%20New%20Syllabus.pdf" },
+    { semester: "Semester 4", url: "https://irdtuttarakhand.org.in/Upload/Computer%20Science%20&%20Engineering%20(05)-IV%20SEM.pdf" },
+    { semester: "Semester 5", url: "https://irdtuttarakhand.org.in/Upload/CSE%20(Computer%20Science%20&%20Engineering)-V%20Sem%20New%20Syllabus.pdf" },
+    { semester: "Semester 6", url: "https://irdtuttarakhand.org.in/Upload/Computer%20Science%20&%20Engineering%20VI%20Sem-%20New%20Syllabus.pdf" }
+  ],
   hod: {
     name: "Manmohan",
     designation: "Lecturer & Head of Department — CSE",

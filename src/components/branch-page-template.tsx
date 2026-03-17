@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
-import { LucideIcon, ChevronRight, BookOpen, Users, FlaskConical, Award, ArrowLeft, Play, X, Crown } from "lucide-react";
+import { LucideIcon, ChevronRight, BookOpen, Users, FlaskConical, Award, ArrowLeft, Play, X, Crown, FileText } from "lucide-react";
 import { Navbar } from "@/components/navbar";
 import { ChatbotWidget } from "@/components/chatbot-widget";
 
@@ -55,6 +55,8 @@ interface BranchPageProps {
   faculty: FacultyMember[];
   labs: Lab[];
   achievements: string[];
+  heroBg?: string;
+  syllabusLinks?: { semester: string; url: string }[];
 }
 
 // ── Faculty Video Modal ────────────────────────────────────────────────
@@ -149,6 +151,7 @@ export function BranchPageTemplate({
   labs,
   achievements,
   heroBg = "/assets/college/it_block.jpeg",
+  syllabusLinks,
 }: BranchPageProps) {
   const [videoModalFaculty, setVideoModalFaculty] = useState<FacultyMember | null>(null);
 
@@ -300,6 +303,33 @@ export function BranchPageTemplate({
           </div>
         </div>
       </section>
+
+      {/* Syllabus */}
+      {syllabusLinks && syllabusLinks.length > 0 && (
+        <section className="py-16 bg-muted/10 border-y border-border">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
+              <FileText size={20} className="text-primary" /> Course Syllabus
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+              {syllabusLinks.map((s, i) => (
+                <Link
+                  key={i}
+                  href={s.url}
+                  className="flex flex-col items-center justify-center p-5 rounded-2xl border border-border bg-card hover:border-primary/40 hover:bg-primary/5 hover:shadow-lg hover:shadow-primary/5 transition-all group"
+                  target="_blank"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                    <FileText size={22} className="text-primary" />
+                  </div>
+                  <span className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">{s.semester}</span>
+                  <span className="text-[10px] text-muted-foreground mt-1">View PDF</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Faculty */}
       <section className="py-20">
