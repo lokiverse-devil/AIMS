@@ -608,39 +608,46 @@ export default function HomePage() {
       </section>
 
       {/* ─── FACILITIES ────────────────────────────────────────── */}
-      <section className="py-24 bg-muted/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="text-center mb-14"
-          >
-            <SectionLabel>Infrastructure</SectionLabel>
-            <h2 className="text-4xl font-bold text-foreground">Campus Facilities</h2>
-          </motion.div>
+    <section className="py-24 bg-muted/20">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      viewport={{ once: true }}
+      className="text-center mb-14"
+    >
+      <SectionLabel>Infrastructure</SectionLabel>
+      <h2 className="text-4xl font-bold text-foreground">
+        Campus Facilities
+      </h2>
+    </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {facilities.map((f, i) => (
-              <motion.div
-                key={f.label}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.07 }}
-                viewport={{ once: true }}
-                className="flex flex-col items-center text-center p-5 rounded-2xl border border-border bg-card hover:border-primary/30 hover:bg-accent/20 transition-all duration-200 group"
-              >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
-                  <f.icon size={22} className="text-primary" />
-                </div>
-                <p className="text-sm font-bold text-foreground">{f.count}</p>
-                <p className="text-xs text-muted-foreground mt-0.5">{f.label}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+    {/* Centered Auto-Fit Grid */}
+    <div className="max-w-5xl mx-auto">
+      <div className="grid gap-4 grid-cols-[repeat(auto-fit,minmax(140px,1fr))]">
+        {facilities.map((f, i) => (
+          <motion.div
+            key={f.label}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.07 }}
+            viewport={{ once: true }}
+            className="flex flex-col items-center text-center p-5 rounded-2xl border border-border bg-card hover:border-primary/30 hover:bg-accent/20 transition-all duration-200 group"
+          >
+            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
+              <f.icon size={22} className="text-primary" />
+            </div>
+            <p className="text-sm font-bold text-foreground">{f.count}</p>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              {f.label}
+            </p>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
 
      {/* ─── LABS OVERVIEW ─────────────────────────────────────── */}
 <section className="py-24">
