@@ -118,7 +118,7 @@ const facultyPreview = [
   {
     name: "BP Singh",
     dept: "Principal",
-    
+    subjects:"The principal of UGIP Kashipur",
     avatar: "/assets/faculty/bp.jpeg",
     initials: "MV",
   },
@@ -424,7 +424,7 @@ export default function HomePage() {
             >
               Welcome to{" "}
               <span className="relative inline-block">
-                <span className="text-primary">IT BLOCK: GP KASHIPUR</span>
+                <span className="text-primary">IT BLOCK: UGIP KASHIPUR</span>
                 <span className="absolute -bottom-1 left-0 right-0 h-0.5 aims-accent-bar rounded-full" />
               </span>
             </motion.h1>

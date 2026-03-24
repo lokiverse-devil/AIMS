@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { Eye, EyeOff, GraduationCap, UserPlus, ArrowLeft, GraduationCap as StudentIcon, BookOpen } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { signupStudent, signupTeacher } from "@/api/auth";
+import { useRouter } from "next/navigation";
 
 type Role = "student" | "teacher";
 
@@ -12,10 +14,19 @@ const branches = ["CSE", "IT", "ELEX"];
 const semesters = ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th"];
 const departments = ["Computer Science Engineering", "Information Technology", "Electronics Engineering"];
 
+// Shared class for all <select> elements
+const selectCls =
+  "w-full px-4 py-2.5 rounded-xl border border-border bg-input text-foreground " +
+  "focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 " +
+  "transition-all text-sm appearance-none cursor-pointer";
+
 export default function SignupPage() {
+  const router = useRouter();
   const [role, setRole] = useState<Role>("student");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
 
   const [studentForm, setStudentForm] = useState({
     name: "", rollNumber: "", branch: "", semester: "", email: "", password: ""
@@ -28,13 +39,50 @@ export default function SignupPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // TODO: Connect to api/auth.ts signupStudent() or signupTeacher()
-    // TODO: Validate teacherAccessKey against teacher_keys table in Supabase
-    setTimeout(() => {
+    setError(null);
+
+    if (role === "student") {
+      const { data, error: err } = await signupStudent({ ...studentForm, role: "student" });
       setLoading(false);
-      alert("Signup integration pending — connect to Supabase Auth");
-    }, 1200);
+      if (err) { setError(err.message); return; }
+      if (data) setSuccess(true);
+    } else {
+      const { data, error: err } = await signupTeacher({
+        ...teacherForm,
+        subjects: teacherForm.subjects.split(",").map((s) => s.trim()).filter(Boolean),
+        role: "teacher",
+      });
+      setLoading(false);
+      if (err) { setError(err.message); return; }
+      if (data) setSuccess(true);
+    }
   };
+
+  if (success) {
+    return (
+      <div className="min-h-screen bg-background aims-grid-bg flex items-center justify-center px-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="max-w-md w-full p-8 rounded-2xl border border-border bg-card text-center shadow-sm"
+        >
+          <div className="w-14 h-14 rounded-2xl bg-emerald-500/15 flex items-center justify-center mx-auto mb-4">
+            <UserPlus size={24} className="text-emerald-500" />
+          </div>
+          <h2 className="text-xl font-bold text-foreground mb-2">Account created!</h2>
+          <p className="text-sm text-muted-foreground mb-6">
+            Check your email to verify your address, then sign in to access your dashboard.
+          </p>
+          <Link
+            href="/login"
+            className="w-full py-2.5 px-5 rounded-xl bg-primary text-primary-foreground font-semibold text-sm inline-block hover:-translate-y-0.5 transition-all shadow-md shadow-primary/25"
+          >
+            Go to Sign In
+          </Link>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background aims-grid-bg">
@@ -68,7 +116,8 @@ export default function SignupPage() {
             {(["student", "teacher"] as Role[]).map((r) => (
               <button
                 key={r}
-                onClick={() => setRole(r)}
+                type="button"
+                onClick={() => { setRole(r); setError(null); }}
                 className={`flex-1 flex items-center justify-center gap-2.5 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${
                   role === r
                     ? "bg-card text-foreground shadow-sm border border-border"
@@ -95,7 +144,6 @@ export default function SignupPage() {
               >
                 {role === "student" ? (
                   <>
-                    {/* Full Name */}
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div className="space-y-1.5">
                         <label className="text-sm font-medium text-foreground">Full Name *</label>
@@ -122,27 +170,37 @@ export default function SignupPage() {
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div className="space-y-1.5">
                         <label className="text-sm font-medium text-foreground">Branch *</label>
-                        <select
-                          required
-                          value={studentForm.branch}
-                          onChange={(e) => setStudentForm({ ...studentForm, branch: e.target.value })}
-                          className="w-full px-4 py-2.5 rounded-xl border border-border bg-input text-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
-                        >
-                          <option value="">Select Branch</option>
-                          {branches.map((b) => <option key={b} value={b}>{b}</option>)}
-                        </select>
+                        <div className="relative">
+                          <select
+                            required
+                            value={studentForm.branch}
+                            onChange={(e) => setStudentForm({ ...studentForm, branch: e.target.value })}
+                            className={selectCls}
+                          >
+                            <option value="" disabled>Select Branch</option>
+                            {branches.map((b) => <option key={b} value={b}>{b}</option>)}
+                          </select>
+                          <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                          </div>
+                        </div>
                       </div>
                       <div className="space-y-1.5">
                         <label className="text-sm font-medium text-foreground">Semester *</label>
-                        <select
-                          required
-                          value={studentForm.semester}
-                          onChange={(e) => setStudentForm({ ...studentForm, semester: e.target.value })}
-                          className="w-full px-4 py-2.5 rounded-xl border border-border bg-input text-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
-                        >
-                          <option value="">Select Semester</option>
-                          {semesters.map((s) => <option key={s} value={s}>{s} Semester</option>)}
-                        </select>
+                        <div className="relative">
+                          <select
+                            required
+                            value={studentForm.semester}
+                            onChange={(e) => setStudentForm({ ...studentForm, semester: e.target.value })}
+                            className={selectCls}
+                          >
+                            <option value="" disabled>Select Semester</option>
+                            {semesters.map((s) => <option key={s} value={s}>{s} Semester</option>)}
+                          </select>
+                          <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
@@ -192,15 +250,20 @@ export default function SignupPage() {
                       </div>
                       <div className="space-y-1.5">
                         <label className="text-sm font-medium text-foreground">Department *</label>
-                        <select
-                          required
-                          value={teacherForm.department}
-                          onChange={(e) => setTeacherForm({ ...teacherForm, department: e.target.value })}
-                          className="w-full px-4 py-2.5 rounded-xl border border-border bg-input text-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
-                        >
-                          <option value="">Select Department</option>
-                          {departments.map((d) => <option key={d} value={d}>{d}</option>)}
-                        </select>
+                        <div className="relative">
+                          <select
+                            required
+                            value={teacherForm.department}
+                            onChange={(e) => setTeacherForm({ ...teacherForm, department: e.target.value })}
+                            className={selectCls}
+                          >
+                            <option value="" disabled>Select Department</option>
+                            {departments.map((d) => <option key={d} value={d}>{d}</option>)}
+                          </select>
+                          <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
@@ -213,6 +276,7 @@ export default function SignupPage() {
                         placeholder="e.g. Data Structures, Algorithms, Discrete Math"
                         className="w-full px-4 py-2.5 rounded-xl border border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
                       />
+                      <p className="text-xs text-muted-foreground">Separate multiple subjects with commas.</p>
                     </div>
 
                     <div className="space-y-1.5">
@@ -248,23 +312,27 @@ export default function SignupPage() {
                     <div className="space-y-1.5">
                       <label className="text-sm font-medium text-foreground">
                         Teacher Access Key *{" "}
-                        <span className="text-muted-foreground font-normal">
-                          (Faculty-issued)
-                        </span>
+                        <span className="text-muted-foreground font-normal">(Faculty-issued)</span>
                       </label>
                       <input
                         required
                         value={teacherForm.teacherAccessKey}
                         onChange={(e) => setTeacherForm({ ...teacherForm, teacherAccessKey: e.target.value })}
-                        placeholder="Enter faculty-issued teacher access key"
+                        placeholder="e.g. AIMS-TEACH-001"
                         className="w-full px-4 py-2.5 rounded-xl border border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
                       />
                       <p className="text-xs text-muted-foreground">
-                        Enter the teacher access key provided by the faculty administration office.
-                        {/* TODO: Validate against teacher_keys table in Supabase */}
+                        Enter the one-time key provided by the faculty administration office.
                       </p>
                     </div>
                   </>
+                )}
+
+                {/* Error */}
+                {error && (
+                  <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm text-center font-medium">
+                    {error}
+                  </div>
                 )}
 
                 <button
@@ -283,13 +351,6 @@ export default function SignupPage() {
                 </button>
               </motion.form>
             </AnimatePresence>
-          </div>
-
-          <div className="mt-4 p-3.5 rounded-xl bg-muted/60 border border-border">
-            <p className="text-xs text-muted-foreground text-center">
-              <span className="font-medium text-foreground">Note:</span> Account creation requires Supabase integration.
-              {/* TODO: Connect Supabase Auth + role-based tables */}
-            </p>
           </div>
 
           <p className="text-sm text-center text-muted-foreground mt-5">
