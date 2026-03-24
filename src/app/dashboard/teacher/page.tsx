@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import {
@@ -576,9 +576,63 @@ function StudentsSection() {
 
 // ── Notices ─────────────────────────────────────────────────────────────
 
-function NoticesSection() {
+function NoticesSection({ userId }: { userId?: string }) {
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ title: "", audience: "", content: "" });
+  const [notices, setNotices] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [posting, setPosting] = useState(false);
+
+  // Fetch notices safely on mount
+  useEffect(() => {
+    async function loadNotices() {
+      try {
+        const { fetchNotices } = await import('@/api/timetable');
+        const data = await fetchNotices();
+        setNotices(data || []);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadNotices();
+  }, []);
+
+  const handlePost = async () => {
+    if (!form.title || !form.audience) {
+      alert("Title and audience are required");
+      return;
+    }
+    if (!userId) {
+      alert("You must be logged in to post a notice.");
+      return;
+    }
+    setPosting(true);
+    try {
+      const { postNotice } = await import('@/api/timetable');
+      const { data, error } = await postNotice({
+        title: form.title,
+        content: form.content,
+        audience: form.audience,
+        posted_by: userId,
+        priority: "Normal"
+      });
+      
+      if (error) {
+        alert("Failed to post: " + error.message);
+      } else if (data) {
+        setNotices([data, ...notices]);
+        setForm({ title: "", audience: "", content: "" });
+        setShowForm(false);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error posting notice");
+    } finally {
+      setPosting(false);
+    }
+  };
 
   return (
     <div>
@@ -590,7 +644,7 @@ function NoticesSection() {
           onClick={() => setShowForm(!showForm)}
           className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-xs font-semibold hover:-translate-y-0.5 transition-all"
         >
-          + Post Notice
+          {showForm ? "Cancel" : "+ Post Notice"}
         </button>
       </div>
 
@@ -609,14 +663,19 @@ function NoticesSection() {
               onChange={(e) => setForm({ ...form, title: e.target.value })}
               className="w-full px-3 py-2 rounded-lg border border-border bg-input text-foreground text-sm focus:outline-none focus:border-primary"
             />
-            <select
-              value={form.audience}
-              onChange={(e) => setForm({ ...form, audience: e.target.value })}
-              className="w-full px-3 py-2 rounded-lg border border-border bg-input text-foreground text-sm focus:outline-none focus:border-primary"
-            >
-              <option value="">Select Audience</option>
-              {["CSE All Years", "CSE FY", "CSE SY", "CSE TY", "CSE Final Year", "All Faculty"].map((a) => <option key={a}>{a}</option>)}
-            </select>
+            <div className="relative">
+              <select
+                value={form.audience}
+                onChange={(e) => setForm({ ...form, audience: e.target.value })}
+                className="w-full px-3 py-2 rounded-lg border border-border bg-input text-foreground text-sm appearance-none focus:outline-none focus:border-primary cursor-pointer"
+              >
+                <option value="" disabled>Select Audience</option>
+                {["CSE All Years", "CSE FY", "CSE SY", "CSE TY", "CSE Final Year", "All Faculty", "General Campus"].map((a) => <option key={a} value={a}>{a}</option>)}
+              </select>
+              <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </div>
+            </div>
             <textarea
               rows={3}
               placeholder="Notice content..."
@@ -625,8 +684,12 @@ function NoticesSection() {
               className="w-full px-3 py-2 rounded-lg border border-border bg-input text-foreground text-sm focus:outline-none focus:border-primary resize-none"
             />
             <div className="flex gap-2">
-              <button onClick={() => { setShowForm(false); alert("Notice posting requires Supabase integration"); }} className="px-4 py-2 rounded-lg bg-primary text-primary-foreground text-xs font-semibold">
-                Post Notice
+              <button 
+                onClick={handlePost} 
+                disabled={posting}
+                className="px-4 py-2 rounded-lg bg-primary text-primary-foreground text-xs font-semibold disabled:opacity-50"
+              >
+                {posting ? "Posting..." : "Post Notice"}
               </button>
               <button onClick={() => setShowForm(false)} className="px-4 py-2 rounded-lg bg-muted text-muted-foreground text-xs font-semibold">Cancel</button>
             </div>
@@ -635,19 +698,28 @@ function NoticesSection() {
       </AnimatePresence>
 
       <div className="space-y-3">
-        {notices.map((n) => (
-          <div key={n.id} className="p-4 rounded-xl border border-border bg-card flex items-start gap-3">
-            <div className={`w-1.5 min-h-full rounded-full flex-shrink-0 ${n.priority === "High" ? "bg-primary" : "bg-muted-foreground/30"}`} />
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 flex-wrap mb-1">
+        {loading ? (
+          <div className="p-4 rounded-xl border border-border bg-card text-center text-sm text-muted-foreground">Loading notices...</div>
+        ) : notices.length === 0 ? (
+          <div className="p-4 rounded-xl border border-border bg-card text-center text-sm text-muted-foreground">No notices posted yet.</div>
+        ) : (
+          notices.map((n) => (
+            <div key={n.id} className="p-4 rounded-xl border border-border bg-card flex items-start flex-col gap-2">
+              <div className="w-full flex items-center gap-2 flex-wrap mb-1">
+                <div className={`w-1.5 h-4 rounded-full flex-shrink-0 ${n.priority === "High" ? "bg-primary" : "bg-muted-foreground/30"}`} />
                 <span className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary font-semibold">{n.audience}</span>
-                {n.priority === "High" && <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400 font-semibold">Priority</span>}
-                <span className="text-[10px] text-muted-foreground ml-auto">{n.date}</span>
+                {n.priority === "High" && <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-600 font-semibold">Priority</span>}
+                <span className="text-[10px] text-muted-foreground ml-auto">
+                  {new Date(n.created_at).toLocaleDateString()}
+                </span>
               </div>
-              <p className="font-semibold text-foreground text-sm">{n.title}</p>
+              <div className="pl-3.5">
+                <p className="font-semibold text-foreground text-sm leading-snug">{n.title}</p>
+                {n.content && <p className="text-xs text-muted-foreground mt-1.5 whitespace-pre-wrap leading-relaxed">{n.content}</p>}
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );
@@ -756,12 +828,28 @@ function ProfileSection() {
 export default function TeacherDashboard() {
   const [activeSection, setActiveSection] = useState("timetable");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [userId, setUserId] = useState<string | undefined>();
+
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        const { getCurrentUser } = await import('@/api/auth');
+        const userData = await getCurrentUser();
+        if (userData?.user) {
+          setUserId(userData.user.id);
+        }
+      } catch (err) {
+        console.error("Failed to load user:", err);
+      }
+    }
+    fetchUser();
+  }, []);
 
   const sectionComponents: Record<string, React.ReactNode> = {
     timetable: <TimetableSection />,
     upload: <UploadSection />,
     students: <StudentsSection />,
-    notices: <NoticesSection />,
+    notices: <NoticesSection userId={userId} />,
     tickets: <TicketsSection />,
     profile: <ProfileSection />,
   };
@@ -820,7 +908,11 @@ export default function TeacherDashboard() {
             Back to Home
           </Link>
           <button
-            onClick={() => alert("Logout requires Supabase Auth")}
+            onClick={async () => {
+              const { logoutUser } = await import('@/api/auth');
+              await logoutUser();
+              window.location.href = '/login';
+            }}
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-500 hover:bg-red-500/10 transition-all"
           >
             <LogOut size={16} />

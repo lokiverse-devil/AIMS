@@ -365,6 +365,29 @@ export default function HomePage() {
   const [teamMembers, setTeamMembers] = useState<
     { id: string; data: TeamMember }[]
   >([]);
+  const [uiNotices, setUiNotices] = useState<any[]>(notices);
+
+  useEffect(() => {
+    async function loadNotices() {
+      try {
+        const { fetchNotices } = await import('@/api/timetable');
+        const fetched = await fetchNotices();
+        if (fetched && fetched.length > 0) {
+          setUiNotices(fetched.map((n: any) => ({
+            id: n.id,
+            tag: n.audience || 'General',
+            title: n.title,
+            desc: n.content,
+            date: new Date(n.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+            urgent: n.priority === 'High'
+          })));
+        }
+      } catch (err) {
+        console.error("Failed to fetch notices:", err);
+      }
+    }
+    loadNotices();
+  }, []);
 
   useEffect(() => {
     fetch("/assets/team/detailes.json")
@@ -786,7 +809,7 @@ export default function HomePage() {
           </motion.div>
 
           <div className="space-y-4">
-            {notices.map((notice, i) => (
+            {uiNotices.map((notice, i) => (
               <motion.div
                 key={notice.id}
                 initial={{ opacity: 0, x: -16 }}
