@@ -790,7 +790,11 @@ export default function StudentDashboard() {
             Back to Home
           </Link>
           <button
-            onClick={() => { /* TODO: Connect logout */ alert("Logout requires Supabase Auth"); }}
+            onClick={async () => {
+              const { logoutUser } = await import('@/api/auth');
+              await logoutUser();
+              window.location.href = '/login';
+            }}
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-500 hover:bg-red-500/10 transition-all"
           >
             <LogOut size={16} />
