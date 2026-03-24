@@ -1,0 +1,52 @@
+-- WARNING: This schema is for context only and is not meant to be run.
+-- Table order and constraints may not be valid for execution.
+
+CREATE TABLE public.notices (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  title text NOT NULL,
+  content text,
+  audience text,
+  priority text DEFAULT 'Normal'::text,
+  posted_by uuid,
+  created_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT notices_pkey PRIMARY KEY (id),
+  CONSTRAINT notices_posted_by_fkey FOREIGN KEY (posted_by) REFERENCES public.users(id)
+);
+CREATE TABLE public.students (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  roll_no text NOT NULL UNIQUE,
+  name text NOT NULL,
+  year text,
+  branch text,
+  created_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT students_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.tickets (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  student_id uuid,
+  category text,
+  subject text NOT NULL,
+  status text DEFAULT 'Pending'::text CHECK (status = ANY (ARRAY['Pending'::text, 'In Progress'::text, 'Resolved'::text])),
+  created_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT tickets_pkey PRIMARY KEY (id),
+  CONSTRAINT tickets_student_id_fkey FOREIGN KEY (student_id) REFERENCES public.users(id)
+);
+CREATE TABLE public.unit_test_marks (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  roll_no text NOT NULL,
+  subject text NOT NULL,
+  marks integer NOT NULL,
+  semester text NOT NULL,
+  uploaded_by text,
+  uploaded_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT unit_test_marks_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.users (
+  id uuid NOT NULL,
+  role text NOT NULL CHECK (role = ANY (ARRAY['student'::text, 'teacher'::text, 'admin'::text])),
+  roll_no text UNIQUE,
+  branch text,
+  created_at timestamp with time zone DEFAULT now(),
+  CONSTRAINT users_pkey PRIMARY KEY (id),
+  CONSTRAINT users_id_fkey FOREIGN KEY (id) REFERENCES auth.users(id)
+);

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Eye, EyeOff, GraduationCap, LogIn, ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { AuthService } from "@/services/authService";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function LoginPage() {
   const router = useRouter();

@@ -61,7 +61,7 @@ const cseData = {
       photoPath: "/assets/faculty/arya.jpeg",
     },
     {
-      name: "Virendra Dharamasaktu",
+      name: "Virendra Dharamshaktu",
       designation: "Lecturer",
       subjects: ["Computer Network Security", "Computer Hardware Systems", "Employbility Skills", "Multimedia System"],
       experience: "17 years",
