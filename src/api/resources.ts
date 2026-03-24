@@ -1,68 +1,197 @@
-// Resources & Timetable API placeholder
-// TODO: Connect to Supabase backend
-// Supabase tables: resources | timetables | students
-// Supabase buckets: resources | timetables | student-photos
+import { supabase, STORAGE_BUCKETS, SUPABASE_STORAGE_BASE } from '@/lib/supabaseClient'
 
-export async function fetchResources(department?: string, semester?: string) {
-  // TODO: Connect Supabase - select from resources table
-  // supabase.from('resources').select('*').eq('department', department).eq('semester', semester)
-  console.log('fetchResources called', department, semester)
-  return []
+export interface Resource {
+  id: string
+  title: string
+  subject: string
+  semester: string
+  department: string
+  file_url: string
+  type: string
+  size?: string
+  uploaded_by: string
+  created_at: string
 }
 
-export async function uploadResource(file: File, metadata: Record<string, unknown>) {
-  // TODO: Connect Supabase Storage - upload to resources bucket
-  // const { data: storageData } = await supabase.storage.from('resources').upload(file.name, file)
-  // await supabase.from('resources').insert({ ...metadata, file_url: storageData.path })
-  console.log('uploadResource called', file.name, metadata)
-  return { data: null, error: null }
-}
-
-export async function getResourceDownloadUrl(filename: string) {
-  // TODO: Replace with Supabase Storage public URL
-  // return supabase.storage.from('resources').getPublicUrl(filename).data.publicUrl
-  console.log('getResourceDownloadUrl called', filename)
-  return null
+export interface TimetableEntry {
+  id: string
+  branch: string
+  year: string
+  type: 'class' | 'lab'
+  file_url: string
+  uploaded_at: string
 }
 
 /**
- * Upload student list CSV. CSV format: roll_no,name,year,branch
- * TODO: Parse CSV and upsert rows into students table
- * TODO: Supabase Storage bucket: timetables (for CSV archive)
+ * Fetch resources filtered by department and/or semester.
+ */
+export async function fetchResources(
+  department?: string,
+  semester?: string,
+): Promise<Resource[]> {
+  let query = supabase
+    .from('resources')
+    .select('*')
+    .order('created_at', { ascending: false })
+
+  if (department) query = query.eq('department', department)
+  if (semester) query = query.eq('semester', semester)
+
+  const { data, error } = await query
+  if (error) {
+    console.error('fetchResources error:', error)
+    return []
+  }
+  return data ?? []
+}
+
+/**
+ * Upload a resource file to Supabase Storage and insert a record in the DB.
+ */
+export async function uploadResource(
+  file: File,
+  metadata: {
+    title: string
+    subject: string
+    semester: string
+    department: string
+    uploaded_by: string
+  },
+): Promise<{ data: Resource | null; error: Error | null }> {
+  const path = `${metadata.department}/${metadata.semester}/${Date.now()}_${file.name}`
+
+  const { error: storageError } = await supabase.storage
+    .from(STORAGE_BUCKETS.RESOURCES)
+    .upload(path, file, { upsert: false })
+
+  if (storageError) return { data: null, error: storageError }
+
+  const publicUrl = `${SUPABASE_STORAGE_BASE}/${STORAGE_BUCKETS.RESOURCES}/${path}`
+
+  const { data: inserted, error: dbError } = await supabase
+    .from('resources')
+    .insert({
+      ...metadata,
+      file_url: publicUrl,
+      type: file.name.split('.').pop()?.toUpperCase() ?? 'FILE',
+      size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
+    })
+    .select()
+    .single()
+
+  if (dbError) return { data: null, error: dbError }
+  return { data: inserted, error: null }
+}
+
+/**
+ * Get a public download URL for a resource file.
+ */
+export async function getResourceDownloadUrl(filename: string): Promise<string | null> {
+  const { data } = supabase.storage
+    .from(STORAGE_BUCKETS.RESOURCES)
+    .getPublicUrl(filename)
+  return data.publicUrl ?? null
+}
+
+/**
+ * Upload student list CSV via backend; also store the file in Supabase Storage.
  */
 export async function uploadStudentCSV(
   file: File,
-  department: string
+  department: string,
 ): Promise<{ success: boolean; message: string; rowsInserted?: number }> {
-  // TODO: Connect to Supabase backend
-  // 1. Upload to storage: supabase.storage.from('timetables').upload(`students/${file.name}`, file)
-  // 2. Parse CSV and insert: supabase.from('students').upsert(rows)
-  console.log('uploadStudentCSV called:', file.name, department)
-  return { success: false, message: 'TODO: Connect to Supabase backend' }
+  // Archive the CSV to Supabase Storage
+  const archivePath = `students/${department}/${Date.now()}_${file.name}`
+  await supabase.storage
+    .from(STORAGE_BUCKETS.RESOURCES)
+    .upload(archivePath, file, { upsert: false })
+
+  // Parse CSV client-side and upsert into students table
+  const text = await file.text()
+  const lines = text.trim().split('\n')
+  const headers = lines[0].split(',').map((h) => h.trim().toLowerCase())
+
+  const required = ['roll_no', 'name', 'year', 'branch']
+  const missing = required.filter((r) => !headers.includes(r))
+  if (missing.length > 0) {
+    return { success: false, message: `Missing columns: ${missing.join(', ')}` }
+  }
+
+  const rows = lines.slice(1).map((line) => {
+    const vals = line.split(',').map((v) => v.trim())
+    return Object.fromEntries(headers.map((h, i) => [h, vals[i] ?? '']))
+  })
+
+  const validRows = rows.filter(
+    (r) => r.roll_no && r.name && r.year && r.branch,
+  )
+
+  if (validRows.length === 0) {
+    return { success: false, message: 'No valid rows found in CSV' }
+  }
+
+  const { error } = await supabase.from('students').upsert(validRows, {
+    onConflict: 'roll_no',
+  })
+
+  if (error) return { success: false, message: error.message }
+  return {
+    success: true,
+    message: `Inserted/updated ${validRows.length} student record(s)`,
+    rowsInserted: validRows.length,
+  }
 }
 
 /**
- * Fetch timetable for a branch/semester.
- * TODO: supabase.storage.from('timetables').getPublicUrl(path).data.publicUrl
+ * Fetch timetable public URL for a branch + year.
  */
-export async function fetchTimetable(branch: string, semester: string): Promise<string | null> {
-  // TODO: Connect to Supabase backend
-  // Returns public URL to timetable PDF/image
-  console.log('fetchTimetable called:', branch, semester)
-  return null
+export async function fetchTimetable(
+  branch: string,
+  year: string,
+): Promise<string | null> {
+  const { data, error } = await supabase
+    .from('timetables')
+    .select('file_url')
+    .eq('branch', branch)
+    .eq('year', year)
+    .order('uploaded_at', { ascending: false })
+    .limit(1)
+    .single()
+
+  if (error || !data) return null
+  return data.file_url
 }
 
 /**
- * Upload timetable file (PDF or image) for a branch/semester.
- * TODO: supabase.storage.from('timetables').upload(`${branch}_${semester}.pdf`, file)
+ * Upload a timetable PDF/image to Supabase Storage and record in DB.
  */
 export async function uploadTimetable(
   file: File,
   branch: string,
-  semester: string,
-  type: 'class' | 'lab'
+  year: string,
+  type: 'class' | 'lab',
 ): Promise<{ success: boolean; url?: string }> {
-  // TODO: Connect to Supabase backend
-  console.log('uploadTimetable called:', file.name, branch, semester, type)
-  return { success: false }
+  const path = `${branch}/${year}/${type}_${Date.now()}_${file.name}`
+
+  const { error: storageError } = await supabase.storage
+    .from('timetables')
+    .upload(path, file, { upsert: true })
+
+  if (storageError) return { success: false }
+
+  const { data: urlData } = supabase.storage
+    .from('timetables')
+    .getPublicUrl(path)
+
+  const publicUrl = urlData.publicUrl
+
+  await supabase.from('timetables').insert({
+    branch,
+    year,
+    type,
+    file_url: publicUrl,
+    uploaded_at: new Date().toISOString(),
+  })
+
+  return { success: true, url: publicUrl }
 }

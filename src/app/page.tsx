@@ -116,6 +116,13 @@ const labs = [
 
 const facultyPreview = [
   {
+    name: "BP Singh",
+    dept: "Principal",
+    
+    avatar: "/assets/faculty/bp.jpeg",
+    initials: "MV",
+  },
+  {
     name: "MANMOHAN",
     dept: "CSE",
     subjects: "Internet Of Things, Operating Systems, Computer System And Organization, Data Mining and Warehouse",
@@ -142,8 +149,8 @@ const notices = [
   {
     id: 1,
     tag: "Exam",
-    title: "Mid-Semester Examinations – April 2026",
-    desc: "Mid-sem exams for all branches scheduled from April 14–22, 2026. Timetable published on portal.",
+    title: "Semester Examinations – May 2026",
+    desc: "Semester exams for all branches scheduled from May, 2026. Timetable published on portal.",
     date: "Feb 18, 2026",
     urgent: true,
   },

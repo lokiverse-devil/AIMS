@@ -1,72 +1,113 @@
-// Supabase table: unit_test_marks (columns: id, roll_no, subject, test_name, marks, max_marks, semester, uploaded_by, uploaded_at)
-// TODO: Replace fetchStudentMarks and deleteMark with Supabase queries after Supabase integration.
-
-import { uploadUnitTestCSV } from "@/services/csvService";
+import { supabase } from '@/lib/supabaseClient'
+import { uploadUnitTestCSV } from '@/services/csvService'
 
 export interface Mark {
-    id: string;
-    roll_no: string;
-    subject: string;
-    test_name: string;
-    marks: number;
-    max_marks: number;
-    semester: string;
-    uploaded_by: string;
-    uploaded_at: string;
+  id: string
+  roll_no: string
+  subject: string
+  test_name: string
+  marks: number
+  max_marks: number
+  semester: string
+  uploaded_by: string
+  uploaded_at: string
 }
 
 /**
- * Fetch all unit test marks for a given student roll number.
- * TODO: Replace with Supabase query:
- *   supabase.from('unit_test_marks').select('*').eq('roll_no', rollNo)
+ * Fetch all unit test marks for a given student roll number from Supabase.
  */
 export async function fetchStudentMarks(rollNo: string): Promise<Mark[]> {
-    // TODO: Connect to Supabase backend
-    console.log("fetchStudentMarks called for:", rollNo);
-    return [];
+  const { data, error } = await supabase
+    .from('unit_test_marks')
+    .select('*')
+    .eq('roll_no', rollNo)
+    .order('uploaded_at', { ascending: false })
+
+  if (error) {
+    console.error('fetchStudentMarks error:', error)
+    return []
+  }
+  return data ?? []
 }
 
 /**
- * Upload marks from a CSV file. CSV format: roll_no,subject,marks,semester
+ * Upload marks from a CSV file via the Python FastAPI backend.
+ * The backend validates+parses the CSV and inserts rows into Supabase.
  *
- * Calls the Python FastAPI backend (POST /upload/unit-test) via csvService.
- * Set NEXT_PUBLIC_API_URL=http://localhost:8000 in .env.local to enable.
- *
- * After Supabase integration:
- *   1. Upload file to storage: supabase.storage.from('marks-uploads').upload(path, file)
- *   2. Insert validated rows: supabase.from('unit_test_marks').insert(rows)
+ * CSV format: roll_no,subject,marks,semester
  */
 export async function uploadMarksCSV(
-    file: File,
-    teacherId: string,
-    subject: string,
-    testName: string
+  file: File,
+  teacherId: string,
+  subject: string,
+  testName: string,
 ): Promise<{ success: boolean; message: string; rowsInserted?: number }> {
-    console.log("uploadMarksCSV called:", file.name, teacherId, subject, testName);
+  const result = await uploadUnitTestCSV(file)
 
-    const result = await uploadUnitTestCSV(file);
+  if (!result.success && result.inserted === 0 && result.errors.length > 0) {
+    return { success: false, message: result.errors[0] }
+  }
 
-    if (!result.success && result.inserted === 0 && result.errors.length > 0) {
-        // Configuration error or total failure
-        return { success: false, message: result.errors[0] };
-    }
+  // After backend inserts rows, store the test_name via direct Supabase upsert
+  if (result.inserted > 0 && testName && subject) {
+    // Update test_name for the rows just inserted (best-effort)
+    await supabase
+      .from('unit_test_marks')
+      .update({ test_name: testName, uploaded_by: teacherId })
+      .is('test_name', null)
+  }
 
-    const message = result.failed > 0
-        ? `Uploaded ${result.inserted} row(s). ${result.failed} row(s) skipped: ${result.errors.join("; ")}`
-        : `Successfully uploaded ${result.inserted} row(s).`;
+  const message =
+    result.failed > 0
+      ? `Uploaded ${result.inserted} row(s). ${result.failed} row(s) skipped: ${result.errors.join('; ')}`
+      : `Successfully uploaded ${result.inserted} row(s).`
 
-    return {
-        success: result.inserted > 0,
-        message,
-        rowsInserted: result.inserted,
-    };
+  return {
+    success: result.inserted > 0,
+    message,
+    rowsInserted: result.inserted,
+  }
 }
 
 /**
- * Delete a mark entry by ID.
- * TODO: supabase.from('unit_test_marks').delete().eq('id', markId)
+ * Insert marks rows directly via Supabase (teacher-side, bypasses backend).
+ * Useful when inserting programmatically without a CSV upload.
+ */
+export async function insertMarks(
+  rows: Omit<Mark, 'id' | 'uploaded_at'>[],
+): Promise<{ success: boolean; error?: string }> {
+  const { error } = await supabase.from('unit_test_marks').insert(rows)
+  if (error) return { success: false, error: error.message }
+  return { success: true }
+}
+
+/**
+ * Delete a mark entry by its UUID.
  */
 export async function deleteMark(markId: string): Promise<void> {
-    // TODO: Connect to Supabase backend
-    console.log("deleteMark called:", markId);
+  const { error } = await supabase
+    .from('unit_test_marks')
+    .delete()
+    .eq('id', markId)
+  if (error) console.error('deleteMark error:', error)
+}
+
+/**
+ * Fetch marks for all students in a subject/semester (teacher view).
+ */
+export async function fetchMarksBySubject(
+  subject: string,
+  semester: string,
+): Promise<Mark[]> {
+  const { data, error } = await supabase
+    .from('unit_test_marks')
+    .select('*')
+    .eq('subject', subject)
+    .eq('semester', semester)
+    .order('roll_no')
+  if (error) {
+    console.error('fetchMarksBySubject error:', error)
+    return []
+  }
+  return data ?? []
 }

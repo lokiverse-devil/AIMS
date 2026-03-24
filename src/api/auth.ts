@@ -1,5 +1,4 @@
-// Auth API placeholder
-// TODO: Connect to Supabase Auth
+import { supabase } from '@/lib/supabaseClient'
 
 export interface LoginCredentials {
   email: string
@@ -26,35 +25,173 @@ export interface SignupTeacherData {
   role: 'teacher'
 }
 
+export interface UserProfile {
+  id: string
+  role: 'student' | 'teacher' | 'admin'
+  roll_no?: string
+  branch?: string
+  name?: string
+  department?: string
+  subjects?: string[]
+  semester?: string
+  created_at: string
+}
+
+/**
+ * Sign in with email + password via Supabase Auth.
+ * Returns the user and their role from the `users` table.
+ */
 export async function loginUser(credentials: LoginCredentials) {
-  // TODO: Connect Supabase Auth
-  // const { data, error } = await supabase.auth.signInWithPassword(credentials)
-  console.log('loginUser called', credentials)
-  return { data: null, error: null }
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: credentials.email,
+    password: credentials.password,
+  })
+  if (error) return { data: null, error }
+
+  // Fetch role from users table
+  const { data: profile, error: profileError } = await supabase
+    .from('users')
+    .select('*')
+    .eq('id', data.user.id)
+    .single()
+
+  if (profileError) return { data: null, error: profileError }
+  return { data: { user: data.user, session: data.session, profile }, error: null }
 }
 
-export async function signupStudent(data: SignupStudentData) {
-  // TODO: Connect Supabase Auth + insert into students table
-  console.log('signupStudent called', data)
-  return { data: null, error: null }
+/**
+ * Sign up a student: creates Supabase Auth user, then inserts into
+ * `users` (role + roll_no + branch) and `students` tables.
+ */
+export async function signupStudent(formData: SignupStudentData) {
+  const { data, error } = await supabase.auth.signUp({
+    email: formData.email,
+    password: formData.password,
+    options: {
+      data: { name: formData.name, role: 'student' },
+    },
+  })
+  if (error) return { data: null, error }
+  if (!data.user) return { data: null, error: new Error('User creation failed') }
+
+  const userId = data.user.id
+
+  // Insert into users profile table
+  const { error: usersError } = await supabase.from('users').insert({
+    id: userId,
+    role: 'student',
+    roll_no: formData.rollNumber,
+    branch: formData.branch,
+  })
+  if (usersError) return { data: null, error: usersError }
+
+  // Insert into students table
+  const { error: studentsError } = await supabase.from('students').insert({
+    id: userId,
+    roll_no: formData.rollNumber,
+    name: formData.name,
+    branch: formData.branch,
+    year: formData.semester,
+  })
+  if (studentsError) return { data: null, error: studentsError }
+
+  return { data, error: null }
 }
 
-export async function signupTeacher(data: SignupTeacherData) {
-  // TODO: Connect Supabase Auth + insert into teachers table
-  // TODO: Validate teacherAccessKey against teacher_keys table
-  console.log('signupTeacher called', data)
-  return { data: null, error: null }
+/**
+ * Sign up a teacher: validates teacher access key from `teacher_keys` table,
+ * creates Supabase Auth user, then inserts into `users` and `teachers` tables.
+ */
+export async function signupTeacher(formData: SignupTeacherData) {
+  // Validate teacher access key
+  const { data: keyData, error: keyError } = await supabase
+    .from('teacher_keys')
+    .select('id, used')
+    .eq('key', formData.teacherAccessKey)
+    .single()
+
+  if (keyError || !keyData) {
+    return { data: null, error: new Error('Invalid teacher access key') }
+  }
+  if (keyData.used) {
+    return { data: null, error: new Error('Teacher access key has already been used') }
+  }
+
+  const { data, error } = await supabase.auth.signUp({
+    email: formData.email,
+    password: formData.password,
+    options: {
+      data: { name: formData.name, role: 'teacher' },
+    },
+  })
+  if (error) return { data: null, error }
+  if (!data.user) return { data: null, error: new Error('User creation failed') }
+
+  const userId = data.user.id
+
+  // Insert into users profile table
+  const { error: usersError } = await supabase.from('users').insert({
+    id: userId,
+    role: 'teacher',
+    branch: formData.department,
+  })
+  if (usersError) return { data: null, error: usersError }
+
+  // Insert into teachers table
+  const { error: teachersError } = await supabase.from('teachers').insert({
+    id: userId,
+    name: formData.name,
+    department: formData.department,
+    subjects: formData.subjects,
+    email: formData.email,
+  })
+  if (teachersError) return { data: null, error: teachersError }
+
+  // Mark access key as used
+  await supabase.from('teacher_keys').update({ used: true }).eq('key', formData.teacherAccessKey)
+
+  return { data, error: null }
 }
 
+/**
+ * Sign out the current user.
+ */
 export async function logoutUser() {
-  // TODO: Connect Supabase Auth
-  // const { error } = await supabase.auth.signOut()
-  console.log('logoutUser called')
-  return { error: null }
+  const { error } = await supabase.auth.signOut()
+  return { error }
 }
 
-export async function getCurrentUser() {
-  // TODO: Connect Supabase Auth
-  // const { data: { user } } = await supabase.auth.getUser()
-  return null
+/**
+ * Get the currently authenticated user along with their profile from `users` table.
+ */
+export async function getCurrentUser(): Promise<{ user: UserProfile & { email?: string } } | null> {
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return null
+
+  const { data: profile } = await supabase
+    .from('users')
+    .select('*')
+    .eq('id', user.id)
+    .single()
+
+  if (!profile) return null
+  return { user: { ...profile, email: user.email } }
+}
+
+/**
+ * Listen to auth state changes (login/logout events).
+ */
+export function onAuthStateChange(callback: (user: UserProfile | null) => void) {
+  return supabase.auth.onAuthStateChange(async (_event, session) => {
+    if (!session?.user) {
+      callback(null)
+      return
+    }
+    const { data: profile } = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', session.user.id)
+      .single()
+    callback(profile ?? null)
+  })
 }

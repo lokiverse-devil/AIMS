@@ -1,17 +1,18 @@
-// Auth service abstraction
-// TODO: Wire up to api/auth.ts functions after Supabase integration
+import { loginUser, logoutUser, getCurrentUser } from '@/api/auth'
 
 export const AuthService = {
   login: async (email: string, password: string) => {
-    // TODO: Call loginUser from api/auth.ts
-    return { success: false, message: 'Auth not yet integrated' }
+    const { data, error } = await loginUser({ email, password })
+    if (error) return { success: false, message: error.message, data: null }
+    return { success: true, message: 'Login successful', data }
   },
+
   logout: async () => {
-    // TODO: Call logoutUser from api/auth.ts
-    return { success: false }
+    const { error } = await logoutUser()
+    return { success: !error, message: error?.message }
   },
+
   getCurrentUser: async () => {
-    // TODO: Call getCurrentUser from api/auth.ts
-    return null
-  }
+    return await getCurrentUser()
+  },
 }

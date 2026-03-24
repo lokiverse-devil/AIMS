@@ -1,17 +1,24 @@
-// Resource service abstraction
-// TODO: Wire up to api/resources.ts after Supabase integration
+import { fetchResources, uploadResource, getResourceDownloadUrl } from '@/api/resources'
 
 export const ResourceService = {
   getAll: async (department?: string, semester?: string) => {
-    // TODO: Call fetchResources from api/resources.ts
-    return []
+    return await fetchResources(department, semester)
   },
-  upload: async (file: File, meta: Record<string, unknown>) => {
-    // TODO: Call uploadResource from api/resources.ts
-    return null
+
+  upload: async (
+    file: File,
+    meta: {
+      title: string
+      subject: string
+      semester: string
+      department: string
+      uploaded_by: string
+    },
+  ) => {
+    return await uploadResource(file, meta)
   },
+
   getDownloadUrl: async (filename: string) => {
-    // TODO: Replace with Supabase Storage URL
-    return null
-  }
+    return await getResourceDownloadUrl(filename)
+  },
 }

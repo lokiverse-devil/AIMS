@@ -1,21 +1,78 @@
-// Faculty API placeholder
-// TODO: Connect to Supabase
+import { supabase, STORAGE_BUCKETS, SUPABASE_STORAGE_BASE } from '@/lib/supabaseClient'
 
-export async function fetchFacultyByDepartment(department: string) {
-  // TODO: Connect Supabase - select from faculty table where department = ?
-  console.log('fetchFacultyByDepartment called', department)
-  return []
+export interface Faculty {
+  id: string
+  name: string
+  department: string
+  subjects: string[]
+  email: string
+  designation?: string
+  video_filename?: string
+  created_at?: string
 }
 
-export async function fetchFacultyById(id: string) {
-  // TODO: Connect Supabase - select from faculty table where id = ?
-  console.log('fetchFacultyById called', id)
-  return null
+/**
+ * Fetch all faculty members in a given department.
+ */
+export async function fetchFacultyByDepartment(department: string): Promise<Faculty[]> {
+  const { data, error } = await supabase
+    .from('teachers')
+    .select('*')
+    .eq('department', department)
+    .order('name')
+
+  if (error) {
+    console.error('fetchFacultyByDepartment error:', error)
+    return []
+  }
+  return data ?? []
 }
 
-export async function fetchFacultyVideoUrl(filename: string) {
-  // TODO: Replace with Supabase Storage URL
-  // return `${SUPABASE_STORAGE_BASE}/faculty-videos/${filename}`
-  console.log('fetchFacultyVideoUrl called', filename)
-  return null
+/**
+ * Fetch a single faculty member by their UUID.
+ */
+export async function fetchFacultyById(id: string): Promise<Faculty | null> {
+  const { data, error } = await supabase
+    .from('teachers')
+    .select('*')
+    .eq('id', id)
+    .single()
+
+  if (error) return null
+  return data
+}
+
+/**
+ * Get the public URL for a faculty introduction video from Supabase Storage.
+ */
+export async function fetchFacultyVideoUrl(filename: string): Promise<string | null> {
+  if (!filename) return null
+  return `${SUPABASE_STORAGE_BASE}/${STORAGE_BUCKETS.FACULTY_VIDEOS}/${filename}`
+}
+
+/**
+ * Upload a faculty introduction video to Supabase Storage.
+ * Returns the public URL.
+ */
+export async function uploadFacultyVideo(
+  file: File,
+  facultyId: string,
+): Promise<{ success: boolean; url?: string }> {
+  const filename = `${facultyId}_${Date.now()}.${file.name.split('.').pop()}`
+
+  const { error } = await supabase.storage
+    .from(STORAGE_BUCKETS.FACULTY_VIDEOS)
+    .upload(filename, file, { upsert: true })
+
+  if (error) return { success: false }
+
+  const url = `${SUPABASE_STORAGE_BASE}/${STORAGE_BUCKETS.FACULTY_VIDEOS}/${filename}`
+
+  // Update teacher record with video filename
+  await supabase
+    .from('teachers')
+    .update({ video_filename: filename })
+    .eq('id', facultyId)
+
+  return { success: true, url }
 }

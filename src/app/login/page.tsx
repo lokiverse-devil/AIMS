@@ -4,22 +4,39 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Eye, EyeOff, GraduationCap, LogIn, ArrowLeft } from "lucide-react";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { useRouter } from "next/navigation";
+import { AuthService } from "@/services/authService";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // TODO: Connect to api/auth.ts loginUser()
-    setTimeout(() => {
-      setLoading(false);
-      // TODO: Route based on user role after successful auth
-      alert("Login integration pending — connect to Supabase Auth");
-    }, 1200);
+    setError(null);
+
+    const { success, message, data } = await AuthService.login(form.email, form.password);
+    
+    setLoading(false);
+    
+    if (!success) {
+      setError(message || "Login failed");
+      return;
+    }
+
+    // Route based on role
+    const role = data?.profile?.role;
+    if (role === "student") {
+      router.push("/dashboard/student");
+    } else if (role === "teacher" || role === "admin") {
+      router.push("/dashboard/teacher");
+    } else {
+      router.push("/");
+    }
   };
 
   return (
@@ -153,12 +170,11 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <div className="mt-4 p-3.5 rounded-xl bg-muted/60 border border-border">
-            <p className="text-xs text-muted-foreground text-center">
-              <span className="font-medium text-foreground">Demo:</span> Authentication will be enabled after Supabase integration.
-              {/* TODO: Connect Supabase Auth */}
-            </p>
-          </div>
+          {error && (
+            <div className="mt-4 p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm text-center font-medium">
+              {error}
+            </div>
+          )}
 
           <p className="text-sm text-center text-muted-foreground mt-6">
             Don&apos;t have an account?{" "}

@@ -58,11 +58,8 @@ def process_students_csv(file_bytes: bytes) -> dict[str, Any]:
             "errors": list[str],   # human-readable error messages per bad row
             "rows": list[dict]     # validated row data (ready for DB insert)
         }
-
-    TODO: Once Supabase is configured, call:
-        from supabase_client import supabase
-        supabase.table("students").insert(result["rows"]).execute()
     """
+    from supabase_client import supabase
     try:
         headers, rows = _read_csv(file_bytes)
     except Exception as exc:
@@ -115,6 +112,19 @@ def process_students_csv(file_bytes: bytes) -> dict[str, Any]:
             "branch": branch,
         })
 
+    try:
+        if valid_rows and supabase:
+            # We use upsert since roll_no is unique and might already exist
+            supabase.table("students").upsert(valid_rows, on_conflict="roll_no").execute()
+    except Exception as exc:
+        return {
+            "success": False,
+            "inserted": 0,
+            "failed": len(rows),
+            "errors": [f"Database insertion failed: {exc}"],
+            "rows": [],
+        }
+
     return {
         "success": True,
         "inserted": len(valid_rows),
@@ -147,11 +157,8 @@ def process_unit_test_csv(file_bytes: bytes) -> dict[str, Any]:
             "errors": list[str],
             "rows": list[dict]     # validated rows (ready for DB insert)
         }
-
-    TODO: Once Supabase is configured, call:
-        from supabase_client import supabase
-        supabase.table("unit_test_marks").insert(result["rows"]).execute()
     """
+    from supabase_client import supabase
     try:
         headers, rows = _read_csv(file_bytes)
     except Exception as exc:
@@ -214,6 +221,18 @@ def process_unit_test_csv(file_bytes: bytes) -> dict[str, Any]:
             "marks": marks_value,
             "semester": semester,
         })
+
+    try:
+        if valid_rows and supabase:
+            supabase.table("unit_test_marks").insert(valid_rows).execute()
+    except Exception as exc:
+        return {
+            "success": False,
+            "inserted": 0,
+            "failed": len(rows),
+            "errors": [f"Database insertion failed: {exc}"],
+            "rows": [],
+        }
 
     return {
         "success": True,

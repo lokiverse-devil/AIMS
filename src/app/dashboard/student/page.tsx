@@ -309,7 +309,7 @@ function SemesterResultsSection() {
 
         {/* CTA Button */}
         <a
-          href="#"
+          href="https://ubterex.in/"
           // TODO: Replace # with actual university result portal URL
           // e.g., https://results.university.ac.in/
           target="_blank"
