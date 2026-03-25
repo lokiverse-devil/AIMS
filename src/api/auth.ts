@@ -163,10 +163,16 @@ export async function logoutUser() {
 
 /**
  * Get the currently authenticated user along with their profile from `users` table.
+ *
+ * Uses getSession() first (reads localStorage, no network race) instead of getUser()
+ * which validates against the API on every call and can fail during initial page load.
  */
 export async function getCurrentUser(): Promise<{ user: UserProfile & { email?: string } } | null> {
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return null
+  // getSession() restores from localStorage instantly — avoids race condition on page mount
+  const { data: { session } } = await supabase.auth.getSession()
+  if (!session?.user) return null
+
+  const user = session.user
 
   const { data: profile } = await supabase
     .from('users')
