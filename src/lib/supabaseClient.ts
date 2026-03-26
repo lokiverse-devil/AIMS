@@ -16,6 +16,8 @@ export const STORAGE_BUCKETS = {
   FACULTY_VIDEOS: 'faculty-videos',
   GUIDE_VIDEOS: 'guide-videos',
   RESOURCES: 'resources',
+  STUDENT_PHOTOS: 'student-photos',
+  TEACHER_PHOTOS: 'teacher-photos',
 }
 
 export function getFacultyVideoUrl(filename: string) {

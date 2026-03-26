@@ -1,7 +1,12 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  AnimatePresence,
+} from "framer-motion";
 import Link from "next/link";
 import {
   Monitor,
@@ -366,6 +371,27 @@ export default function HomePage() {
     { id: string; data: TeamMember }[]
   >([]);
   const [uiNotices, setUiNotices] = useState<any[]>(notices);
+  
+  const [dashboardHref, setDashboardHref] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string | null>(null);
+  const [userPhoto, setUserPhoto] = useState<string | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { getCurrentUser } = await import("@/api/auth");
+        const userData = await getCurrentUser();
+        if (userData?.user) {
+          const u = userData.user;
+          const role = u.role;
+          const name = (u as any).name || u.email?.split("@")[0] || "User";
+          setDashboardHref(role === "teacher" ? "/dashboard/teacher" : "/dashboard/student");
+          setUserName(name);
+          setUserPhoto(u.photo_url || null);
+        }
+      } catch (_) {}
+    })();
+  }, []);
 
   useEffect(() => {
     async function loadNotices() {
@@ -467,18 +493,40 @@ export default function HomePage() {
               custom={3}
               className="flex flex-wrap gap-4"
             >
-              <Link
-                href="/login"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/35 hover:-translate-y-0.5 transition-all duration-200"
-              >
-                Access Dashboard <ArrowRight size={16} />
-              </Link>
-              <Link
-                href="/signup"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-border bg-card/80 backdrop-blur text-foreground font-semibold text-sm hover:border-primary/50 hover:bg-accent/30 transition-all duration-200"
-              >
-                Create Account <ChevronRight size={16} />
-              </Link>
+              {dashboardHref ? (
+                <>
+                  <Link
+                    href={dashboardHref}
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/35 hover:-translate-y-0.5 transition-all duration-200"
+                  >
+                    Go to Dashboard <ArrowRight size={16} />
+                  </Link>
+                  <div className="inline-flex items-center gap-3 px-4 py-2 rounded-xl border border-border bg-card/80 backdrop-blur text-foreground font-semibold text-sm">
+                    {userPhoto && (
+                      <div className="w-6 h-6 rounded-lg overflow-hidden border border-primary/20">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={userPhoto} alt="User" className="w-full h-full object-cover" />
+                      </div>
+                    )}
+                    Welcome back, {userName}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/35 hover:-translate-y-0.5 transition-all duration-200"
+                  >
+                    Access Dashboard <ArrowRight size={16} />
+                  </Link>
+                  <Link
+                    href="/signup"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-border bg-card/80 backdrop-blur text-foreground font-semibold text-sm hover:border-primary/50 hover:bg-accent/30 transition-all duration-200"
+                  >
+                    Create Account <ChevronRight size={16} />
+                  </Link>
+                </>
+              )}
             </motion.div>
 
             {/* Stats row */}

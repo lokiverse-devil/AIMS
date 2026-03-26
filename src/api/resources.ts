@@ -28,14 +28,20 @@ export interface TimetableEntry {
 export async function fetchResources(
   department?: string,
   semester?: string,
+  branch?: string,
 ): Promise<Resource[]> {
   let query = supabase
     .from('resources')
     .select('*')
     .order('created_at', { ascending: false })
 
-  if (department) query = query.eq('department', department)
-  if (semester) query = query.eq('semester', semester)
+  // Filter by branch if provided, fallback to department
+  if (branch) query = query.eq('department', branch)
+  else if (department) query = query.eq('department', department)
+  
+  if (semester && semester !== 'All') {
+    query = query.or(`semester.eq."${semester}",semester.eq.All`)
+  }
 
   const { data, error } = await query
   if (error) {
@@ -119,7 +125,16 @@ export async function uploadStudentCSV(
 
   const rows = lines.slice(1).map((line) => {
     const vals = line.split(',').map((v) => v.trim())
-    return Object.fromEntries(headers.map((h, i) => [h, vals[i] ?? '']))
+    const row = Object.fromEntries(headers.map((h, i) => [h, vals[i] ?? '']))
+    
+    // Normalize year
+    if (row.year) {
+      const y = row.year.toLowerCase()
+      if (y.includes('1') || y.includes('fy')) row.year = '1st Year'
+      else if (y.includes('2') || y.includes('sy')) row.year = '2nd Year'
+      else if (y.includes('3') || y.includes('ty')) row.year = '3rd Year'
+    }
+    return row
   })
 
   const validRows = rows.filter(

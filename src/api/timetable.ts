@@ -10,9 +10,18 @@ export interface Notice {
   created_at: string
 }
 
-export async function fetchNotices(audience?: string): Promise<Notice[]> {
+export async function fetchNotices(branch?: string, year?: string): Promise<Notice[]> {
   let query = supabase.from('notices').select('*').order('created_at', { ascending: false })
-  if (audience) query = query.eq('audience', audience)
+  
+  if (branch) {
+    if (year) {
+      // Matches specific combinations like "CSE – 1st Year", or broad ones like "CSE – All" / "All – All"
+      query = query.or(`audience.ilike.%${branch} ${year}%,audience.ilike.%${branch} All%,audience.ilike.%All All%,audience.eq.General Campus`)
+    } else {
+      query = query.or(`audience.ilike.%${branch}%,audience.eq.General Campus,audience.ilike.%All%`)
+    }
+  }
+  
   const { data, error } = await query
   if (error) { console.error('fetchNotices error:', error); return [] }
   return data ?? []

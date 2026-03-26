@@ -34,6 +34,8 @@ export interface UserProfile {
   department?: string
   subjects?: string[]
   semester?: string
+  photo_url?: string
+  phone?: string
   created_at: string
 }
 
@@ -181,6 +183,25 @@ export async function getCurrentUser(): Promise<{ user: UserProfile & { email?: 
     .single()
 
   if (!profile) return null
+
+  // If photo_url is missing from users (old user or not yet synced),
+  // try to fetch it from student/teacher table
+  if (!profile.photo_url || !profile.phone) {
+    if (profile.role === 'student' && profile.roll_no) {
+      const { data: sd } = await supabase.from('students').select('photo_url, phone').eq('roll_no', profile.roll_no).single()
+      if (sd) {
+        profile.photo_url = sd.photo_url || profile.photo_url
+        profile.phone = sd.phone || profile.phone
+      }
+    } else if (profile.role === 'teacher') {
+      const { data: td } = await supabase.from('teachers').select('photo_url, phone').eq('id', profile.id).single()
+      if (td) {
+        profile.photo_url = td.photo_url || profile.photo_url
+        profile.phone = td.phone || profile.phone
+      }
+    }
+  }
+
   return { user: { ...profile, email: user.email } }
 }
 

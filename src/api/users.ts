@@ -9,6 +9,8 @@ export interface UserProfile {
   department?: string
   semester?: string
   email?: string
+  photo_url?: string
+  phone?: string
   created_at: string
 }
 
@@ -18,6 +20,10 @@ export interface Student {
   name: string
   year: string
   branch: string
+  phone?: string
+  section?: string
+  photo_url?: string
+  semester?: string
   created_at?: string
 }
 
@@ -49,6 +55,42 @@ export async function updateUserProfile(
     .from('users')
     .update(updates)
     .eq('id', userId)
+    .select()
+    .single()
+
+  if (error) return { data: null, error }
+  return { data, error: null }
+}
+
+/**
+ * Update a student's profile in the `students` table (phone, photo_url, etc.)
+ */
+export async function updateStudentProfile(
+  rollNo: string,
+  updates: Partial<Pick<Student, 'phone' | 'photo_url' | 'section' | 'name'>>,
+): Promise<{ data: Student | null; error: Error | null }> {
+  const { data, error } = await supabase
+    .from('students')
+    .update(updates)
+    .eq('roll_no', rollNo)
+    .select()
+    .single()
+
+  if (error) return { data: null, error }
+  return { data, error: null }
+}
+
+/**
+ * Update a teacher's profile in the `teachers` table (phone, photo_url, designation, etc.)
+ */
+export async function updateTeacherProfile(
+  teacherId: string,
+  updates: Partial<{ phone: string; photo_url: string; designation: string; name: string }>,
+): Promise<{ data: any; error: Error | null }> {
+  const { data, error } = await supabase
+    .from('teachers')
+    .update(updates)
+    .eq('id', teacherId)
     .select()
     .single()
 
