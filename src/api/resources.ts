@@ -40,7 +40,8 @@ export async function fetchResources(
   else if (department) query = query.eq('department', department)
   
   if (semester && semester !== 'All') {
-    query = query.or(`semester.eq."${semester}",semester.eq.All`)
+    const formattedSemester = semester.includes('Semester') ? semester : `${semester} Semester`
+    query = query.or(`semester.eq."${formattedSemester}",semester.eq.All`)
   }
 
   const { data, error } = await query

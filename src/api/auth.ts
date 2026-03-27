@@ -148,8 +148,9 @@ export async function signupTeacher(formData: SignupTeacherData) {
   })
   if (teachersError) return { data: null, error: teachersError }
 
-  // Mark access key as used
-  await supabase.from('teacher_keys').update({ used: true }).eq('key', formData.teacherAccessKey)
+  // Mark access key as used and link to the teacher
+  const { error: keyUpdateError } = await supabase.from('teacher_keys').update({ used: true, used_by: userId }).eq('key', formData.teacherAccessKey)
+  if (keyUpdateError) console.error("Failed to update teacher key:", keyUpdateError)
 
   return { data, error: null }
 }

@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 type Role = "student" | "teacher";
 
 const branches = ["CSE", "IT", "ELEX"];
-const semesters = ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th"];
+const semesters = ["1st", "2nd", "3rd", "4th", "5th", "6th"];
 const departments = ["Computer Science Engineering", "Information Technology", "Electronics Engineering"];
 
 // Shared class for all <select> elements
@@ -26,7 +26,6 @@ export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
 
   const [studentForm, setStudentForm] = useState({
     name: "", rollNumber: "", branch: "", semester: "", email: "", password: ""
@@ -45,7 +44,7 @@ export default function SignupPage() {
       const { data, error: err } = await signupStudent({ ...studentForm, role: "student" });
       setLoading(false);
       if (err) { setError(err.message); return; }
-      if (data) setSuccess(true);
+      if (data) router.push("/dashboard/student");
     } else {
       const { data, error: err } = await signupTeacher({
         ...teacherForm,
@@ -53,35 +52,9 @@ export default function SignupPage() {
       });
       setLoading(false);
       if (err) { setError(err.message); return; }
-      if (data) setSuccess(true);
+      if (data) router.push("/dashboard/teacher");
     }
   };
-
-  if (success) {
-    return (
-      <div className="min-h-screen bg-background aims-grid-bg flex items-center justify-center px-4">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="max-w-md w-full p-8 rounded-2xl border border-border bg-card text-center shadow-sm"
-        >
-          <div className="w-14 h-14 rounded-2xl bg-emerald-500/15 flex items-center justify-center mx-auto mb-4">
-            <UserPlus size={24} className="text-emerald-500" />
-          </div>
-          <h2 className="text-xl font-bold text-foreground mb-2">Account created!</h2>
-          <p className="text-sm text-muted-foreground mb-6">
-            Check your email to verify your address, then sign in to access your dashboard.
-          </p>
-          <Link
-            href="/login"
-            className="w-full py-2.5 px-5 rounded-xl bg-primary text-primary-foreground font-semibold text-sm inline-block hover:-translate-y-0.5 transition-all shadow-md shadow-primary/25"
-          >
-            Go to Sign In
-          </Link>
-        </motion.div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-background aims-grid-bg">
