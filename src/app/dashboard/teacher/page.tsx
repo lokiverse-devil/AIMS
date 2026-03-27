@@ -1014,6 +1014,49 @@ function ProfileSection({ teacher }: { teacher: TeacherProfile }) {
   const [uploading, setUploading] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
+  const [localSubjects, setLocalSubjects] = useState<string[]>(teacher.subjects || []);
+  const [isManagingSubjects, setIsManagingSubjects] = useState(false);
+  const [availableData, setAvailableData] = useState<any[]>([]);
+  const [selectedSubjects, setSelectedSubjects] = useState<string[]>(teacher.subjects || []);
+  const [savingSubjects, setSavingSubjects] = useState(false);
+  const [activeBranch, setActiveBranch] = useState<string>("");
+
+  const handleManageSubjects = async () => {
+    setIsManagingSubjects(true);
+    setSelectedSubjects([...localSubjects]);
+    if (availableData.length === 0) {
+      try {
+        const { fetchBranchesAndSubjects } = await import("@/api/subjects");
+        const data = await fetchBranchesAndSubjects();
+        setAvailableData(data);
+        if (data.length > 0) setActiveBranch(data[0].code);
+      } catch (err) { console.error(err); }
+    }
+  };
+
+  const saveSubjects = async () => {
+    setSavingSubjects(true);
+    try {
+      const { updateTeacherSubjects } = await import("@/api/subjects");
+      const { success } = await updateTeacherSubjects(teacher.id, selectedSubjects);
+      if (success) {
+        setLocalSubjects([...selectedSubjects]);
+        setIsManagingSubjects(false);
+      } else {
+        alert("Failed to save subjects.");
+      }
+    } catch (err) { console.error(err); }
+    setSavingSubjects(false);
+  };
+
+  const toggleSubject = (subjectName: string) => {
+    if (selectedSubjects.includes(subjectName)) {
+      setSelectedSubjects(prev => prev.filter(s => s !== subjectName));
+    } else {
+      setSelectedSubjects(prev => [...prev, subjectName]);
+    }
+  };
+
   const handlePhoto = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -1118,10 +1161,15 @@ function ProfileSection({ teacher }: { teacher: TeacherProfile }) {
                 </div>
               </div>
 
-              <div className="p-6 rounded-3xl bg-muted/40 border border-border/50 space-y-3">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Active Subjects</p>
+              <div className="p-6 rounded-3xl bg-muted/40 border border-border/50 space-y-3 relative">
+                <div className="flex items-center justify-between">
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Active Subjects</p>
+                  <button onClick={handleManageSubjects} className="px-4 py-2 bg-primary text-primary-foreground rounded-xl text-xs font-bold hover:shadow-lg hover:-translate-y-0.5 transition-all flex items-center gap-2 shadow-sm">
+                    <Edit2 size={14}/> Manage Subjects
+                  </button>
+                </div>
                 <div className="flex flex-wrap gap-2">
-                  {teacher.subjects.length > 0 ? teacher.subjects.map(s => (
+                  {localSubjects.length > 0 ? localSubjects.map(s => (
                     <span key={s} className="px-3.5 py-1.5 rounded-xl bg-card border border-border/50 text-primary text-xs font-bold shadow-sm">
                       {s}
                     </span>
@@ -1189,6 +1237,83 @@ function ProfileSection({ teacher }: { teacher: TeacherProfile }) {
           </button>
         </div>
       </div>
+
+      <AnimatePresence>
+        {isManagingSubjects && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+            <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onClick={() => !savingSubjects && setIsManagingSubjects(false)} className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
+            <motion.div initial={{opacity:0, scale:0.95, y:20}} animate={{opacity:1, scale:1, y:0}} exit={{opacity:0, scale:0.95, y:20}} className="relative w-full max-w-4xl max-h-[90vh] flex flex-col bg-card border border-border/60 rounded-[2.5rem] shadow-2xl overflow-hidden">
+              
+              <div className="p-6 sm:p-8 flex items-center justify-between border-b border-border/50 bg-muted/30">
+                <div>
+                  <h3 className="text-2xl font-bold text-foreground tracking-tight">Manage Teaching Subjects</h3>
+                  <p className="text-sm text-muted-foreground font-medium mt-1">Select the subjects you teach across all branches.</p>
+                </div>
+                <button disabled={savingSubjects} onClick={() => setIsManagingSubjects(false)} className="w-10 h-10 rounded-full bg-muted flex items-center justify-center hover:bg-muted-foreground/20 transition-all text-muted-foreground">
+                  <X size={18}/>
+                </button>
+              </div>
+
+              <div className="flex flex-1 overflow-hidden min-h-[400px] flex-col sm:flex-row">
+                {/* Branch Sidebar */}
+                <div className="w-full sm:w-64 border-r border-border/50 bg-muted/10 overflow-y-auto p-4 space-y-2 border-b sm:border-b-0 max-h-48 sm:max-h-full">
+                  {availableData.length === 0 ? (
+                    <div className="flex justify-center p-8"><Loader2 className="animate-spin text-primary" size={24}/></div>
+                  ) : (
+                    availableData.map(branch => (
+                      <button key={branch.code} onClick={() => setActiveBranch(branch.code)}
+                        className={`w-full text-left px-4 py-3 rounded-2xl text-sm font-bold transition-all flex items-center justify-between ${activeBranch === branch.code ? "bg-primary text-primary-foreground shadow-md shadow-primary/20" : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"}`}>
+                        <span className="truncate pr-2">{branch.name}</span>
+                      </button>
+                    ))
+                  )}
+                </div>
+
+                {/* Subjects Grid */}
+                <div className="flex-1 overflow-y-auto p-6 sm:p-8 bg-card/50">
+                  {availableData.find(b => b.code === activeBranch)?.subjects?.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {availableData.find(b => b.code === activeBranch)?.subjects.map((sub: any) => {
+                        const isSelected = selectedSubjects.includes(sub.name);
+                        return (
+                          <div key={sub.id} onClick={() => toggleSubject(sub.name)}
+                            className={`p-4 rounded-2xl border-2 transition-all cursor-pointer flex gap-3 ${isSelected ? "border-primary bg-primary/5 shadow-sm" : "border-border/40 hover:border-primary/40 bg-card hover:bg-muted/20"}`}>
+                            <div className={`mt-0.5 w-5 h-5 rounded flex items-center justify-center flex-shrink-0 transition-colors ${isSelected ? "bg-primary text-primary-foreground" : "border-2 border-muted-foreground/30"}`}>
+                              {isSelected && <Check size={14} strokeWidth={3}/>}
+                            </div>
+                            <div>
+                              <p className={`text-sm font-bold leading-tight ${isSelected ? "text-foreground" : "text-muted-foreground"}`}>{sub.name}</p>
+                              <div className="flex items-center gap-2 mt-2">
+                                {sub.code && <span className="text-[10px] font-bold text-muted-foreground px-2 py-0.5 rounded-md bg-muted/50 uppercase">{sub.code}</span>}
+                                {sub.semester && <span className="text-[10px] font-bold text-primary/80 px-2 py-0.5 rounded-md bg-primary/10">Sem {sub.semester}</span>}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <EmptyState text="No subjects found for this branch." />
+                  )}
+                </div>
+              </div>
+
+              <div className="p-6 border-t border-border/50 bg-muted/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+                  <span className="text-primary">{selectedSubjects.length}</span> Subjects Selected Globally
+                </p>
+                <div className="flex gap-3 w-full sm:w-auto">
+                  <button disabled={savingSubjects} onClick={() => setIsManagingSubjects(false)} className="flex-1 sm:flex-none px-6 py-3 rounded-xl bg-card border border-border font-bold text-sm text-muted-foreground hover:bg-accent hover:text-foreground transition-all">Cancel</button>
+                  <button disabled={savingSubjects} onClick={saveSubjects} className="flex-1 sm:flex-none px-8 py-3 rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:shadow-lg hover:shadow-primary/20 transition-all flex items-center justify-center gap-2">
+                    {savingSubjects ? <><Loader2 size={16} className="animate-spin"/> Saving...</> : <><Check size={16}/> Save Updates</>}
+                  </button>
+                </div>
+              </div>
+
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

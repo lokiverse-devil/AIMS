@@ -33,7 +33,7 @@ export default function SignupPage() {
   });
 
   const [teacherForm, setTeacherForm] = useState({
-    name: "", department: "", subjects: "", email: "", password: "", teacherAccessKey: ""
+    name: "", department: "", email: "", password: "", teacherAccessKey: ""
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -49,7 +49,6 @@ export default function SignupPage() {
     } else {
       const { data, error: err } = await signupTeacher({
         ...teacherForm,
-        subjects: teacherForm.subjects.split(",").map((s) => s.trim()).filter(Boolean),
         role: "teacher",
       });
       setLoading(false);
@@ -267,17 +266,7 @@ export default function SignupPage() {
                       </div>
                     </div>
 
-                    <div className="space-y-1.5">
-                      <label className="text-sm font-medium text-foreground">Subjects Taught *</label>
-                      <input
-                        required
-                        value={teacherForm.subjects}
-                        onChange={(e) => setTeacherForm({ ...teacherForm, subjects: e.target.value })}
-                        placeholder="e.g. Data Structures, Algorithms, Discrete Math"
-                        className="w-full px-4 py-2.5 rounded-xl border border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
-                      />
-                      <p className="text-xs text-muted-foreground">Separate multiple subjects with commas.</p>
-                    </div>
+
 
                     <div className="space-y-1.5">
                       <label className="text-sm font-medium text-foreground">Email Address *</label>

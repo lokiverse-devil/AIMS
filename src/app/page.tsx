@@ -375,6 +375,7 @@ export default function HomePage() {
   const [dashboardHref, setDashboardHref] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
   const [userPhoto, setUserPhoto] = useState<string | null>(null);
+  const [bgVideoUrl, setBgVideoUrl] = useState<string>("/assets/college/it.block.mp4");
 
   useEffect(() => {
     (async () => {
@@ -426,6 +427,17 @@ export default function HomePage() {
       .catch(() => {});
   }, []);
 
+  useEffect(() => {
+    fetch("/assets/media.json")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.videos?.itBlockBg) {
+          setBgVideoUrl(data.videos.itBlockBg);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -437,7 +449,7 @@ export default function HomePage() {
         {/* Background Video */}
         <video
           className="absolute inset-0 w-full h-full object-cover z-0"
-          src="/assets/college/it.block.mp4"
+          src={bgVideoUrl}
           autoPlay
           loop
           muted
@@ -447,11 +459,6 @@ export default function HomePage() {
 
         {/* Gradient & grid overlays */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/15 z-[2]" />
-        <div className="absolute inset-0 aims-hero-overlay z-[3]" />
-
-        {/* Decorative circles */}
-        <div className="absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full bg-primary/5 blur-1xl z-[2]" />
-        <div className="absolute -bottom-32 -left-32 w-[500px] h-[500px] rounded-full bg-accent/15 blur-1xl z-[2]" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 pt-48">
           <motion.div
@@ -461,30 +468,40 @@ export default function HomePage() {
             animate="visible"
             className="max-w-4xl"
           >
-            <motion.div variants={fadeUp} custom={0}>
-              <SectionLabel>IT BLOCK X AIMS</SectionLabel>
+            <motion.div variants={fadeUp} custom={0} className="mb-3">
+              <span className="inline-flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/5">
+                <div className="h-0.5 w-6 aims-accent-bar rounded-full" />
+                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-primary [text-shadow:0_2px_4px_rgba(0,0,0,0.8)]">
+                  IT BLOCK X AIMS
+                </span>
+                <div className="h-0.5 w-6 aims-accent-bar rounded-full" />
+              </span>
             </motion.div>
 
             <motion.h1
               variants={fadeUp}
               custom={1}
-              className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground leading-[1.08] tracking-tight mb-6 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+              className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.15] tracking-tight mb-7"
             >
-              Welcome to{" "}
-              <span className="relative inline-block">
-                <span className="text-primary drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">IT BLOCK: UGIP KASHIPUR</span>
-                <span className="absolute -bottom-1 left-0 right-0 h-0.5 aims-accent-bar rounded-full shadow-lg shadow-primary/50" />
+              <span className="bg-black/30 text-white px-3 py-1 rounded-xl box-decoration-clone backdrop-blur-md [text-shadow:0_2px_10px_rgba(0,0,0,0.6)]">
+                Welcome to{" "}
+                <span className="relative inline-block text-primary">
+                  IT BLOCK: UGIP KASHIPUR
+                  <span className="absolute -bottom-2 left-0 right-0 h-1 aims-accent-bar rounded-full shadow-lg shadow-primary/50" />
+                </span>
               </span>
             </motion.h1>
 
             <motion.p
               variants={fadeUp}
               custom={2}
-              className="text-lg sm:text-xl text-white/90 leading-relaxed max-w-2xl mb-10 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] font-medium"
+              className="text-lg sm:text-xl leading-[1.65] max-w-2xl mb-10 font-medium"
             >
-              A part of government polytechnic kashipur with collboration of aims a centralized platform for managing academic block infrastructure,
-              faculty information, student services, labs, resources, scheduling,
-              and visitor assistance — all in one elegant system.
+              <span className="bg-black/40 text-white/95 px-3 py-1 rounded-lg box-decoration-clone backdrop-blur-md [text-shadow:0_1px_3px_rgba(0,0,0,0.8)]">
+                A part of government polytechnic kashipur with collboration of aims a centralized platform for managing academic block infrastructure,
+                faculty information, student services, labs, resources, scheduling,
+                and visitor assistance — all in one elegant system.
+              </span>
             </motion.p>
 
             <motion.div

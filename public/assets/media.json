@@ -1,0 +1,33 @@
+{
+  "videos": {
+    "itBlockBg": "https://res.cloudinary.com/ds98shuih/video/upload/f_auto,q_auto/v1774628012/it.block_bu0bvl.mp4",
+    "unnamed": "/assets/college/.mp4"
+  },
+  "images": {
+    "college": {
+      "cse": "/assets/college/cse.jpg",
+      "elex": "/assets/college/elex.jpg",
+      "it": "/assets/college/it.jpg",
+      "itBlock": "/assets/college/it_block.jpeg",
+      "itBlockPng": "/assets/college/it_block.png"
+    },
+    "faculty": {
+      "arya": "/assets/faculty/arya.jpeg",
+      "ashok": "/assets/faculty/ashok.jpg",
+      "bora": "/assets/faculty/bora.jpg",
+      "bp": "/assets/faculty/bp.jpeg",
+      "mannu": "/assets/faculty/mannu.jpg",
+      "manoj": "/assets/faculty/manoj.jpg",
+      "pandey": "/assets/faculty/pandey.jpg",
+      "viren": "/assets/faculty/viren.jpg"
+    },
+    "team": {
+      "anshikaGulati": "/assets/team/anshika-gulati.jpg",
+      "ashish": "/assets/team/ashish.jpg",
+      "ko": "/assets/team/ko.png",
+      "om": "/assets/team/om.jpg",
+      "pushpanjaliRawat": "/assets/team/pushpanjali-rawat.jpg",
+      "tanujaKurya": "/assets/team/tanuja-kurya.jpg"
+    }
+  }
+}
