@@ -18,7 +18,6 @@ export interface SignupStudentData {
 export interface SignupTeacherData {
   name: string
   department: string
-  subjects: string[]
   email: string
   password: string
   teacherAccessKey: string
@@ -144,7 +143,7 @@ export async function signupTeacher(formData: SignupTeacherData) {
     id: userId,
     name: formData.name,
     department: formData.department,
-    subjects: formData.subjects,
+    subjects: [],
     email: formData.email,
   })
   if (teachersError) return { data: null, error: teachersError }
@@ -184,22 +183,29 @@ export async function getCurrentUser(): Promise<{ user: UserProfile & { email?: 
 
   if (!profile) return null
 
-  // If photo_url is missing from users (old user or not yet synced),
+  // If name, photo_url or phone is missing from users (old user or not yet synced),
   // try to fetch it from student/teacher table
-  if (!profile.photo_url || !profile.phone) {
+  if (!profile.name || !profile.photo_url || !profile.phone) {
     if (profile.role === 'student' && profile.roll_no) {
-      const { data: sd } = await supabase.from('students').select('photo_url, phone').eq('roll_no', profile.roll_no).single()
+      const { data: sd } = await supabase.from('students').select('name, photo_url, phone').eq('roll_no', profile.roll_no).single()
       if (sd) {
+        profile.name = sd.name || profile.name
         profile.photo_url = sd.photo_url || profile.photo_url
         profile.phone = sd.phone || profile.phone
       }
     } else if (profile.role === 'teacher') {
-      const { data: td } = await supabase.from('teachers').select('photo_url, phone').eq('id', profile.id).single()
+      const { data: td } = await supabase.from('teachers').select('name, photo_url, phone').eq('id', profile.id).single()
       if (td) {
+        profile.name = td.name || profile.name
         profile.photo_url = td.photo_url || profile.photo_url
         profile.phone = td.phone || profile.phone
       }
     }
+  }
+
+  // Fallback to auth metadata name if not in database
+  if (!profile.name && user.user_metadata?.name) {
+    profile.name = user.user_metadata.name;
   }
 
   return { user: { ...profile, email: user.email } }

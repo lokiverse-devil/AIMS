@@ -1,0 +1,133 @@
+{
+"branches": [
+{
+"name": "Computer Science & Engineering",
+"code": "05",
+"semesters": {
+"semester_1": [
+{"code": "991001", "name": "English and Communication Skills -I"},
+{"code": "991002", "name": "Applied Mathematics –I"},
+{"code": "991003", "name": "Applied Physics -I"},
+{"code": "991004", "name": "Applied Chemistry –I"},
+{"code": "991005", "name": "Computer Fundamentals"},
+{"code": "991006", "name": "Engineering Graphics –I"},
+{"code": "991007", "name": "General Workshop Practice -I"},
+{"code": "991051", "name": "General Proficiency#"},
+{"code": "991052", "name": "Industrial Exposure (Assessment at Inst. Level)+"}
+],
+"semester_2": [
+{"code": "992001", "name": "English and Communication Skills –II"},
+{"code": "992002", "name": "Applied Mathematics –II"},
+{"code": "992003", "name": "Applied Physics –II"},
+{"code": "992004", "name": "Applied Chemistry –II"},
+{"code": "992005", "name": "Environmental Science & Energy Management"},
+{"code": "992006", "name": "Engineering Graphics–II"},
+{"code": "992007", "name": "General Workshop Practice -II"},
+{"code": "992051", "name": "General Proficiency#"},
+{"code": "992052", "name": "Industrial Exposure (Assessment at Inst. Level)+"}
+],
+"semester_3": [
+{"code": "053.1", "name": "PROGRAMMING IN C"},
+{"code": "053.2", "name": "DIGITAL TECHNIQUES"},
+{"code": "053.3", "name": "OPERATING SYSTEM"},
+{"code": "053.4", "name": "INTERNET OF THINGS"},
+{"code": "053.6", "name": "OFFICE APPLICATION"},
+{"code": "053002", "name": "DATA COMMUNICATION"}
+],
+"semester_4": [],
+"semester_5": [],
+"semester_6": [
+{"code": null, "name": "Optical Fibre Communication"},
+{"code": null, "name": "Mobile Communication"},
+{"code": null, "name": "Microcontrollers and Embedded System"},
+{"code": null, "name": "PLC & Its Application"},
+{"code": null, "name": "Major Project - II"},
+{"code": null, "name": "Employability Skills"},
+{"code": null, "name": "General Proficiency"}
+]
+}
+},
+{
+"name": "Information Technology",
+"code": "12",
+"semesters": {
+"semester_1": [
+{"code": "991001", "name": "ENGLISH AND COMMUNICATION SKILLS-I"},
+{"code": "991002", "name": "APPLIED MATHEMATICS-I"},
+{"code": "991003", "name": "APPLIED PHYSICS-I"},
+{"code": "991004", "name": "APPLIED CHEMISTRY-I"},
+{"code": "991005", "name": "COMPUTER FUNDAMENTALS"},
+{"code": "991006", "name": "ENGINEERING DRAWING-I"},
+{"code": "991007", "name": "GENERAL WORKSHOP PRACTICE-1"},
+{"code": "991051", "name": "DISC/GAME/SCA/NCC/NSS#"}
+],
+"semester_2": [
+{"code": "992001", "name": "ENGLISH AND COMMUNICATION SKILLS-II"},
+{"code": "992002", "name": "APPLIED MATHEMATICS-II"},
+{"code": "992003", "name": "APPLIED PHYSICS-II"},
+{"code": "992004", "name": "APPLIED CHEMISTRY-II"},
+{"code": "992006", "name": "ENGINEERING GRAPHICS- II"},
+{"code": "992007", "name": "GENERAL WORKSHOP PRACTICE-II"},
+{"code": "992051", "name": "DISC / GAME / SCA / NCC / NSS #"},
+{"code": "992052", "name": "INDUSTRIAL EXPOSURE(ASSIGNMENT AT INSTITUTE LEVEL)"}
+],
+"semester_3": [
+{"code": "123001", "name": "PROGRAMMING IN C"},
+{"code": "123002", "name": "DIGITAL TECHNIQUES"},
+{"code": "123003", "name": "OPERATING SYSTEM"},
+{"code": "123004", "name": "INTERNET OF THINGS"},
+{"code": "123005", "name": "DIGITAL DATA COMMUNICATION"},
+{"code": "123006", "name": "OFFICE APPLICATION"}
+],
+"semester_4": [],
+"semester_5": [],
+"semester_6": []
+}
+},
+{
+"name": "Electronics Engineering",
+"code": "09",
+"semesters": {
+"semester_1": [
+{"code": "991001", "name": "English and Communication Skills -I"},
+{"code": "991002", "name": "Applied Mathematics –I"},
+{"code": "991003", "name": "Applied Physics -I"},
+{"code": "991004", "name": "Applied Chemistry –I"},
+{"code": "991005", "name": "Computer Fundamentals"},
+{"code": "991006", "name": "Engineering Graphics –I"},
+{"code": "991007", "name": "General Workshop Practice -I"},
+{"code": "991051", "name": "General Proficiency#"},
+{"code": "991052", "name": "Industrial Exposure (Assessment at Inst. Level)+"}
+],
+"semester_2": [
+{"code": "992001", "name": "English and Communication Skills –II"},
+{"code": "992002", "name": "Applied Mathematics –II"},
+{"code": "992003", "name": "Applied Physics –II"},
+{"code": "992004", "name": "Applied Chemistry –II"},
+{"code": "992005", "name": "Environmental Science & Energy Management"},
+{"code": "992006", "name": "Engineering Graphics–II"},
+{"code": "992007", "name": "General Workshop Practice -II"},
+{"code": "992051", "name": "General Proficiency#"},
+{"code": "992052", "name": "Industrial Exposure (Assessment at Inst. Level)+"}
+],
+"semester_3": [
+{"code": "093003", "name": "BASIC OF C PROGRAMMING"},
+{"code": "093004", "name": "BASICS OF ELECTRICAL ENGINEERING AND MACHINERY"},
+{"code": "093005", "name": "COMMUNICATION ENGINEERING"},
+{"code": "323.2", "name": "ANALOG ELECTRONICS"},
+{"code": "323.3", "name": "DIGITAL ELECTRONICS"}
+],
+"semester_4": [],
+"semester_5": [],
+"semester_6": [
+{"code": "096003", "name": "Optical Fibre Communication"},
+{"code": "096002", "name": "Mobile Communication"},
+{"code": "096001", "name": "Microcontrollers and Embedded System"},
+{"code": "096004", "name": "PLC & Its Application"},
+{"code": "096005", "name": "Major Project - II"},
+{"code": null, "name": "Employability Skills"},
+{"code": null, "name": "General Proficiency"}
+]
+}
+}
+] }
