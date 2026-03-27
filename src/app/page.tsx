@@ -437,26 +437,25 @@ export default function HomePage() {
         {/* Background Video */}
         <video
           className="absolute inset-0 w-full h-full object-cover z-0"
-          src="/assets/college/it_block.mp4"
+          src="/assets/college/it.block.mp4"
           autoPlay
           loop
           muted
           playsInline
         />
 
-        {/* Translucent dark overlay over video */}
-        <div className="absolute inset-0 bg-black/55 z-[1]" />
 
         {/* Gradient & grid overlays */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/15 z-[2]" />
         <div className="absolute inset-0 aims-hero-overlay z-[3]" />
 
         {/* Decorative circles */}
-        <div className="absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full bg-primary/5 blur-3xl z-[2]" />
-        <div className="absolute -bottom-32 -left-32 w-[500px] h-[500px] rounded-full bg-accent/15 blur-3xl z-[2]" />
+        <div className="absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full bg-primary/5 blur-1xl z-[2]" />
+        <div className="absolute -bottom-32 -left-32 w-[500px] h-[500px] rounded-full bg-accent/15 blur-1xl z-[2]" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 pt-48">
           <motion.div
+          
             variants={stagger}
             initial="hidden"
             animate="visible"
@@ -469,19 +468,19 @@ export default function HomePage() {
             <motion.h1
               variants={fadeUp}
               custom={1}
-              className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground leading-[1.08] tracking-tight mb-6"
+              className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground leading-[1.08] tracking-tight mb-6 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
             >
               Welcome to{" "}
               <span className="relative inline-block">
-                <span className="text-primary">IT BLOCK: UGIP KASHIPUR</span>
-                <span className="absolute -bottom-1 left-0 right-0 h-0.5 aims-accent-bar rounded-full" />
+                <span className="text-primary drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">IT BLOCK: UGIP KASHIPUR</span>
+                <span className="absolute -bottom-1 left-0 right-0 h-0.5 aims-accent-bar rounded-full shadow-lg shadow-primary/50" />
               </span>
             </motion.h1>
 
             <motion.p
               variants={fadeUp}
               custom={2}
-              className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mb-10"
+              className="text-lg sm:text-xl text-white/90 leading-relaxed max-w-2xl mb-10 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] font-medium"
             >
               A part of government polytechnic kashipur with collboration of aims a centralized platform for managing academic block infrastructure,
               faculty information, student services, labs, resources, scheduling,
@@ -970,42 +969,43 @@ export default function HomePage() {
                   key={member.id}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
+                  whileHover={{ y: -12, transition: { duration: 0.4, ease: "easeOut" } }}
                   transition={{ delay: i * 0.1, duration: 0.5, type: "spring", stiffness: 100 }}
                   viewport={{ once: true }}
-                  className={`group relative rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-2 flex flex-col items-center shadow-lg hover:shadow-2xl bg-card border h-full ${colors.border} ${colors.hoverBorder} ${member.data.github ? "cursor-pointer" : ""}`}
+                  className={`group relative rounded-[2.5rem] overflow-hidden transition-all duration-500 flex flex-col items-center shadow-xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.2)] dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)] bg-card border-2 h-full ${colors.border} ${colors.hoverBorder} ${member.data.github ? "cursor-pointer" : ""}`}
                 >
                   {/* Shimmer effect on hover */}
-                  <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:animate-shimmer z-10 pointer-events-none" />
+                  <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:animate-shimmer z-10 pointer-events-none" />
 
                   {/* Glassmorphism Background Base */}
-                  <div className="absolute inset-0 bg-background/40 backdrop-blur-md z-0" />
+                  <div className="absolute inset-0 bg-background/20 backdrop-blur-2xl z-0" />
 
                   {/* Glowing gradient blob behind card content */}
                   <div
-                    className={`absolute inset-0 bg-gradient-to-br ${colors.gradient} opacity-40 group-hover:opacity-100 transition-opacity duration-500 z-0`}
+                    className={`absolute inset-0 bg-gradient-to-br ${colors.gradient} opacity-20 group-hover:opacity-60 transition-opacity duration-700 z-0`}
                   />
 
-                  {/* Top accent bar */}
-                  <div className={`absolute top-0 left-0 w-full h-1.5 ${colors.accentBg} z-10`} />
+                  {/* Top accent bar with glow */}
+                  <div className={`absolute top-0 left-0 w-full h-2 ${colors.accentBg} z-10 shadow-[0_0_15px_${colors.accentBg}]`} />
 
                   {/* Leader crown badge */}
                   {isLeader && (
-                    <div className={`absolute top-4 right-4 w-9 h-9 rounded-full ${colors.accentBg} flex items-center justify-center shadow-lg shadow-${colors.accentBg}/30 z-20`}>
-                      <Crown size={16} className={colors.accentText} />
+                    <div className={`absolute top-6 right-6 w-11 h-11 rounded-2xl ${colors.accentBg} flex items-center justify-center shadow-xl shadow-${colors.accentBg}/40 z-20 transform rotate-12 group-hover:rotate-0 transition-transform duration-300`}>
+                      <Crown size={20} className={colors.accentText} />
                     </div>
                   )}
 
                   <div className="relative z-10 w-full p-8 flex flex-col items-center">
                     {/* Avatar Container with pulse ring on hover */}
-                    <div className="relative mb-6">
-                      <div className={`absolute inset-0 rounded-full bg-gradient-to-tr ${colors.gradient} blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500 scale-110`} />
+                    <div className="relative mb-8">
+                      <div className={`absolute inset-0 rounded-full bg-gradient-to-tr ${colors.gradient} blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 scale-125`} />
                       <div
-                        className={`relative w-28 h-28 rounded-full border-[3px] overflow-hidden transition-all duration-300 ${colors.border} group-hover:border-transparent bg-background shadow-inner`}
+                        className={`relative w-32 h-32 rounded-full border-[4px] overflow-hidden transition-all duration-500 ${colors.border} group-hover:border-white bg-background shadow-2xl scale-100 group-hover:scale-105`}
                       >
                         <img
                           src={`/assets/team/${member.data.image}`}
                           alt={member.data.name}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                          className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                         />
                       </div>
                     </div>
@@ -1031,10 +1031,10 @@ export default function HomePage() {
                         return (
                           <div
                             key={role}
-                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl ${roleBadgeColors.badge} ${roleBadgeColors.badgeText} text-xs font-semibold capitalize border border-[color:var(--tw-border-opacity)] ${roleBadgeColors.border} backdrop-blur-sm transition-colors group-hover:bg-opacity-20`}
+                            className={`flex items-center gap-2 px-4 py-2 rounded-2xl ${roleBadgeColors.badge} ${roleBadgeColors.badgeText} text-[11px] font-bold capitalize border-2 border-transparent hover:border-[color:var(--tw-border-opacity)] ${roleBadgeColors.border} backdrop-blur-xl transition-all duration-300 group-hover:shadow-lg group-hover:shadow-${roleBadgeColors.accentBg}/10`}
                           >
-                            <RoleIcon size={12} />
-                            <span>{role.trim().replace(/-/g, " ")}</span>
+                            <RoleIcon size={14} className="opacity-80" />
+                            <span className="tracking-tight">{role.trim().replace(/-/g, " ")}</span>
                           </div>
                         );
                       })}
