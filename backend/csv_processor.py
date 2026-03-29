@@ -41,14 +41,14 @@ def _missing_columns(required: list[str], actual: list[str]) -> list[str]:
 
 # ─── Student CSV Processor ────────────────────────────────────────────────────
 
-STUDENT_REQUIRED_COLUMNS = ["roll_no", "name", "year", "branch"]
+STUDENT_REQUIRED_COLUMNS = ["roll_no", "name", "semester", "branch"]
 
 
 def process_students_csv(file_bytes: bytes) -> dict[str, Any]:
     """
     Parse a student list CSV.
 
-    Expected columns: roll_no, name, year, branch
+    Expected columns: roll_no, name, semester, branch
 
     Returns:
         {
@@ -87,7 +87,7 @@ def process_students_csv(file_bytes: bytes) -> dict[str, Any]:
     for idx, row in enumerate(rows, start=2):  # start=2 accounts for header row
         roll_no = row.get("roll_no", "").strip()
         name = row.get("name", "").strip()
-        year = row.get("year", "").strip()
+        semester = row.get("semester", "").strip()
         branch = row.get("branch", "").strip()
 
         row_errors: list[str] = []
@@ -96,8 +96,10 @@ def process_students_csv(file_bytes: bytes) -> dict[str, Any]:
             row_errors.append("roll_no is empty")
         if not name:
             row_errors.append("name is empty")
-        if not year:
-            row_errors.append("year is empty")
+        if not semester:
+            row_errors.append("semester is empty")
+        elif semester not in ["1", "2", "3", "4", "5", "6"]:
+            row_errors.append(f"semester must be 1-6, got '{semester}'")
         if not branch:
             row_errors.append("branch is empty")
 
@@ -108,7 +110,7 @@ def process_students_csv(file_bytes: bytes) -> dict[str, Any]:
         valid_rows.append({
             "roll_no": roll_no,
             "name": name,
-            "year": year,
+            "semester": semester,
             "branch": branch,
         })
 
@@ -147,6 +149,7 @@ def process_unit_test_csv(file_bytes: bytes) -> dict[str, Any]:
 
     Validation rules:
       - roll_no, subject, semester must be non-empty strings
+      - semester must be 1-6
       - marks must be a non-negative integer
 
     Returns:
@@ -197,6 +200,8 @@ def process_unit_test_csv(file_bytes: bytes) -> dict[str, Any]:
             row_errors.append("subject is empty")
         if not semester:
             row_errors.append("semester is empty")
+        elif semester not in ["1", "2", "3", "4", "5", "6"]:
+            row_errors.append(f"semester must be 1-6, got '{semester}'")
 
         # Validate marks is a non-negative integer
         marks_value: int | None = None

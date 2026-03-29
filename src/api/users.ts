@@ -18,7 +18,7 @@ export interface Student {
   id?: string
   roll_no: string
   name: string
-  year: string
+  semester: string
   branch: string
   phone?: string
   section?: string
@@ -104,12 +104,12 @@ export async function updateTeacherProfile(
  */
 export async function fetchStudentList(
   department?: string,
-  year?: string,
+  semester?: string,
 ): Promise<Student[]> {
   let query = supabase.from('students').select('*').order('roll_no')
 
   if (department) query = query.eq('branch', department)
-  if (year) query = query.eq('year', year)
+  if (semester) query = query.eq('semester', semester)
 
   const { data, error } = await query
   if (error) {

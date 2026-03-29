@@ -83,6 +83,7 @@ export async function signupStudent(formData: SignupStudentData) {
     role: 'student',
     roll_no: formData.rollNumber,
     branch: formData.branch,
+    semester: formData.semester,
   })
   if (usersError) return { data: null, error: usersError }
 
@@ -92,7 +93,7 @@ export async function signupStudent(formData: SignupStudentData) {
     roll_no: formData.rollNumber,
     name: formData.name,
     branch: formData.branch,
-    year: formData.semester,
+    semester: formData.semester,
   })
   if (studentsError) return { data: null, error: studentsError }
 

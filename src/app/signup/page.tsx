@@ -11,7 +11,14 @@ import { useRouter } from "next/navigation";
 type Role = "student" | "teacher";
 
 const branches = ["CSE", "IT", "ELEX"];
-const semesters = ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th"];
+const semesters = [
+  { value: "1", label: "1st Semester" },
+  { value: "2", label: "2nd Semester" },
+  { value: "3", label: "3rd Semester" },
+  { value: "4", label: "4th Semester" },
+  { value: "5", label: "5th Semester" },
+  { value: "6", label: "6th Semester" },
+];
 const departments = ["Computer Science Engineering", "Information Technology", "Electronics Engineering"];
 
 // Shared class for all <select> elements
@@ -194,7 +201,7 @@ export default function SignupPage() {
                             className={selectCls}
                           >
                             <option value="" disabled>Select Semester</option>
-                            {semesters.map((s) => <option key={s} value={s}>{s} Semester</option>)}
+                            {semesters.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
                           </select>
                           <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
                             <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
