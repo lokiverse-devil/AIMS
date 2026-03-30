@@ -1,4 +1,5 @@
 import { supabase, STORAGE_BUCKETS, SUPABASE_STORAGE_BASE } from '@/lib/supabaseClient'
+import { getBranchLabel } from '@/lib/constants'
 
 export interface Resource {
   id: string
@@ -16,7 +17,7 @@ export interface Resource {
 export interface TimetableEntry {
   id: string
   branch: string
-  year: string
+  semester: string
   type: 'class' | 'lab'
   file_url: string
   uploaded_at: string
@@ -36,7 +37,7 @@ export async function fetchResources(
     .order('created_at', { ascending: false })
 
   // Filter by branch if provided, fallback to department
-  if (branch) query = query.eq('department', branch)
+  if (branch) query = query.in('department', [branch, getBranchLabel(branch)])
   else if (department) query = query.eq('department', department)
   
   if (semester && semester !== 'All') {
@@ -118,7 +119,7 @@ export async function uploadStudentCSV(
   const lines = text.trim().split('\n')
   const headers = lines[0].split(',').map((h) => h.trim().toLowerCase())
 
-  const required = ['roll_no', 'name', 'year', 'branch']
+  const required = ['roll_no', 'name', 'semester', 'branch']
   const missing = required.filter((r) => !headers.includes(r))
   if (missing.length > 0) {
     return { success: false, message: `Missing columns: ${missing.join(', ')}` }
@@ -128,18 +129,16 @@ export async function uploadStudentCSV(
     const vals = line.split(',').map((v) => v.trim())
     const row = Object.fromEntries(headers.map((h, i) => [h, vals[i] ?? '']))
     
-    // Normalize year
-    if (row.year) {
-      const y = row.year.toLowerCase()
-      if (y.includes('1') || y.includes('fy')) row.year = '1st Year'
-      else if (y.includes('2') || y.includes('sy')) row.year = '2nd Year'
-      else if (y.includes('3') || y.includes('ty')) row.year = '3rd Year'
+    // Normalize semester
+    if (row.semester) {
+      const s = row.semester.replace(/\D/g, '')
+      row.semester = ['1','2','3','4','5','6'].includes(s) ? s : ''
     }
     return row
   })
 
   const validRows = rows.filter(
-    (r) => r.roll_no && r.name && r.year && r.branch,
+    (r) => r.roll_no && r.name && r.semester && r.branch,
   )
 
   if (validRows.length === 0) {
@@ -163,13 +162,13 @@ export async function uploadStudentCSV(
  */
 export async function fetchTimetable(
   branch: string,
-  year: string,
+  semester: string,
 ): Promise<string | null> {
   const { data, error } = await supabase
     .from('timetables')
     .select('file_url')
     .eq('branch', branch)
-    .eq('year', year)
+    .eq('semester', semester)
     .order('uploaded_at', { ascending: false })
     .limit(1)
     .single()
@@ -184,10 +183,10 @@ export async function fetchTimetable(
 export async function uploadTimetable(
   file: File,
   branch: string,
-  year: string,
+  semester: string,
   type: 'class' | 'lab',
 ): Promise<{ success: boolean; url?: string }> {
-  const path = `${branch}/${year}/${type}_${Date.now()}_${file.name}`
+  const path = `${branch}/${semester}/${type}_${Date.now()}_${file.name}`
 
   const { error: storageError } = await supabase.storage
     .from('timetables')
@@ -203,7 +202,7 @@ export async function uploadTimetable(
 
   await supabase.from('timetables').insert({
     branch,
-    year,
+    semester,
     type,
     file_url: publicUrl,
     uploaded_at: new Date().toISOString(),

@@ -18,7 +18,7 @@ export interface Student {
   id?: string
   roll_no: string
   name: string
-  year: string
+  semester: string
   branch: string
   phone?: string
   section?: string
@@ -105,7 +105,7 @@ export async function updateTeacherProfile(
  */
 export async function fetchStudentList(
   department?: string,
-  year?: string,
+  semester?: string,
 ): Promise<Student[]> {
   let query = supabase.from('students').select('*').order('roll_no')
 

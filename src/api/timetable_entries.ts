@@ -5,7 +5,7 @@ export interface TimetableEntry {
   teacher_id: string
   teacher_name: string   // stored when teacher saves slot
   branch: string
-  year: string          // "1st Year" | "2nd Year" | "3rd Year"
+  semester: string      // "1" | "2" | "3" | "4" | "5" | "6"
   day_of_week: string
   start_time: string
   end_time: string
@@ -40,13 +40,13 @@ export async function fetchTeacherTimetable(teacherId: string): Promise<Timetabl
  */
 export async function fetchClassTimetable(
   branch: string,
-  year: string,
+  semester: string,
 ): Promise<TimetableEntry[]> {
   const { data, error } = await supabase
     .from('timetable_entries')
     .select('*')
     .eq('branch', branch)
-    .eq('year', year)
+    .eq('semester', semester)
     .order('day_of_week')
     .order('start_time')
 

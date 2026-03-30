@@ -18,16 +18,14 @@ import { supabase } from "@/lib/supabaseClient";
 // ── Types ──────────────────────────────────────────────────────────
 interface StudentProfile {
   id: string; name: string; rollNumber: string; branch: string;
-  semester: string; year: string; yearForDB: string; yearLabel: string;
+  semester: string; year: string; yearLabel: string;
   email: string; phone: string; section: string; initials: string;
   photoUrl: string | null;
 }
 
 type BadgeMap = Record<string, number>;
 
-const YEAR_TO_DB: Record<string, string> = {
-  "FY": "1st Year", "SY": "2nd Year", "TY": "3rd Year",
-};
+
 
 const sidebarItems = [
   { id: "timetable",     label: "Timetable",        icon: Calendar },
@@ -86,7 +84,7 @@ function Avatar({ photoUrl, initials, size = 36, className = "" }: { photoUrl?: 
 // ── Timetable Section (live from DB by branch+year) ────────────────
 const DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday"];
 
-function TimetableSection({ branch, yearForDB }: { branch: string; yearForDB: string }) {
+function TimetableSection({ branch, semester }: { branch: string; semester: string }) {
   const today = new Date().toLocaleDateString("en-US", { weekday: "long" });
   const [activeDay, setActiveDay] = useState(DAYS.includes(today) ? today : "Monday");
   const [allEntries, setAllEntries] = useState<any[]>([]);
@@ -96,11 +94,11 @@ function TimetableSection({ branch, yearForDB }: { branch: string; yearForDB: st
     (async () => {
       try {
         const { fetchClassTimetable } = await import("@/api/timetable_entries");
-        setAllEntries(await fetchClassTimetable(getBranchKey(branch), yearForDB));
+        setAllEntries(await fetchClassTimetable(getBranchKey(branch), semester));
       } catch(e) { console.error(e); }
       finally { setLoading(false); }
     })();
-  }, [branch, yearForDB]);
+  }, [branch, semester]);
 
   const dayEntries = allEntries
     .filter(e => e.day_of_week === activeDay)
@@ -116,7 +114,7 @@ function TimetableSection({ branch, yearForDB }: { branch: string; yearForDB: st
             </span>
             Schedule
           </h2>
-          <p className="text-sm text-muted-foreground mt-1 ml-13">Classes for {branch} — {yearForDB}</p>
+          <p className="text-sm text-muted-foreground mt-1 ml-13">Classes for {branch} — Semester {semester}</p>
         </div>
       </div>
 
@@ -697,16 +695,16 @@ function IDCardSection({ student }: { student: StudentProfile }) {
 }
 
 // ── Notifications ──────────────────────────────────────────────────
-function NotificationsSection({ branch, yearForDB }: { branch: string; yearForDB: string }) {
+function NotificationsSection({ branch, semester }: { branch: string; semester: string }) {
   const [notices, setNotices] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
-      try { const { fetchNotices } = await import("@/api/timetable"); setNotices(await fetchNotices(branch, yearForDB) || []); }
+      try { const { fetchNotices } = await import("@/api/timetable"); setNotices(await fetchNotices(branch, semester) || []); }
       catch(e) { console.error(e); } finally { setLoading(false); }
     })();
-  }, [branch, yearForDB]);
+  }, [branch, semester]);
 
   return (
     <div className="space-y-6">
@@ -932,11 +930,14 @@ export default function StudentDashboard() {
           }
         } catch(_) {}
 
-        const semNum = parseInt(semester.replace(/\D/g,"")) || 6;
-        const year = semNum<=2?"FY":semNum<=4?"SY":"TY";
+        const semNum = parseInt(semester.replace(/\D/g,"")) || 1;
+        const derivedYear = Math.ceil(semNum / 2);
+        const year = derivedYear === 1 ? "FY" : derivedYear === 2 ? "SY" : "TY";
+        const yearLabel = derivedYear === 1 ? "1st Year" : derivedYear === 2 ? "2nd Year" : "3rd Year";
+        
         setStudent({
-          id:u.id, name, rollNumber:rollNo, branch:u.branch||"CSE", semester,
-          year, yearForDB:YEAR_TO_DB[year]||"3rd Year", yearLabel:semNum<=2?"1st Year":semNum<=4?"2nd Year":"3rd Year",
+          id:u.id, name, rollNumber:rollNo, branch:u.branch||"CSE", semester: semNum.toString(),
+          year, yearLabel,
           email:u.email||"", phone, section,
           initials:name.split(" ").map((n:string)=>n[0]).join("").toUpperCase().slice(0,2),
           photoUrl,
@@ -991,14 +992,14 @@ export default function StudentDashboard() {
   if (!student) return null;
 
   const sections: Record<string,React.ReactNode> = {
-    timetable:     <TimetableSection branch={student.branch} yearForDB={student.yearForDB}/>,
+    timetable:     <TimetableSection branch={student.branch} semester={student.semester}/>,
     marks:         <MarksSection rollNumber={student.rollNumber}/>,
     results:       <SemesterResultsSection semester={student.semester}/>,
     resources:     <ResourcesSection branch={student.branch} semester={student.semester}/>,
     labs:          <LabsSection/>,
     complaints:    <ComplaintsSection userId={student.id} rollNumber={student.rollNumber} onNewActivity={()=>setBadges(b=>({...b,complaints:(b.complaints||0)+1}))}/>,
     idcard:        <IDCardSection student={student}/>,
-    notifications: <NotificationsSection branch={student.branch} yearForDB={student.yearForDB}/>,
+    notifications: <NotificationsSection branch={student.branch} semester={student.semester}/>,
     profile:       <ProfileSection student={student} onUpdate={handleProfileUpdate}/>,
   };
 

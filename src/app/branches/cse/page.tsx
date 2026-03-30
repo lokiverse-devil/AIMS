@@ -74,7 +74,15 @@ const cseData = {
     { name: "IOT LAB", capacity: 20, description: "Iot Kit, Rapberry, Esp's, 3d Printer, Mechanical Arm", available: false },
   ],
   achievements: [
-    "100% placement record for past consecutive years",
+    {
+      title: "Winner of Rajat Jayanti Samaroh State Level Hackathon",
+      description: "Our exceptionally talented team bagged the 1st Position in the prestigious Rajat Jayanti Samaroh State Level Hackathon. The project showcased innovative problem-solving and technical excellence in software development.",
+      image: "/assets/college/hackathon_winner.jpg",
+      featured: true
+    },
+    {
+      title: "100% placement record for past consecutive years",
+    }
   ],
 };
 

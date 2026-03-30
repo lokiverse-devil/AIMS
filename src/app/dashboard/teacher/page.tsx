@@ -21,12 +21,12 @@ interface TeacherProfile {
 }
 interface TEntry {
   id: string; day_of_week: string; start_time: string; end_time: string;
-  subject: string; room: string; class_name: string; branch: string; year: string;
+  subject: string; room: string; class_name: string; branch: string; semester: string;
 }
 
 // ── Constants ──────────────────────────────────────────────────────
 const DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday"];
-const YEARS = ["All","1st Year","2nd Year","3rd Year"];
+const SEMESTERS = ["All","1","2","3","4","5","6"];
 import { getBranchLabel, getBranchKey, BRANCH_MAP } from "@/lib/constants";
 
 const YEAR_LABELS: Record<string,string> = {"1st Year":"FY","2nd Year":"SY","3rd Year":"TY"};
@@ -92,7 +92,7 @@ function TimetableSection({ teacher }: { teacher: TeacherProfile }) {
   );
   const [showEditor, setShowEditor] = useState(false);
   const [editId, setEditId] = useState<string|null>(null);
-  const [form, setForm] = useState({ day_of_week:"Monday", start_time:"09:00", end_time:"10:00", subject:"", room:"", class_name:"", branch:"CSE", year:"1st Year" });
+  const [form, setForm] = useState({ day_of_week:"Monday", start_time:"09:00", end_time:"10:00", subject:"", room:"", class_name:"", branch:"CSE", semester:"1" });
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
@@ -124,7 +124,7 @@ function TimetableSection({ teacher }: { teacher: TeacherProfile }) {
         if (data) setEntries(prev => [...prev, data as TEntry]);
       }
       setShowEditor(false); setEditId(null);
-      setForm({ day_of_week:"Monday", start_time:"09:00", end_time:"10:00", subject:"", room:"", class_name:"", branch:"CSE", year:"1st Year" });
+      setForm({ day_of_week:"Monday", start_time:"09:00", end_time:"10:00", subject:"", room:"", class_name:"", branch:"CSE", semester:"1" });
     } catch(e) { console.error(e); }
     finally { setSaving(false); }
   };
@@ -138,7 +138,7 @@ function TimetableSection({ teacher }: { teacher: TeacherProfile }) {
 
   const startEdit = (e: TEntry) => {
     setEditId(e.id);
-    setForm({ day_of_week:e.day_of_week, start_time:e.start_time, end_time:e.end_time, subject:e.subject, room:e.room, class_name:e.class_name, branch:e.branch, year:e.year });
+    setForm({ day_of_week:e.day_of_week, start_time:e.start_time, end_time:e.end_time, subject:e.subject, room:e.room, class_name:e.class_name, branch:e.branch, semester:e.semester });
     setShowEditor(true);
   };
 
@@ -208,9 +208,9 @@ function TimetableSection({ teacher }: { teacher: TeacherProfile }) {
                   </select>
               </div>
               <div className="space-y-1.5">
-                <label className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground ml-1">Academic Year</label>
-                <select value={form.year} onChange={e=>setForm({...form,year:e.target.value})} className={inputCls}>
-                  {YEARS.filter(y=>y!=="All").map(y=><option key={y}>{y}</option>)}
+                <label className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground ml-1">Academic Semester</label>
+                <select value={form.semester} onChange={e=>setForm({...form,semester:e.target.value})} className={inputCls}>
+                  {SEMESTERS.filter(y=>y!=="All").map(y=><option key={y}>{y}</option>)}
                 </select>
               </div>
             </div>
@@ -277,7 +277,7 @@ function TimetableSection({ teacher }: { teacher: TeacherProfile }) {
                   </div>
                   <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/5 border border-primary/10">
                     <GraduationCap size={12} className="text-primary"/>
-                    <span className="text-[10px] font-bold uppercase text-primary">{slot.branch} {YEAR_LABELS[slot.year]||slot.year}</span>
+                    <span className="text-[10px] font-bold uppercase text-primary">{slot.branch} Sem {slot.semester}</span>
                   </div>
                   <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted/50 border border-border">
                     <Hash size={12} className="text-muted-foreground"/>
@@ -353,7 +353,7 @@ function UploadSection({ teacher }: { teacher: TeacherProfile }) {
         title: resTitle,
         subject: resSubject,
         semester: resSemester || "All",
-        department: resBranch,
+        department: getBranchKey(resBranch) || resBranch,
         uploaded_by: teacher.id
       });
       if (error) throw error;
@@ -490,7 +490,7 @@ function UploadSection({ teacher }: { teacher: TeacherProfile }) {
                     <label className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground ml-1">Target Semester</label>
                     <select value={resSemester} onChange={e=>setResSemester(e.target.value)} className={inputCls}>
                       <option value="">All Semesters</option>
-                      {["1st","2nd","3rd","4th","5th","6th"].map(s=><option key={s}>{s} Semester</option>)}
+                      {["1","2","3","4","5","6"].map(s=><option key={s} value={s}>Semester {s}</option>)}
                     </select>
                   </div>
                 </div>
@@ -546,7 +546,7 @@ function UploadSection({ teacher }: { teacher: TeacherProfile }) {
                       <p className="text-xs text-muted-foreground">roll_no, subject, marks, max_marks, semester</p>
                     </div>
                   </div>
-                  <button onClick={()=>downloadCSV("marks_template.csv","roll_no,subject,marks,max_marks,semester\nCSE2022047,Data Structures,18,20,6th")}
+                  <button onClick={()=>downloadCSV("marks_template.csv","roll_no,subject,marks,max_marks,semester\nCSE2022047,Data Structures,18,20,6")}
                     className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-card border border-border text-xs font-bold text-primary hover:bg-primary hover:text-white transition-all">
                     <Download size={14}/> Get Template
                   </button>
@@ -567,10 +567,10 @@ function UploadSection({ teacher }: { teacher: TeacherProfile }) {
                     <div className="p-3 rounded-2xl bg-accent/10 text-accent-foreground"><Users size={20}/></div>
                     <div>
                       <p className="text-sm font-bold text-foreground">Registry Template</p>
-                      <p className="text-xs text-muted-foreground">roll_no, name, year, branch</p>
+                      <p className="text-xs text-muted-foreground">roll_no, name, semester, branch</p>
                     </div>
                   </div>
-                  <button onClick={()=>downloadCSV("students_template.csv","roll_no,name,year,branch\nCSE2022047,Rahul Sharma,3rd Year,CSE")}
+                  <button onClick={()=>downloadCSV("students_template.csv","roll_no,name,semester,branch\nCSE2022047,Rahul Sharma,6,CSE")}
                     className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-card border border-border text-xs font-bold text-accent-foreground hover:bg-accent hover:text-white transition-all">
                     <Download size={14}/> Get Template
                   </button>
@@ -593,7 +593,7 @@ function UploadSection({ teacher }: { teacher: TeacherProfile }) {
 function StudentsSection({ department }: { department: string }) {
   const [students, setStudents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [yearFilter, setYearFilter] = useState("All");
+  const [semesterFilter, setSemesterFilter] = useState("All");
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -602,12 +602,12 @@ function StudentsSection({ department }: { department: string }) {
       try {
         const { fetchStudentList } = await import("@/api/users");
         // Department is already passed from teacher profile, ensuring branch-specific view
-        const yearParam = yearFilter !== "All" ? yearFilter : undefined;
-        setStudents(await fetchStudentList(getBranchKey(department), yearParam));
+        const semParam = semesterFilter !== "All" ? semesterFilter : undefined;
+        setStudents(await fetchStudentList(getBranchKey(department), semParam));
       } catch(e) { console.error(e); }
       finally { setLoading(false); }
     })();
-  }, [department, yearFilter]);
+  }, [department, semesterFilter]);
 
   const filtered = students.filter(s => {
     const matchSearch = !search || 
@@ -636,10 +636,10 @@ function StudentsSection({ department }: { department: string }) {
       </div>
 
       <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-muted/40 border border-border/50 overflow-x-auto no-scrollbar scrollbar-hide">
-        {YEARS.map(y=>(
-          <button key={y} onClick={()=>setYearFilter(y)}
-            className={`flex-1 min-w-[100px] px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${yearFilter===y?"bg-card text-primary shadow-sm border border-border/50 ring-1 ring-primary/10":"text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}>
-            {y==="All" ? "Full Registry" : y}
+        {SEMESTERS.map(s=>(
+          <button key={s} onClick={()=>setSemesterFilter(s)}
+            className={`flex-1 min-w-[100px] px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${semesterFilter===s?"bg-card text-primary shadow-sm border border-border/50 ring-1 ring-primary/10":"text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}>
+            {s==="All" ? "Full Registry" : `Semester ${s}`}
           </button>
         ))}
       </div>
@@ -687,8 +687,8 @@ function StudentsSection({ department }: { department: string }) {
                           <code className="text-xs font-bold text-muted-foreground bg-muted/60 px-2 py-1 rounded-lg border border-border/50">{s.roll_no}</code>
                         </td>
                         <td className="px-6 py-4 hidden sm:table-cell">
-                          <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase border ${s.year.includes("1st")?"bg-emerald-500/10 text-emerald-600 border-emerald-500/20":s.year.includes("2nd")?"bg-amber-500/10 text-amber-600 border-amber-500/20":"bg-blue-500/10 text-blue-600 border-blue-500/20"}`}>
-                            {YEAR_LABELS[s.year]||s.year}
+                          <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase border bg-primary/10 text-primary border-primary/20`}>
+                            Sem {s.semester}
                           </span>
                         </td>
                         <td className="px-6 py-4 text-xs font-bold text-muted-foreground hidden sm:table-cell">
@@ -711,7 +711,7 @@ function StudentsSection({ department }: { department: string }) {
 function NoticesSection({ userId, department }: { userId: string; department: string }) {
   const [showForm, setShowForm] = useState(false);
   const [editId, setEditId] = useState<string|null>(null);
-  const [form, setForm] = useState({ title:"", audience:"", content:"", priority:"Normal" as "Normal"|"High" });
+  const [form, setForm] = useState({ title:"", target_branch:getBranchKey(department)||"All", target_type:"All", target_value:"", content:"", priority:"Normal" as "Normal"|"High" });
   const [notices, setNotices] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [posting, setPosting] = useState(false);
@@ -724,16 +724,16 @@ function NoticesSection({ userId, department }: { userId: string; department: st
   }, []);
 
   const handlePost = async () => {
-    if (!form.title || !form.audience) { alert("Core announcement details are required."); return; }
+    if (!form.title) { alert("Core announcement details are required."); return; }
     setPosting(true);
     try {
       const { postNotice, updateNotice } = await import("@/api/timetable");
       if (editId) {
-        const { data, error } = await updateNotice(editId, { title:form.title, content:form.content, audience:form.audience, priority:form.priority });
+        const { data, error } = await updateNotice(editId, { title:form.title, content:form.content, target_branch:form.target_branch, target_type:form.target_type, target_value:form.target_value, priority:form.priority });
         if (error) alert("Sync failed: "+error.message);
         else if (data) { setNotices(prev=>prev.map(n=>n.id===editId?{...n,...data}:n)); closeForm(); }
       } else {
-        const { data, error } = await postNotice({ title:form.title, content:form.content, audience:form.audience, posted_by:userId, priority:form.priority });
+        const { data, error } = await postNotice({ title:form.title, content:form.content, target_branch:form.target_branch, target_type:form.target_type, target_value:form.target_value, posted_by:userId, priority:form.priority });
         if (error) alert("Broadcast failed: "+error.message);
         else if (data) { setNotices([data,...notices]); closeForm(); }
       }
@@ -749,13 +749,13 @@ function NoticesSection({ userId, department }: { userId: string; department: st
 
   const startEdit = (n: any) => {
     setEditId(n.id);
-    setForm({ title:n.title, audience:n.audience, content:n.content||"", priority:n.priority });
+    setForm({ title:n.title, target_branch:n.target_branch||"All", target_type:n.target_type||"All", target_value:n.target_value||"", content:n.content||"", priority:n.priority });
     setShowForm(true);
   };
 
   const closeForm = () => {
     setShowForm(false); setEditId(null);
-    setForm({ title:"", audience:"", content:"", priority:"Normal" });
+    setForm({ title:"", target_branch:getBranchKey(department)||"All", target_type:"All", target_value:"", content:"", priority:"Normal" });
   };
 
   const inputCls = "w-full px-4 py-3 rounded-2xl border border-border bg-background/50 text-foreground text-sm font-medium focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all";
@@ -792,14 +792,32 @@ function NoticesSection({ userId, department }: { userId: string; department: st
                 <label className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground ml-1">Announcement Title</label>
                 <input placeholder="e.g. Critical: Mid-Term Examination Reschedule" value={form.title} onChange={e=>setForm({...form,title:e.target.value})} className={inputCls}/>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground ml-1">Target Audience</label>
-                  <select value={form.audience} onChange={e=>setForm({...form,audience:e.target.value})} className={inputCls}>
-                    <option value="" disabled>Select Target Group</option>
-                    {[`${department} – All`,`${department} – 1st Year`,`${department} – 2nd Year`,`${department} – 3rd Year`,"All Faculty","General Campus"].map(a=><option key={a} value={a}>{a}</option>)}
+                  <label className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground ml-1">Target Branch</label>
+                  <select value={form.target_branch} onChange={e=>setForm({...form,target_branch:e.target.value})} className={inputCls}>
+                    <option value="All">All Branches</option>
+                    {Object.entries(BRANCH_MAP).map(([k, v])=><option key={k} value={k}>{v}</option>)}
                   </select>
                 </div>
+                <div className="space-y-1.5">
+                  <label className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground ml-1">Target Type</label>
+                  <select value={form.target_type} onChange={e=>setForm({...form,target_type:e.target.value})} className={inputCls}>
+                    <option value="All">Entire Branch</option>
+                    <option value="Semester">Specific Semester</option>
+                  </select>
+                </div>
+                {form.target_type === "Semester" ? (
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground ml-1">Semester Value</label>
+                    <select value={form.target_value} onChange={e=>setForm({...form,target_value:e.target.value})} className={inputCls}>
+                      <option value="" disabled>Select Sem</option>
+                      {["1","2","3","4","5","6"].map(s=><option key={s} value={s}>{s}</option>)}
+                    </select>
+                  </div>
+                ) : (
+                  <div />
+                )}
                 <div className="space-y-1.5">
                   <label className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground ml-1">Priority Level</label>
                   <select value={form.priority} onChange={e=>setForm({...form,priority:e.target.value as "Normal"|"High"})} className={inputCls}>
@@ -836,7 +854,7 @@ function NoticesSection({ userId, department }: { userId: string; department: st
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2">
                   <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${n.priority==="High"?"bg-red-500/10 text-red-500 border-red-500/20":"bg-primary/10 text-primary border-primary/20"}`}>
-                    {n.audience}
+                    {n.target_branch ? `${n.target_branch} ${n.target_type !== 'All' ? '- ' + n.target_type + ' ' + n.target_value : ''}` : n.audience}
                   </span>
                   {n.priority==="High" && (
                     <span className="flex items-center gap-1 text-[10px] font-bold text-red-500 uppercase tracking-wider animate-pulse">

@@ -460,7 +460,7 @@ export default function HomePage() {
         {/* Gradient & grid overlays */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/15 z-[2]" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 pt-48">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 pt-36">
           <motion.div
           
             variants={stagger}
@@ -468,39 +468,38 @@ export default function HomePage() {
             animate="visible"
             className="max-w-4xl"
           >
-            <motion.div variants={fadeUp} custom={0} className="mb-3">
-              <span className="inline-flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/5">
-                <div className="h-0.5 w-6 aims-accent-bar rounded-full" />
-                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-primary [text-shadow:0_2px_4px_rgba(0,0,0,0.8)]">
-                  IT BLOCK X AIMS
+            <motion.div variants={fadeUp} custom={0} className="mb-6">
+              <span className="inline-flex items-center gap-2.5 bg-background/40 backdrop-blur-xl px-4 py-2 rounded-2xl border border-white/10 shadow-lg">
+                <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-foreground/80">
+                  IT BLOCK X AIMS · ACADEMIC EXCELLENCE
                 </span>
-                <div className="h-0.5 w-6 aims-accent-bar rounded-full" />
               </span>
             </motion.div>
 
             <motion.h1
               variants={fadeUp}
               custom={1}
-              className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.15] tracking-tight mb-7"
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight tracking-tighter mb-8"
             >
-              <span className="bg-black/30 text-white px-3 py-1 rounded-xl box-decoration-clone backdrop-blur-md [text-shadow:0_2px_10px_rgba(0,0,0,0.6)]">
-                Welcome to{" "}
-                <span className="relative inline-block text-primary">
-                  IT BLOCK: UGIP KASHIPUR
-                  <span className="absolute -bottom-2 left-0 right-0 h-1 aims-accent-bar rounded-full shadow-lg shadow-primary/50" />
+              <span className="relative inline-block">
+                <span className="relative z-10 text-white drop-shadow-2xl">
+                  IT BLOCK:
                 </span>
+                <span className="absolute -inset-x-4 inset-y-2 bg-primary/20 blur-2xl -z-10 rounded-full" />
               </span>
+              <br />
+              <span className="text-primary italic">UGIP KASHIPUR</span>
             </motion.h1>
 
             <motion.p
               variants={fadeUp}
               custom={2}
-              className="text-lg sm:text-xl leading-[1.65] max-w-2xl mb-10 font-medium"
+              className="text-lg sm:text-xl leading-relaxed max-w-2xl mb-12 font-medium text-white/90"
             >
-              <span className="bg-black/40 text-white/95 px-3 py-1 rounded-lg box-decoration-clone backdrop-blur-md [text-shadow:0_1px_3px_rgba(0,0,0,0.8)]">
-                A part of government polytechnic kashipur with collboration of aims a centralized platform for managing academic block infrastructure,
-                faculty information, student services, labs, resources, scheduling,
-                and visitor assistance — all in one elegant system.
+              <span className="bg-black/20 backdrop-blur-md px-2 py-1 rounded-md box-decoration-clone">
+                A centralized, high-performance ecosystem for managing academic infrastructure, 
+                streamlining resources, and empowering the next generation of engineers.
               </span>
             </motion.p>
 
@@ -578,7 +577,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── IT BLOCK INTRO ────────────────────────────────────── */}
-      <section className="py-24 bg-muted/30">
+      <section className="py-16 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -588,7 +587,7 @@ export default function HomePage() {
               viewport={{ once: true }}
             >
               <SectionLabel>Academic Block</SectionLabel>
-              <h2 className="text-4xl font-bold text-foreground mb-4">
+              <h2 className="text-3xl font-bold text-foreground mb-4">
                 The IT & Engineering Block
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-6">
@@ -621,28 +620,29 @@ export default function HomePage() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
               viewport={{ once: true }}
               className="relative"
             >
-              <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-muted border border-border shadow-2xl relative group">
-                
-                <img src="/assets/college/it_block.jpeg" alt="IT Block" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-               
-               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
-                <div className="absolute bottom-6 left-6 right-6">
-                  <div className="flex items-center gap-2 mb-1">
-                    <Building2 size={16} className="text-white/80" />
-                    <p className="text-sm text-white/90 font-medium">IT Block</p>
+              <div className="aspect-video lg:aspect-square rounded-[2.5rem] overflow-hidden bg-muted border-4 border-background shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2)] dark:shadow-[0_32px_64px_-16px_rgba(0,0,0,1)] relative group">
+                <img src="/assets/college/it_block.jpeg" alt="IT Block" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                <div className="absolute inset-0 bg-gradient-to-tr from-primary/40 via-transparent to-transparent opacity-60 mix-blend-overlay" />
+                <div className="absolute inset-x-0 bottom-0 p-8 pt-20 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="p-2 rounded-xl bg-primary/20 backdrop-blur-md border border-white/10">
+                      <Building2 size={24} className="text-white" />
+                    </div>
+                    <p className="text-xl font-bold text-white tracking-tight">Academic IT Block</p>
                   </div>
-                  <p className="text-xs text-white/70">Academic Campus</p>
+                  <p className="text-sm text-white/70 font-medium">Equipped for excellence since 2005</p>
                 </div>
               </div>
-              <div className="absolute -bottom-4 -right-4 w-32 h-32 rounded-2xl bg-primary/10 border border-primary/20 flex flex-col items-center justify-center shadow-lg backdrop-blur-md">
-                <span className="text-2xl font-bold text-primary">Est.</span>
-                <span className="text-xl font-bold text-foreground">2005</span>
+              {/* Decorative side element */}
+              <div className="absolute -bottom-6 -left-6 w-32 h-32 rounded-3xl bg-primary border-4 border-background flex flex-col items-center justify-center shadow-xl z-20">
+                <Award size={32} className="text-primary-foreground mb-1" />
+                <span className="text-xs font-bold text-primary-foreground uppercase tracking-widest">Est. 2005</span>
               </div>
             </motion.div>
           </div>
@@ -650,48 +650,54 @@ export default function HomePage() {
       </section>
 
       {/* ─── BRANCHES ──────────────────────────────────────────── */}
-      <section className="py-24">
+      <section className="py-16 bg-muted/30 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="text-center mb-14"
-          >
-            <SectionLabel>Departments</SectionLabel>
-            <h2 className="text-4xl font-bold text-foreground">Engineering Branches</h2>
-            <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
-              Three specialized departments offering comprehensive diploma engineering programs.
-            </p>
-          </motion.div>
+          <div className="text-center mb-16">
+            <SectionLabel>Our Specializations</SectionLabel>
+            <h2 className="text-3xl font-bold text-foreground tracking-tighter">Engineering Departments</h2>
+          </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-8">
             {branches.map((branch, i) => (
               <motion.div
                 key={branch.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
+                transition={{ delay: i * 0.1, duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                <Link href={branch.href}>
-                  <div className="group relative p-6 rounded-2xl border border-border bg-card hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 h-full flex flex-col">
-                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${branch.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                      <branch.icon size={22} className="text-primary" />
+                <Link href={branch.href} className="block group h-full">
+                  <div className="relative p-8 rounded-[3rem] border border-border bg-card hover:border-primary/50 transition-all duration-500 h-full flex flex-col overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-primary/5">
+                    <div className="absolute -top-24 -right-24 w-56 h-56 bg-primary/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                    
+                    <div className={`w-16 h-16 rounded-3xl bg-gradient-to-br ${branch.color} flex items-center justify-center mb-8 shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
+                      <branch.icon size={32} className="text-primary" />
                     </div>
-                    <div className="inline-flex items-center gap-1.5 mb-2">
-                      <span className={`w-1.5 h-1.5 rounded-full ${branch.accent}`} />
-                      <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{branch.short}</span>
+                    
+                    <div className="flex-1">
+                      <div className="inline-flex items-center gap-3 mb-4">
+                        <span className={`w-3 h-3 rounded-full ${branch.accent} shadow-lg`} />
+                        <span className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground">{branch.short}</span>
+                      </div>
+                      <h3 className="text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors leading-tight">{branch.name}</h3>
+                      <p className="text-muted-foreground leading-relaxed mb-10">{branch.description}</p>
                     </div>
-                    <h3 className="text-lg font-bold text-foreground mb-2">{branch.name}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed flex-1">{branch.description}</p>
-                    <div className="mt-4 pt-4 border-t border-border flex justify-between text-sm">
-                      <span className="text-muted-foreground">{branch.students} students</span>
-                      <span className="text-muted-foreground">{branch.faculty} faculty</span>
-                    </div>
-                    <div className="mt-3 flex items-center gap-1 text-primary text-sm font-medium group-hover:gap-2 transition-all">
-                      Explore Department <ChevronRight size={14} />
+
+                    <div className="mt-auto pt-8 border-t border-border flex items-center justify-between">
+                      <div className="flex items-center gap-6">
+                        <div>
+                          <span className="text-foreground block text-lg font-black tracking-tight">{branch.students}</span>
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Students</span>
+                        </div>
+                        <div className="w-px h-8 bg-border" />
+                        <div>
+                          <span className="text-foreground block text-lg font-black tracking-tight">{branch.faculty}</span>
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Faculty</span>
+                        </div>
+                      </div>
+                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+                        <ArrowRight size={22} />
+                      </div>
                     </div>
                   </div>
                 </Link>
@@ -702,206 +708,312 @@ export default function HomePage() {
       </section>
 
       {/* ─── FACILITIES ────────────────────────────────────────── */}
-    <section className="py-24 bg-muted/20">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      viewport={{ once: true }}
-      className="text-center mb-14"
-    >
-      <SectionLabel>Infrastructure</SectionLabel>
-      <h2 className="text-4xl font-bold text-foreground">
-        Campus Facilities
-      </h2>
-    </motion.div>
-
-    {/* Centered Auto-Fit Grid */}
-    <div className="max-w-5xl mx-auto">
-      <div className="grid gap-4 grid-cols-[repeat(auto-fit,minmax(140px,1fr))]">
-        {facilities.map((f, i) => (
+      <section className="py-16 relative overflow-hidden bg-background">
+        <div className="absolute inset-0 bg-primary/[0.02] -z-10" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
-            key={f.label}
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.07 }}
+            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="flex flex-col items-center text-center p-5 rounded-2xl border border-border bg-card hover:border-primary/30 hover:bg-accent/20 transition-all duration-200 group"
+            className="text-center mb-16"
           >
-            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
-              <f.icon size={22} className="text-primary" />
-            </div>
-            <p className="text-sm font-bold text-foreground">{f.count}</p>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              {f.label}
-            </p>
+            <SectionLabel>Infrastructure</SectionLabel>
+            <h2 className="text-3xl font-bold text-foreground tracking-tight">
+              Premium Campus Facilities
+            </h2>
           </motion.div>
-        ))}
-      </div>
-    </div>
-  </div>
-</section>
 
-     {/* ─── LABS OVERVIEW ─────────────────────────────────────── */}
-<section className="py-24">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      viewport={{ once: true }}
-      className="text-center mb-14"
-    >
-        <SectionLabel>Labs & Workspaces</SectionLabel>
-        <h2 className="text-4xl font-bold text-foreground">Lab Overview</h2>
-        <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
-          Lab preview at a glance.
-        </p>
-        <Link
-          href="/login"
-          className="inline-flex items-center gap-2 text-sm text-primary font-medium hover:gap-3 transition-all mt-4"
-        >
-          Connect with IT Block <ArrowRight size={14} />
-        </Link>
-    </motion.div>
+          <div className="max-w-6xl mx-auto">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+              {facilities.map((f, i) => (
+                <motion.div
+                  key={f.label}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: i * 0.05, duration: 0.4 }}
+                  viewport={{ once: true }}
+                  className="group relative p-6 rounded-[2rem] border border-border bg-card hover:border-primary/40 hover:shadow-2xl transition-all duration-300 flex flex-col items-center text-center"
+                >
+                  <div className="w-16 h-16 rounded-2xl bg-primary/5 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary/10 transition-all">
+                    <f.icon size={32} className="text-primary" />
+                  </div>
+                  <p className="text-2xl font-black text-foreground mb-1 tracking-tighter">{f.count}</p>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground whitespace-nowrap">
+                    {f.label}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
-          <div className="grid md:grid-cols-2 gap-5">
-            {labs.map((lab, i) => (
-              <motion.div
-                key={lab.name}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.08 }}
-                viewport={{ once: true }}
-                className="p-5 rounded-2xl border border-border bg-card flex items-center gap-4 hover:border-primary/30 transition-all"
-              >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <FlaskConical size={20} className="text-primary" />
+      {/* ─── SUCCESS STORIES ───────────────────────────────────── */}
+      <section className="py-16 bg-primary/5 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-2 mb-12">
+            <div className="h-0.5 w-8 aims-accent-bar rounded-full" />
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Center of Excellence</span>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+             <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="relative order-2 lg:order-1"
+            >
+              <div className="aspect-[16/10] rounded-[2.5rem] overflow-hidden bg-card border border-primary/20 shadow-2xl relative group">
+                <img src="/assets/college/hackathon_winner.jpg" alt="Hackathon Winners" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
+                <div className="absolute bottom-8 left-8 right-8">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-widest mb-4">
+                    <Crown size={12} /> 1st Position
+                  </div>
+                  <h3 className="text-2xl font-black text-white mb-2 tracking-tight">State Level Hackathon Champions</h3>
+                  <p className="text-sm text-white/70 font-medium">CSE Department · Rajat Jayanti Samaroh</p>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between gap-2">
-                    <h4 className="font-semibold text-foreground text-sm">{lab.name}</h4>
+              </div>
+              {/* Floating Badge */}
+              <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-background border-4 border-primary flex flex-col items-center justify-center shadow-2xl z-20 transform rotate-12">
+                <span className="text-xl font-black text-primary">#1</span>
+                <span className="text-[8px] font-bold text-muted-foreground uppercase tracking-widest">Rank</span>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="order-1 lg:order-2"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-[1.1]">
+                Nurturing the <br />
+                <span className="text-primary italic">Champions of Tomorrow</span>
+              </h2>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+                Our students don't just learn; they compete and win on the biggest stages. 
+                From state-level hackathons to national coding challenges, the IT Block 
+                provides the mentorship and resources needed to excel.
+              </p>
+              <div className="space-y-4">
+                {[
+                  { title: "Technical Excellence", desc: "Mastering complex algorithms and real-world system design." },
+                  { title: "Collaborative Innovation", desc: "Working in agile teams to solve critical infrastructure problems." }
+                ].map((item) => (
+                  <div key={item.title} className="flex gap-4 p-4 rounded-2xl bg-background/50 border border-border backdrop-blur-sm">
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Zap size={20} className="text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-foreground text-sm">{item.title}</h4>
+                      <p className="text-xs text-muted-foreground mt-1">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── LABS ─────────────────────────────────────────────── */}
+      <section className="py-20 bg-muted/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-12 gap-24 items-center">
+            <div className="lg:col-span-5">
+              <SectionLabel>Labs & Workspaces</SectionLabel>
+              <h2 className="text-3xl md:text-4xl font-black text-foreground mb-8 tracking-tighter leading-none">
+                Specialized <br /><span className="text-primary italic">Centers</span>
+              </h2>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-10">
+                From high-compute servers to IoT experimentation boards, 
+                our labs offer everything an engineer needs to turn ideas 
+                into production-ready software and hardware.
+              </p>
+              <div className="flex flex-col gap-4">
+                 {[
+                  "Intel i5/i7 Workstations",
+                  "100 Mbps Dedicated LAN",
+                  "Open-Source Software Stack",
+                  "Hardware Prototyping Kits"
+                 ].map(t => (
+                   <div key={t} className="flex items-center gap-3">
+                     <div className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(20,184,166,0.6)]" />
+                     <span className="text-xs font-black uppercase tracking-widest text-foreground">{t}</span>
+                   </div>
+                 ))}
+              </div>
+              <div className="mt-12">
+                <Link
+                  href="/login"
+                  className="group inline-flex items-center gap-3 text-sm font-black text-primary uppercase tracking-[0.3em] hover:gap-5 transition-all"
+                >
+                  Explore Lab Details <ArrowRight size={18} />
+                </Link>
+              </div>
+            </div>
+
+            <div className="lg:col-span-7 grid sm:grid-cols-2 gap-6">
+              {labs.map((lab, i) => (
+                <motion.div
+                  key={lab.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  viewport={{ once: true }}
+                  className="group p-6 rounded-[2.5rem] border border-border bg-background hover:border-primary/50 hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] transition-all duration-500 relative overflow-hidden"
+                >
+                  <div className="flex items-center justify-between mb-8">
+                    <div className="w-14 h-14 rounded-2xl bg-primary/5 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:bg-primary/10 transition-all duration-500">
+                      <FlaskConical size={28} className="text-primary" />
+                    </div>
                     <span
-                      className={`text-[10px] font-semibold px-2 py-0.5 rounded-full flex-shrink-0 ${lab.available
-                        ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400"
-                        : "bg-red-500/15 text-red-500"
+                      className={`text-[9px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-sm ${lab.available
+                        ? "bg-emerald-500/10 text-emerald-600 border border-emerald-500/20"
+                        : "bg-red-500/10 text-red-500 border border-red-500/20"
                         }`}
                     >
-                      {lab.available ? "Available" : "Occupied"}
+                      {lab.available ? "Ready" : "In Use"}
                     </span>
                   </div>
-                  <p className="text-xs text-muted-foreground mt-0.5">{lab.equipment}</p>
-                  <div className="flex gap-3 mt-1.5 text-xs text-muted-foreground">
-                    <span>{lab.wing}</span>
-                    <span>·</span>
-                    <span>{lab.capacity} seats</span>
+                  
+                  <h4 className="font-bold text-foreground text-xl mb-3 tracking-tight group-hover:text-primary transition-colors">{lab.name}</h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed mb-8 flex-1">{lab.equipment}</p>
+                  
+                  <div className="flex items-center gap-6 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">
+                    <div className="flex items-center gap-2">
+                       <Building2 size={14} className="opacity-50" />
+                       {lab.wing}
+                    </div>
+                    <div className="flex items-center gap-2">
+                       <Users size={14} className="opacity-50" />
+                       {lab.capacity} Seats
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* ─── FACULTY PREVIEW ───────────────────────────────────── */}
-      <section className="py-24 bg-muted/20">
+      <section className="py-20 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="text-center mb-14"
-          >
-            <SectionLabel>Our Educators</SectionLabel>
-            <h2 className="text-4xl font-bold text-foreground">Faculty Preview</h2>
-            <Link
-              href="/branches/cse"
-              className="inline-flex items-center gap-2 text-sm text-primary font-medium hover:gap-3 transition-all mt-4"
-            >
-              View all faculty <ArrowRight size={14} />
-            </Link>
-          </motion.div>
+          <div className="text-center mb-24">
+            <SectionLabel>Mentorship</SectionLabel>
+            <h2 className="text-3xl font-bold text-foreground tracking-tighter uppercase">Academic Leadership</h2>
+          </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {facultyPreview.map((f, i) => (
               <motion.div
                 key={f.name}
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.09 }}
-                viewport={{ once: true }}
-                className="p-5 rounded-2xl border border-border bg-card hover:border-primary/30 hover:shadow-lg hover:shadow-primary/8 transition-all duration-300 text-center"
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ y: -10 }}
+                className="p-6 rounded-[3rem] border border-border bg-card hover:border-primary/50 transition-all duration-500 text-center flex flex-col shadow-sm hover:shadow-2xl"
               >
-                <div className="w-16 h-16 rounded-full bg-primary/15 flex items-center justify-center mx-auto mb-3 border-2 border-primary/20 overflow-hidden relative">
+                <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6 border-4 border-background shadow-xl overflow-hidden relative">
                   {f.avatar ? (
-                    <img src={f.avatar} alt={f.name} className="w-full h-full object-cover" />
+                    <img src={f.avatar} alt={f.name} className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
                   ) : (
-                    <span className="text-lg font-bold text-primary">{f.initials}</span>
+                    <span className="text-2xl font-black text-primary uppercase">{f.initials}</span>
                   )}
                 </div>
-                <h4 className="font-semibold text-foreground text-sm">{f.name}</h4>
-                <span className="inline-block mt-1 px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-semibold">
-                  {f.dept}
-                </span>
-                <p className="text-xs text-muted-foreground mt-2">{f.subjects}</p>
-                {/* TODO: Faculty intro video: Replace with Supabase Storage URL */}
-                {/* Video: https://PROJECT.supabase.co/storage/v1/object/public/faculty-videos/{name}_intro.mp4 */}
+                <h4 className="font-bold text-foreground text-lg mb-2 tracking-tight">{f.name}</h4>
+                <div className="inline-flex items-center justify-center mb-5">
+                  <span className="px-4 py-1.5 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/20">
+                    {f.dept} Department
+                  </span>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed italic mb-6">"{f.subjects}"</p>
+                <div className="mt-auto h-1 w-12 bg-primary/30 rounded-full mx-auto" />
               </motion.div>
             ))}
+          </div>
+
+          <div className="mt-20 text-center">
+            <Link
+              href="/branches/cse"
+              className="inline-flex items-center gap-3 px-10 py-5 rounded-3xl bg-foreground text-background font-black text-sm uppercase tracking-widest hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-2xl"
+            >
+              Meet Entire Faculty <ArrowRight size={20} />
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* ─── NOTICE BOARD ──────────────────────────────────────── */}
-      <section className="py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="text-center mb-14"
-          >
-            <SectionLabel>Announcements</SectionLabel>
-            <h2 className="text-4xl font-bold text-foreground">Notice Board</h2>
-            <div className="flex items-center justify-center gap-2 mt-3">
-              <Bell size={16} className="text-primary" />
-              <span className="text-sm text-muted-foreground">Latest announcements</span>
-            </div>
-          </motion.div>
 
-          <div className="space-y-4">
+      {/* ─── NOTICE BOARD ──────────────────────────────────────── */}
+      <section className="py-20 bg-background relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/5 blur-[120px] rounded-full -z-10" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
+            <div className="max-w-2xl">
+              <SectionLabel>Live Updates</SectionLabel>
+              <h2 className="text-3xl font-bold text-foreground tracking-tighter">Academic Notice Board</h2>
+              <p className="text-lg text-muted-foreground mt-4">Stay informed with the latest official announcements, exam schedules, and campus events.</p>
+            </div>
+            <div className="flex items-center gap-4 bg-muted/30 px-6 py-3 rounded-2xl border border-border backdrop-blur-sm">
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center animate-pulse">
+                <Bell size={20} className="text-primary" />
+              </div>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground block leading-none mb-1">Status</span>
+                <span className="text-sm font-bold text-foreground">AIMS Real-time Sync Active</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid gap-6">
             {uiNotices.map((notice, i) => (
               <motion.div
                 key={notice.id}
-                initial={{ opacity: 0, x: -16 }}
+                initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.07 }}
+                transition={{ delay: i * 0.1 }}
                 viewport={{ once: true }}
-                className="p-5 rounded-2xl border border-border bg-card hover:border-primary/30 transition-all flex gap-4 items-start"
+                className="group relative p-6 rounded-[2.5rem] border border-border bg-card hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 flex flex-col md:flex-row gap-8 items-start md:items-center overflow-hidden"
               >
-                <div className="flex-shrink-0 pt-0.5">
-                  <div
-                    className={`w-1.5 h-full min-h-[40px] rounded-full ${notice.urgent ? "bg-primary" : "bg-muted-foreground/30"
-                      }`}
-                  />
+                <div className="flex-shrink-0">
+                  <div className={`w-16 h-16 rounded-2xl flex flex-col items-center justify-center border ${
+                    notice.urgent 
+                    ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20" 
+                    : "bg-muted/50 text-muted-foreground border-border"
+                  }`}>
+                    <Clock size={24} className="mb-1" />
+                    <span className="text-[8px] font-black uppercase tracking-tighter">Latest</span>
+                  </div>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex flex-wrap items-center gap-2 mb-1">
-                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-primary/10 text-primary uppercase tracking-wider">
+
+                <div className="flex-1 space-y-3">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span className={`text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest border transition-colors ${
+                      notice.urgent 
+                      ? "bg-amber-500/10 text-amber-600 border-amber-500/20" 
+                      : "bg-primary/5 text-primary border-primary/20"
+                    }`}>
                       {notice.tag}
                     </span>
-                    {notice.urgent && (
-                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400">
-                        Important
-                      </span>
-                    )}
-                    <span className="text-xs text-muted-foreground ml-auto">{notice.date}</span>
+                    <span className="text-xs font-bold text-muted-foreground flex items-center gap-2">
+                       <Shield size={12} /> {notice.date}
+                    </span>
                   </div>
-                  <h4 className="font-semibold text-foreground text-sm">{notice.title}</h4>
-                  <p className="text-sm text-muted-foreground mt-1 leading-relaxed">{notice.desc}</p>
+                  <h4 className="text-2xl font-black text-foreground group-hover:text-primary transition-colors tracking-tight">{notice.title}</h4>
+                  <p className="text-muted-foreground leading-relaxed max-w-4xl">{notice.desc}</p>
+                </div>
+
+                <div className="md:border-l border-border md:pl-8 flex-shrink-0 self-stretch flex items-center">
+                  <div className="w-12 h-12 rounded-full border border-border flex items-center justify-center text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all duration-300">
+                    <ChevronRight size={24} />
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -910,170 +1022,84 @@ export default function HomePage() {
       </section>
 
       {/* ─── CTA ───────────────────────────────────────────────── */}
-      <section className="py-24 bg-primary/5 border-t border-border">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+      <section className="py-16 px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
+            className="relative rounded-[4rem] overflow-hidden bg-foreground p-10 md:p-16 text-center"
           >
-            <SectionLabel>Get Started</SectionLabel>
-            <h2 className="text-4xl font-bold text-foreground mb-4">
-              Ready to access AIMS?
-            </h2>
-            <p className="text-muted-foreground text-lg mb-8">
-              Students and faculty can log in to access personalized dashboards,
-              timetables, resources, and more.
-            </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <Link
-                href="/login"
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/35 hover:-translate-y-0.5 transition-all duration-200"
-              >
-                Login to Portal <ArrowRight size={16} />
-              </Link>
-              <Link
-                href="/signup"
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl border border-border bg-card text-foreground font-semibold hover:border-primary/40 transition-all duration-200"
-              >
-                Create Account <ChevronRight size={16} />
-              </Link>
+            {/* Background decorative elements */}
+            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/20 to-transparent pointer-events-none" />
+            <div className="absolute -bottom-48 -right-48 w-96 h-96 bg-primary/30 rounded-full blur-[100px] pointer-events-none" />
+            
+            <div className="relative z-10 max-w-3xl mx-auto">
+              <span className="inline-block px-6 py-2 rounded-full bg-white/10 text-white/80 text-[10px] font-black uppercase tracking-[0.4em] border border-white/5 mb-8">
+                Portal Access
+              </span>
+              <h2 className="text-3xl md:text-5xl font-bold text-white mb-8 tracking-tighter leading-none">
+                Experience <span className="text-primary italic">AIMS</span> Today.
+              </h2>
+              <p className="text-xl text-white/60 mb-12 leading-relaxed">
+                Unlock a centralized ecosystem where academic performance, 
+                infrastructure, and innovation converge. Join 350+ students 
+                and faculty already using IT Block's advanced platform.
+              </p>
+              <div className="flex flex-wrap gap-6 justify-center">
+                <Link
+                  href="/login"
+                  className="px-10 py-5 rounded-[2rem] bg-primary text-primary-foreground font-black text-sm uppercase tracking-widest shadow-[0_20px_40px_rgba(20,184,166,0.4)] hover:-translate-y-1 transition-all"
+                >
+                  Launch Dashboard
+                </Link>
+                <Link
+                  href="/signup"
+                  className="px-10 py-5 rounded-[2rem] border border-white/20 text-white font-black text-sm uppercase tracking-widest hover:bg-white/5 transition-all"
+                >
+                  Create Identity
+                </Link>
+              </div>
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* ─── MEET THE TEAM ─────────────────────────────────────── */}
-      <section className="py-24 bg-muted/20 relative overflow-hidden">
-        {/* Decorative background elements */}
-        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-primary/5 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-accent/5 blur-3xl pointer-events-none" />
-
+      <section className="py-16 relative bg-muted/20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <SectionLabel>Behind AIMS</SectionLabel>
-            <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-foreground via-foreground to-muted-foreground mb-4">
-              Meet the Visionaries
-            </h2>
-            <p className="text-muted-foreground text-lg mt-3 max-w-2xl mx-auto">
-              The talented minds who designed, built, and maintain this
-              platform.
+          <div className="text-center mb-16">
+            <SectionLabel>The Architects</SectionLabel>
+            <h2 className="text-4xl font-bold text-foreground tracking-tighter mb-6">Minds Behind AIMS</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto italic font-medium">
+              "Building the future of academic infrastructure, one line of code at a time."
             </p>
-          </motion.div>
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 justify-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
             {teamMembers.map((member, i) => {
-              const isLeader = member.data.role
-                .toLowerCase()
-                .split(",")
-                .some((r) => r.trim() === "leader");
-
-              const roles = member.data.role
-                .split(",")
-                .filter((r) => r.trim().toLowerCase() !== "leader");
-
+              const isLeader = member.data.role.toLowerCase().includes("leader");
+              const roles = member.data.role.split(",").filter((r) => !r.toLowerCase().includes("leader"));
               const colors = getMemberColors(member.data.role);
 
-              const tileContent = (
+              return (
                 <motion.div
                   key={member.id}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  whileHover={{ y: -12, transition: { duration: 0.4, ease: "easeOut" } }}
-                  transition={{ delay: i * 0.1, duration: 0.5, type: "spring", stiffness: 100 }}
+                  transition={{ delay: i * 0.1 }}
                   viewport={{ once: true }}
-                  className={`group relative rounded-[2.5rem] overflow-hidden transition-all duration-500 flex flex-col items-center shadow-xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.2)] dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)] bg-card border-2 h-full ${colors.border} ${colors.hoverBorder} ${member.data.github ? "cursor-pointer" : ""}`}
                 >
-                  {/* Shimmer effect on hover */}
-                  <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:animate-shimmer z-10 pointer-events-none" />
-
-                  {/* Glassmorphism Background Base */}
-                  <div className="absolute inset-0 bg-background/20 backdrop-blur-2xl z-0" />
-
-                  {/* Glowing gradient blob behind card content */}
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-br ${colors.gradient} opacity-20 group-hover:opacity-60 transition-opacity duration-700 z-0`}
-                  />
-
-                  {/* Top accent bar with glow */}
-                  <div className={`absolute top-0 left-0 w-full h-2 ${colors.accentBg} z-10 shadow-[0_0_15px_${colors.accentBg}]`} />
-
-                  {/* Leader crown badge */}
-                  {isLeader && (
-                    <div className={`absolute top-6 right-6 w-11 h-11 rounded-2xl ${colors.accentBg} flex items-center justify-center shadow-xl shadow-${colors.accentBg}/40 z-20 transform rotate-12 group-hover:rotate-0 transition-transform duration-300`}>
-                      <Crown size={20} className={colors.accentText} />
+                  {member.data.github ? (
+                    <a href={member.data.github} target="_blank" rel="noopener noreferrer" className="block group h-full">
+                      <TeamMemberCard member={member} isLeader={isLeader} roles={roles} colors={colors} />
+                    </a>
+                  ) : (
+                    <div className="h-full group">
+                      <TeamMemberCard member={member} isLeader={isLeader} roles={roles} colors={colors} />
                     </div>
                   )}
-
-                  <div className="relative z-10 w-full p-8 flex flex-col items-center">
-                    {/* Avatar Container with pulse ring on hover */}
-                    <div className="relative mb-8">
-                      <div className={`absolute inset-0 rounded-full bg-gradient-to-tr ${colors.gradient} blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 scale-125`} />
-                      <div
-                        className={`relative w-32 h-32 rounded-full border-[4px] overflow-hidden transition-all duration-500 ${colors.border} group-hover:border-white bg-background shadow-2xl scale-100 group-hover:scale-105`}
-                      >
-                        <img
-                          src={`/assets/team/${member.data.image}`}
-                          alt={member.data.name}
-                          className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Name */}
-                    <h4 className="font-bold text-foreground text-lg mb-2 text-center group-hover:text-primary transition-colors duration-300">
-                      {member.data.name}
-                    </h4>
-
-                    {/* Leader accent label */}
-                    {isLeader && (
-                      <span className={`inline-block mb-3 px-3.5 py-1 rounded-full ${colors.accentBg} ${colors.accentText} text-[10px] font-bold uppercase tracking-widest shadow-sm`}>
-                        Team Lead
-                      </span>
-                    )}
-
-                    {/* Role badges */}
-                    <div className="flex flex-wrap justify-center gap-2 mt-auto">
-                      {roles.map((role) => {
-                        const key = role.trim().toLowerCase().replace(/[-\s]/g, "");
-                        const RoleIcon = roleIconMap[key] || Award;
-                        const roleBadgeColors = roleColorMap[key] || colors;
-                        return (
-                          <div
-                            key={role}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-2xl ${roleBadgeColors.badge} ${roleBadgeColors.badgeText} text-[11px] font-bold capitalize border-2 border-transparent hover:border-[color:var(--tw-border-opacity)] ${roleBadgeColors.border} backdrop-blur-xl transition-all duration-300 group-hover:shadow-lg group-hover:shadow-${roleBadgeColors.accentBg}/10`}
-                          >
-                            <RoleIcon size={14} className="opacity-80" />
-                            <span className="tracking-tight">{role.trim().replace(/-/g, " ")}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
                 </motion.div>
-              );
-
-              return member.data.github ? (
-                <a
-                  key={member.id}
-                  href={member.data.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="no-underline block h-full"
-                >
-                  {tileContent}
-                </a>
-              ) : (
-                <React.Fragment key={member.id}>
-                  {tileContent}
-                </React.Fragment>
               );
             })}
           </div>
@@ -1081,21 +1107,97 @@ export default function HomePage() {
       </section>
 
       {/* ─── FOOTER ────────────────────────────────────────────── */}
-      <footer className="border-t border-border bg-card/50 py-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-md bg-primary flex items-center justify-center">
-              <BookOpen size={12} className="text-primary-foreground" />
+      <footer className="pt-32 pb-12 bg-background border-t border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-4 gap-12 mb-20">
+            <div className="md:col-span-2">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
+                  <BookOpen size={20} className="text-primary-foreground" />
+                </div>
+                <span className="text-xl font-bold tracking-tighter text-foreground">AIMS <span className="text-primary italic">X</span> IT BLOCK</span>
+              </div>
+              <p className="text-muted-foreground leading-relaxed max-w-sm">
+                A high-performance Academic Management System designed for 
+                UMID Government ITI Polytechnic Kashipur, empowering 
+                students and faculty with modern tools.
+              </p>
             </div>
-            <span className="text-sm font-semibold text-foreground">AIMS X IT BLOCK</span>
-            <span className="text-sm text-muted-foreground">— Academic Infrastructure Management System</span>
+            <div>
+              <h5 className="font-bold text-xs uppercase tracking-[0.2em] text-foreground mb-6">Resources</h5>
+              <ul className="space-y-4">
+                <li><Link href="/branches/cse" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">CSE Department</Link></li>
+                <li><Link href="/branches/it" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">IT Department</Link></li>
+                <li><Link href="/branches/elex" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Electronics</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h5 className="font-bold text-xs uppercase tracking-[0.2em] text-foreground mb-6">Connect</h5>
+              <ul className="space-y-4">
+                <li><a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Contact Admin</a></li>
+                <li><a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Submit Bug Reports</a></li>
+                <li><a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Support Center</a></li>
+              </ul>
+            </div>
           </div>
-          <p className="text-xs text-muted-foreground">© 2026 AIMS. All rights reserved.</p>
+          <div className="pt-12 border-t border-border flex flex-col md:flex-row items-center justify-between gap-6">
+            <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">© 2026 AIMS PORTAL · UGIP KASHIPUR</p>
+            <div className="flex items-center gap-6">
+              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground">System Online · Stable</span>
+            </div>
+          </div>
         </div>
       </footer>
 
       {/* Chatbot Widget */}
       <ChatbotWidget />
+    </div>
+  );
+}
+
+// ── Shared Helper Component ────────────────────────────────────
+
+function TeamMemberCard({ member, isLeader, roles, colors }: any) {
+  return (
+    <div className={`relative rounded-[3rem] overflow-hidden transition-all duration-700 h-full flex flex-col border-2 ${colors.border} ${colors.hoverBorder} bg-card shadow-xl group-hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.2)] group-hover:-translate-y-4`}>
+      <div className={`absolute top-0 left-0 w-full h-2 ${colors.accentBg} shadow-[0_0_20px_${colors.accentBg}] z-20`} />
+      
+      {isLeader && (
+        <div className={`absolute top-6 right-6 w-12 h-12 rounded-2xl ${colors.accentBg} flex items-center justify-center shadow-xl z-20 transform rotate-12 transition-transform duration-500 group-hover:rotate-0`}>
+          <Crown size={22} className={colors.accentText} />
+        </div>
+      )}
+
+      <div className="p-8 pb-10 flex flex-col items-center flex-1">
+        <div className="relative mb-8">
+          <div className={`absolute inset-0 rounded-full bg-gradient-to-tr ${colors.gradient} blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 scale-150`} />
+          <div className={`relative w-36 h-36 rounded-full border-4 ${colors.border} group-hover:border-white overflow-hidden transition-all duration-500 group-hover:scale-105 shadow-2xl bg-muted`}>
+            <img src={`/assets/team/${member.data.image}`} alt={member.data.name} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+          </div>
+        </div>
+
+        <h4 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors text-center">{member.data.name}</h4>
+        
+        {isLeader && (
+          <span className={`px-4 py-1 rounded-full ${colors.accentBg} ${colors.accentText} text-[10px] font-bold uppercase tracking-[0.2em] mb-6 shadow-lg shadow-black/10`}>
+            Team Lead
+          </span>
+        )}
+
+        <div className="flex flex-wrap justify-center gap-2 mt-auto">
+          {roles.map((role: string) => {
+             const key = role.trim().toLowerCase().replace(/[-\s]/g, "");
+             const RoleIcon = roleIconMap[key] || Award;
+             return (
+               <div key={role} className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-muted/50 text-muted-foreground text-[10px] font-bold uppercase tracking-tighter border border-transparent group-hover:border-primary/20 group-hover:bg-primary/5 group-hover:text-primary transition-all">
+                 <RoleIcon size={12} />
+                 {role.trim()}
+               </div>
+             );
+          })}
+        </div>
+      </div>
     </div>
   );
 }

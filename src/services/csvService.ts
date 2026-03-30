@@ -26,7 +26,7 @@ const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "";
 /**
  * Upload a student list CSV to POST /upload/students.
  *
- * Expected CSV columns: roll_no, name, year, branch
+ * Expected CSV columns: roll_no, name, semester, branch
  *
  * Returns counts of inserted vs failed rows.
  * Falls back to a descriptive error if NEXT_PUBLIC_API_URL is not configured.

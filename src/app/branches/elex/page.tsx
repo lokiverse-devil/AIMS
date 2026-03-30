@@ -78,7 +78,7 @@ const elexData = {
     { name: "Drone Lab", capacity: 20, description: "Spectrum analyzers, RF transceivers, signal modules,8086 Microprocessor", available: true },
   ],
   achievements: [
-    "100% placement record for the past few years"
+    { title: "100% placement record for the past few years", featured: false }
   ],
 };
 

@@ -167,7 +167,7 @@ export default function SignupPage() {
                             className={selectCls}
                           >
                             <option value="" disabled>Select Semester</option>
-                            {semesters.map((s) => <option key={s} value={s}>{s} Semester</option>)}
+                            {semesters.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
                           </select>
                           <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
                             <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
