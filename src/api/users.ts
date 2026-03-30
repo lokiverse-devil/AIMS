@@ -24,6 +24,7 @@ export interface Student {
   section?: string
   photo_url?: string
   semester?: string
+  email?: string
   created_at?: string
 }
 
@@ -67,7 +68,7 @@ export async function updateUserProfile(
  */
 export async function updateStudentProfile(
   rollNo: string,
-  updates: Partial<Pick<Student, 'phone' | 'photo_url' | 'section' | 'name'>>,
+  updates: Partial<Pick<Student, 'phone' | 'photo_url' | 'section' | 'name' | 'email'>>,
 ): Promise<{ data: Student | null; error: Error | null }> {
   const { data, error } = await supabase
     .from('students')
@@ -109,7 +110,13 @@ export async function fetchStudentList(
   let query = supabase.from('students').select('*').order('roll_no')
 
   if (department) query = query.eq('branch', department)
-  if (semester) query = query.eq('semester', semester)
+  
+  if (year) {
+    if (year === "1st Year") query = query.in('year', ['1st', '2nd', '1st Semester', '2nd Semester'])
+    else if (year === "2nd Year") query = query.in('year', ['3rd', '4th', '3rd Semester', '4th Semester'])
+    else if (year === "3rd Year") query = query.in('year', ['5th', '6th', '5th Semester', '6th Semester'])
+    else query = query.eq('year', year)
+  }
 
   const { data, error } = await query
   if (error) {

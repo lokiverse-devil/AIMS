@@ -29,12 +29,13 @@ export default function LoginPage() {
       return;
     }
 
-    // Route based on role
     const role = data?.profile?.role;
     if (role === "student") {
       router.push("/dashboard/student");
-    } else if (role === "teacher" || role === "admin") {
+    } else if (role === "teacher") {
       router.push("/dashboard/teacher");
+    } else if (role === "admin") {
+      router.push("/dashboard/admin");
     } else {
       router.push("/");
     }
