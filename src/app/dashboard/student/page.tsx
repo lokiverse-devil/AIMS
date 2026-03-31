@@ -329,7 +329,7 @@ function ResourcesSection({ branch, semester }: { branch: string; semester: stri
 
   useEffect(() => {
     (async () => {
-      try { const { fetchResources } = await import("@/api/resources"); setResources(await fetchResources(undefined, semester||undefined, getBranchKey(branch)||undefined)); }
+      try { const { fetchResources } = await import("@/api/resources"); setResources(await fetchResources(undefined, semester||undefined, branch||undefined)); }
       catch(e) { console.error(e); } finally { setLoading(false); }
     })();
   }, [branch, semester]);

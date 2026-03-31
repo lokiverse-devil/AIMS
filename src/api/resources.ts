@@ -41,7 +41,8 @@ export async function fetchResources(
   else if (department) query = query.eq('department', department)
   
   if (semester && semester !== 'All') {
-    query = query.or(`semester.eq."${semester}",semester.eq.All`)
+    // Use two separate filters joined with OR — compatible with PostgREST in all environments
+    query = query.or(`semester.eq.${semester},semester.eq.All`)
   }
 
   const { data, error } = await query
@@ -73,7 +74,12 @@ export async function uploadResource(
 
   if (storageError) return { data: null, error: storageError }
 
-  const publicUrl = `${SUPABASE_STORAGE_BASE}/${STORAGE_BUCKETS.RESOURCES}/${path}`
+  // Use getPublicUrl() instead of manually building the URL.
+  // Manual URL construction can be affected by bucket policies and signed URL expiry.
+  const { data: urlData } = supabase.storage
+    .from(STORAGE_BUCKETS.RESOURCES)
+    .getPublicUrl(path)
+  const publicUrl = urlData.publicUrl
 
   const { data: inserted, error: dbError } = await supabase
     .from('resources')
