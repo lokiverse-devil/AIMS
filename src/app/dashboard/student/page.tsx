@@ -329,7 +329,11 @@ function ResourcesSection({ branch, semester }: { branch: string; semester: stri
 
   useEffect(() => {
     (async () => {
+<<<<<<< HEAD
       try { const { fetchResources } = await import("@/api/resources"); setResources(await fetchResources(undefined, semester||undefined, branch||undefined)); }
+=======
+      try { const { fetchResources } = await import("@/api/resources"); setResources(await fetchResources(getBranchLabel(branch)||undefined, semester||undefined, undefined)); }
+>>>>>>> 5a15271eeff93dbebaba0c35e012ac29322b9f3a
       catch(e) { console.error(e); } finally { setLoading(false); }
     })();
   }, [branch, semester]);
@@ -767,9 +771,9 @@ function ProfileSection({ student, onUpdate }: { student: StudentProfile; onUpda
     setSaving(true);
     try {
       const { updateStudentProfile } = await import("@/api/users");
-      const { error } = await updateStudentProfile(student.rollNumber, { phone: form.phone });
+      const { error } = await updateStudentProfile(student.rollNumber, { phone: form.phone, email: form.email });
       if (error) { alert("Failed to save: " + error.message); return; }
-      onUpdate({ phone: form.phone });
+      onUpdate({ phone: form.phone, email: form.email });
       setEditing(false);
     } catch(e) { console.error(e); }
     finally { setSaving(false); }
@@ -849,7 +853,7 @@ function ProfileSection({ student, onUpdate }: { student: StudentProfile; onUpda
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-bold text-muted-foreground uppercase ml-1">Email Address</label>
-                    <input value={student.email} disabled className="w-full px-5 py-3.5 rounded-[20px] border border-border bg-muted/30 text-muted-foreground cursor-not-allowed font-bold text-sm" />
+                    <input value={form.email} onChange={e=>setForm({...form,email:e.target.value})} className="w-full px-5 py-3.5 rounded-[20px] border border-border bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold text-sm" placeholder="student@example.com" />
                   </div>
                 </div>
                 <div className="flex gap-3 pt-4 border-t border-border/40">
@@ -922,7 +926,7 @@ export default function StudentDashboard() {
             const sd = await fetchStudentByRollNo(rollNo);
             if (sd) {
               name=(sd as any).name||name;
-              semester=(sd as any).semester||semester;
+              semester=(sd as any).year||(sd as any).semester||semester;
               section=(sd as any).section||"";
               phone=(sd as any).phone||"";
               photoUrl=(sd as any).photo_url||null;

@@ -29,7 +29,7 @@ const DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday"];
 const SEMESTERS = ["All","1","2","3","4","5","6"];
 import { getBranchLabel, getBranchKey, BRANCH_MAP } from "@/lib/constants";
 
-const BRANCHES = Object.keys(BRANCH_MAP);
+const YEAR_LABELS: Record<string,string> = {"1st Year":"FY","2nd Year":"SY","3rd Year":"TY"};
 
 const sidebarItems = [
   { id:"timetable", label:"Timetable", icon:Calendar },
@@ -310,7 +310,7 @@ function UploadSection({ teacher }: { teacher: TeacherProfile }) {
   const [resTitle, setResTitle] = useState("");
   const [resSubject, setResSubject] = useState("");
   const [resSemester, setResSemester] = useState("");
-  const [resBranch, setResBranch] = useState(teacher.department);
+  const [resBranch] = useState(teacher.department);
   const [resFile, setResFile] = useState<File|null>(null);
   const [marksTestName, setMarksTestName] = useState("");
   const [marksSubject, setMarksSubject] = useState("");
