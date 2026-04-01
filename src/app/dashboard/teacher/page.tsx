@@ -335,7 +335,7 @@ function UploadSection({ teacher }: { teacher: TeacherProfile }) {
   const tabs: {id:UploadTab;label:string;icon:React.ComponentType<{size?:number;className?:string}>;desc:string}[] = [
     {id:"resources",label:"Knowledge Assets",icon:BookOpen,desc:"Upload PDF notes, PPTs, or Research Papers."},
     {id:"marks",label:"Academic Performance",icon:BarChart2,desc:"Batch upload unit test marks via CSV."},
-    {id:"students",label:"Registry Sync",icon:Table2,desc:"Update the student database for your branch."},
+    {id:"students",label:"Student List",icon:Table2,desc:"Update the student list for your branch."},
   ];
 
   const showMsg = (type:"success"|"error", text:string) => {
@@ -357,7 +357,7 @@ function UploadSection({ teacher }: { teacher: TeacherProfile }) {
         uploaded_by: teacher.id
       });
       if (error) throw error;
-      showMsg("success","Asset successfully cataloged in the Knowledge Hub.");
+      showMsg("success","Asset uploaded successfully.");
       setResFile(null); setResTitle(""); setResSubject(""); setResSemester("");
       if (data) setHistory(prev => [data, ...prev].slice(0, 5));
     } catch(e: any) { showMsg("error","System Error: "+e.message); }
@@ -379,21 +379,16 @@ function UploadSection({ teacher }: { teacher: TeacherProfile }) {
         showMsg("success", result.message);
         setMarksFile(null); setMarksTestName(""); setMarksSubject("");
       } else showMsg("error", result.message);
-    } catch(e) { showMsg("error","Assessment sync failed."); }
+    } catch(e) { showMsg("error","Failed to upload marks."); }
     finally { setUploading(false); }
   };
 
   const handleStudentsUpload = async () => {
-    if (!studentsFile) { showMsg("error","Registry CSV file is missing."); return; }
-    setUploading(true);
-    try {
-      const { uploadStudentCSV } = await import("@/api/resources");
-      const result = await uploadStudentCSV(studentsFile, teacher.department);
       if (result.success) {
         showMsg("success",result.message);
         setStudentsFile(null);
       } else showMsg("error",result.message);
-    } catch(e) { showMsg("error","Registry sync error."); }
+    } catch(e) { showMsg("error","Failed to update student list."); }
     finally { setUploading(false); }
   };
 
@@ -497,7 +492,7 @@ function UploadSection({ teacher }: { teacher: TeacherProfile }) {
                 <DropZone selectedFile={resFile} onFileSelect={setResFile} accept=".pdf,.ppt,.pptx,.doc,.docx" label="Drop lecture material here"/>
                 <button onClick={handleResourceUpload} disabled={uploading}
                   className="w-full sm:w-auto px-10 py-4 rounded-2xl bg-primary text-primary-foreground font-bold text-sm hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-1 active:translate-y-0 transition-all shadow-lg disabled:opacity-50">
-                  {uploading ? "Broadcasting Asset..." : "Sync to Students"}
+                  {uploading ? "Uploading..." : "Upload Resources"}
                 </button>
 
                 {history.length > 0 && (
@@ -554,7 +549,7 @@ function UploadSection({ teacher }: { teacher: TeacherProfile }) {
                 <DropZone selectedFile={marksFile} onFileSelect={setMarksFile} accept="text/csv,.csv" label="Upload Assessment Data"/>
                 <button onClick={handleMarksUpload} disabled={uploading}
                   className="w-full sm:w-auto px-10 py-4 rounded-2xl bg-primary text-primary-foreground font-bold text-sm hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-1 active:translate-y-0 transition-all shadow-lg disabled:opacity-50">
-                  {uploading ? "Processing Analytics..." : "Publish Results"}
+                  {uploading ? "Uploading..." : "Upload Marks"}
                 </button>
               </div>
             )}
@@ -566,7 +561,7 @@ function UploadSection({ teacher }: { teacher: TeacherProfile }) {
                   <div className="flex items-center gap-3">
                     <div className="p-3 rounded-2xl bg-accent/10 text-accent-foreground"><Users size={20}/></div>
                     <div>
-                      <p className="text-sm font-bold text-foreground">Registry Template</p>
+                      <p className="text-sm font-bold text-foreground">Student List Template</p>
                       <p className="text-xs text-muted-foreground">roll_no, name, semester, branch</p>
                     </div>
                   </div>
@@ -578,7 +573,7 @@ function UploadSection({ teacher }: { teacher: TeacherProfile }) {
                 <DropZone selectedFile={studentsFile} onFileSelect={setStudentsFile} accept="text/csv,.csv" label="Upload Enrollment Sheet"/>
                 <button onClick={handleStudentsUpload} disabled={uploading}
                   className="w-full sm:w-auto px-10 py-4 rounded-2xl bg-primary text-primary-foreground font-bold text-sm hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-1 active:translate-y-0 transition-all shadow-lg disabled:opacity-50">
-                  {uploading ? "Updating Registry..." : "Sync Enrollments"}
+                  {uploading ? "Uploading..." : "Upload Student List"}
                 </button>
               </div>
             )}
@@ -1414,7 +1409,7 @@ export default function TeacherDashboard() {
         {/* Logo */}
         <div className="h-20 flex items-center gap-3 px-6 border-b border-border/50">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg shadow-primary/20">
-            <GraduationCap size={20} className="text-primary-foreground"/>
+             <img width={16} height={16} src="/assets/college/logo.png" alt="AIMS Logo" />
           </div>
           <div className="flex flex-col">
             <span className="font-bold text-base tracking-tight text-foreground">AIMS TEACHER</span>

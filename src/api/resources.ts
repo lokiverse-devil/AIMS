@@ -1,5 +1,5 @@
 import { supabase, STORAGE_BUCKETS, SUPABASE_STORAGE_BASE } from '@/lib/supabaseClient'
-import { getBranchLabel } from '@/lib/constants'
+import { getBranchLabel, getBranchKey } from '@/lib/constants'
 
 export interface Resource {
   id: string
@@ -36,9 +36,11 @@ export async function fetchResources(
     .select('*')
     .order('created_at', { ascending: false })
 
-  // Filter by branch if provided, fallback to department
-  if (branch) query = query.in('department', [branch, getBranchLabel(branch)])
-  else if (department) query = query.eq('department', department)
+  // Robust branch/department filtering: handles both 'CSE' and 'Computer Science Engineering'
+  if (branch || department) {
+    const b = branch || department || ""
+    query = query.in('department', [b, getBranchLabel(b), getBranchKey(b)])
+  }
   
   if (semester && semester !== 'All') {
     // Use two separate filters joined with OR — compatible with PostgREST in all environments

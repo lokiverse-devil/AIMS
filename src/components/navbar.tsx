@@ -72,7 +72,7 @@ export function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
           <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shadow-md group-hover:shadow-primary/30 transition-shadow">
-            <GraduationCap size={16} className="text-primary-foreground" />
+             <img width={16} height={16} src="/assets/college/logo.png" alt="AIMS Logo" />
           </div>
           <div className="flex flex-col leading-none">
             <span className="text-sm font-bold tracking-wide text-foreground">AIMS X IT BLOCK</span>

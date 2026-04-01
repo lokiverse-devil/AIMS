@@ -75,7 +75,7 @@ function Avatar({ photoUrl, initials, size = 36, className = "" }: { photoUrl?: 
       style={{ width: size, height: size }}>
       {photoUrl
         // eslint-disable-next-line @next/next/no-img-element
-        ? <img src={photoUrl} alt="Profile" className="w-full h-full object-cover" />
+        ? <img src={photoUrl} alt="Profile" className="w-full h-full object-cover" crossOrigin="anonymous" />
         : <span className="font-bold text-primary" style={{ fontSize: size * 0.35 }}>{initials}</span>}
     </div>
   );
@@ -128,7 +128,7 @@ function TimetableSection({ branch, semester }: { branch: string; semester: stri
         ))}
       </div>
 
-      {loading ? <LoadingState text="Fetching your schedule…" /> : dayEntries.length === 0 ? (
+      {loading ? <LoadingState text="Getting your schedule…" /> : dayEntries.length === 0 ? (
         <EmptyState text="Clear schedule! No classes listed for today yet." />
       ) : (
         <div className="grid gap-4">
@@ -216,7 +216,7 @@ function MarksSection({ rollNumber }: { rollNumber: string }) {
         )}
       </div>
 
-      {loading ? <LoadingState text="Analyzing performance data…" /> : filtered.length === 0 ? <EmptyState text="No evaluation records found for this semester." /> : (
+      {loading ? <LoadingState text="Getting marks data…" /> : filtered.length === 0 ? <EmptyState text="No evaluation records found for this semester." /> : (
         <div className="grid gap-4">
           {filtered.map((m, idx) => {
             const p = (m.marks/m.max_marks)*100;
@@ -329,11 +329,7 @@ function ResourcesSection({ branch, semester }: { branch: string; semester: stri
 
   useEffect(() => {
     (async () => {
-<<<<<<< HEAD
       try { const { fetchResources } = await import("@/api/resources"); setResources(await fetchResources(undefined, semester||undefined, branch||undefined)); }
-=======
-      try { const { fetchResources } = await import("@/api/resources"); setResources(await fetchResources(getBranchLabel(branch)||undefined, semester||undefined, undefined)); }
->>>>>>> 5a15271eeff93dbebaba0c35e012ac29322b9f3a
       catch(e) { console.error(e); } finally { setLoading(false); }
     })();
   }, [branch, semester]);
@@ -346,7 +342,7 @@ function ResourcesSection({ branch, semester }: { branch: string; semester: stri
         </span>
         Knowledge Hub
       </h2>
-      {loading ? <LoadingState text="Curating resources…" /> : resources.length === 0 ? <EmptyState text="No study materials available for your current branch/semester yet." /> : (
+      {loading ? <LoadingState text="Getting materials…" /> : resources.length === 0 ? <EmptyState text="No study materials available for your current branch/semester yet." /> : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {resources.map((r, i) => (
             <motion.div 
@@ -578,13 +574,31 @@ function IDCardSection({ student }: { student: StudentProfile }) {
       const html2canvas = (await import("html2canvas")).default;
       const { jsPDF } = await import("jspdf");
       const el = document.getElementById("student-id-card");
-      if (!el) return;
-      const canvas = await html2canvas(el, { scale: 3, useCORS: true, backgroundColor: null });
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: [86, 140] });
+      if (!el) throw new Error("ID Card element not found");
+
+      // Use a slight scale-up for high resolution; logging can help debug.
+      const canvas = await html2canvas(el, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: false,
+        backgroundColor: null,
+        scrollX: 0,
+        scrollY: -window.scrollY, // Fix for capture when scrolled
+      });
+
+      const imgData = canvas.toDataURL("image/png", 1.0);
+      const pdf = new jsPDF({ 
+        orientation: "portrait", 
+        unit: "mm", 
+        format: [86, 140] // Standard ID card dimension (approx)
+      });
+
       pdf.addImage(imgData, "PNG", 0, 0, 86, 140, undefined, "FAST");
       pdf.save(`ID-CARD-${student.rollNumber}.pdf`);
-    } catch (e) { console.error("PDF generation error:", e); alert("Failed to generate PDF. Please try again."); }
+    } catch (e) { 
+      console.error("PDF generation error:", e); 
+      alert("Failed to generate PDF. If the error persists, please ensure your profile photo is properly loaded."); 
+    }
     finally { setDownloading(false); }
   };
 
@@ -615,7 +629,7 @@ function IDCardSection({ student }: { student: StudentProfile }) {
           {/* Header */}
           <div className="bg-primary/90 backdrop-blur-md px-8 py-6 flex items-center gap-4 border-b border-white/10 relative z-10">
             <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-lg flex items-center justify-center border border-white/20 shadow-inner">
-              <GraduationCap size={24} className="text-white"/>
+              <img width={16} height={16} src="/assets/college/logo.png"  alt="AIMS Logo" />
             </div>
             <div className="flex-1">
               <h3 className="text-white font-bold text-lg tracking-tight leading-none uppercase">UGIP</h3>
@@ -647,10 +661,10 @@ function IDCardSection({ student }: { student: StudentProfile }) {
                 <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider opacity-60">Roll Number</p>
                 <p className="font-mono text-sm font-bold text-foreground tracking-tight">{student.rollNumber}</p>
               </div>
-              <div className="flex justify-between items-center py-2.5 border-b border-border/40">
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Branch</p>
-              <p className="text-[11px] font-bold text-foreground uppercase">{getBranchLabel(student.branch)}</p>
-            </div>
+              <div className="space-y-1">
+                <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider opacity-60">Branch</p>
+                <p className="text-sm font-bold text-foreground tracking-tight">{getBranchLabel(student.branch)}</p>
+              </div>
               <div className="space-y-1">
                 <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider opacity-60">Academic Year</p>
                 <p className="text-sm font-bold text-foreground tracking-tight">{student.yearLabel}</p>
@@ -1032,7 +1046,7 @@ export default function StudentDashboard() {
         {/* Logo */}
         <div className="h-20 flex items-center gap-3 px-6 border-b border-border/50">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg shadow-primary/20">
-            <GraduationCap size={20} className="text-primary-foreground"/>
+            <img width={16} height={16} src="/assets/college/logo.png" alt="" />
           </div>
           <div className="flex flex-col">
             <span className="font-bold text-base tracking-tight text-foreground">AIMS PORTAL</span>

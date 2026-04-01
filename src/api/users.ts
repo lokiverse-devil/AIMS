@@ -23,7 +23,6 @@ export interface Student {
   phone?: string
   section?: string
   photo_url?: string
-  semester?: string
   email?: string
   created_at?: string
 }
@@ -101,7 +100,7 @@ export async function updateTeacherProfile(
 
 /**
  * Fetch a list of students from the `students` table,
- * optionally filtered by department (branch) and/or year.
+ * optionally filtered by department (branch) and/or semester.
  */
 export async function fetchStudentList(
   department?: string,
@@ -109,13 +108,14 @@ export async function fetchStudentList(
 ): Promise<Student[]> {
   let query = supabase.from('students').select('*').order('roll_no')
 
-  if (department) query = query.eq('branch', department)
+  // Robust branch filtering: handles both 'CSE' and 'Computer Science Engineering'
+  if (department) {
+    const { getBranchLabel, getBranchKey } = await import('@/lib/constants')
+    query = query.in('branch', [department, getBranchLabel(department), getBranchKey(department)])
+  }
   
-  if (year) {
-    if (year === "1st Year") query = query.in('year', ['1st', '2nd', '1st Semester', '2nd Semester'])
-    else if (year === "2nd Year") query = query.in('year', ['3rd', '4th', '3rd Semester', '4th Semester'])
-    else if (year === "3rd Year") query = query.in('year', ['5th', '6th', '5th Semester', '6th Semester'])
-    else query = query.eq('year', year)
+  if (semester && semester !== 'All') {
+    query = query.eq('semester', semester)
   }
 
   const { data, error } = await query

@@ -122,28 +122,28 @@ const labs = [
 const facultyPreview = [
   {
     name: "BP Singh",
-    dept: "Principal",
-    subjects:"The principal of UGIP Kashipur",
+    designation: "Principal",
+    subjects:"Principal of UGIP Kashipur",
     avatar: "/assets/faculty/bp.jpeg",
-    initials: "MV",
+    initials: "BP",
   },
   {
     name: "MANMOHAN",
-    dept: "CSE",
+    designation: "Head of Department — CSE",
     subjects: "Internet Of Things, Operating Systems, Computer System And Organization, Data Mining and Warehouse",
     avatar: "/assets/faculty/mannu.jpg",
     initials: "MV",
   },
   {
     name: "JAGDISH CHANDRA PANDEY",
-    dept: "IT",
+    designation: "Head of Department — IT",
     subjects: "Programming In C, Concepts of .NET Technology, Android Application Development, Java Programming",
     avatar: "/assets/faculty/pandey.jpg",
     initials: "JP",
   },
   {
     name: "MANOJ RIKHARI",
-    dept: "ELEX",
+    designation: "Head of Department — ELEX",
     subjects: "VLSI Design, Embedded Systems",
     avatar: "/assets/faculty/manoj.jpg",
     initials: "MR",
@@ -417,7 +417,7 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    fetch("/assets/team/detailes.json")
+    fetch("/assets/team/details.json")
       .then((res) => res.json())
       .then((data: Record<string, TeamMember>) => {
         setTeamMembers(
@@ -640,8 +640,8 @@ export default function HomePage() {
                 </div>
               </div>
               {/* Decorative side element */}
-              <div className="absolute -bottom-6 -left-6 w-32 h-32 rounded-3xl bg-primary border-4 border-background flex flex-col items-center justify-center shadow-xl z-20">
-                <Award size={32} className="text-primary-foreground mb-1" />
+              <div className="absolute -bottom-6 -right-6 w-32 h-32 rounded-3xl bg-primary border-4 border-background flex flex-col items-center justify-center shadow-xl z-20">
+                <Award size={24} className="text-primary-foreground mb-1" />
                 <span className="text-xs font-bold text-primary-foreground uppercase tracking-widest">Est. 2005</span>
               </div>
             </motion.div>
@@ -767,7 +767,7 @@ export default function HomePage() {
               className="relative order-2 lg:order-1"
             >
               <div className="aspect-[16/10] rounded-[2.5rem] overflow-hidden bg-card border border-primary/20 shadow-2xl relative group">
-                <img src="/assets/college/hackathon_winner.jpg" alt="Hackathon Winners" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
+                <img src="/assets/college/hackathon_winner.jpeg" alt="Hackathon Winners" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
                 <div className="absolute bottom-8 left-8 right-8">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-widest mb-4">
@@ -797,7 +797,7 @@ export default function HomePage() {
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">
                 Our students don't just learn; they compete and win on the biggest stages. 
-                From state-level hackathons to national coding challenges, the IT Block 
+                From college and district level hackathons to state level hackathons, the IT Block 
                 provides the mentorship and resources needed to excel.
               </p>
               <div className="space-y-4">
@@ -930,7 +930,7 @@ export default function HomePage() {
                 <h4 className="font-bold text-foreground text-lg mb-2 tracking-tight">{f.name}</h4>
                 <div className="inline-flex items-center justify-center mb-5">
                   <span className="px-4 py-1.5 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/20">
-                    {f.dept} Department
+                    {f.designation} Designation
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed italic mb-6">"{f.subjects}"</p>
