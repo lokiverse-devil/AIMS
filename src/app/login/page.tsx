@@ -100,8 +100,8 @@ export default function LoginPage() {
         >
           {/* Logo */}
           <div className="flex items-center gap-2.5 mb-8">
-            <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center shadow-md">
-              <GraduationCap size={18} className="text-primary-foreground" />
+            <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center shadow-md overflow-hidden p-1.5">
+              <img src="/assets/college/logo.png" alt="AIMS Logo" className="w-full h-full object-contain" />
             </div>
             <div>
               <p className="font-bold text-foreground leading-none">AIMS</p>
