@@ -149,8 +149,8 @@ export default function SignupPage() {
                             onChange={(e) => setStudentForm({ ...studentForm, branch: e.target.value })}
                             className={selectCls}
                           >
-                            <option value="" disabled>Select Branch</option>
-                            {branches.map((b) => <option key={b} value={b}>{b}</option>)}
+                            <option value="" disabled className="bg-background text-foreground">Select Branch</option>
+                            {branches.map((b) => <option key={b} value={b} className="bg-background text-foreground">{b}</option>)}
                           </select>
                           <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
                             <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -166,8 +166,8 @@ export default function SignupPage() {
                             onChange={(e) => setStudentForm({ ...studentForm, semester: e.target.value })}
                             className={selectCls}
                           >
-                            <option value="" disabled>Select Semester</option>
-                            {semesters.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
+                            <option value="" disabled className="bg-background text-foreground">Select Semester</option>
+                            {semesters.map((s) => <option key={s} value={s} className="bg-background text-foreground">{s}</option>)}
                           </select>
                           <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
                             <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -229,8 +229,8 @@ export default function SignupPage() {
                             onChange={(e) => setTeacherForm({ ...teacherForm, department: e.target.value })}
                             className={selectCls}
                           >
-                            <option value="" disabled>Select Department</option>
-                            {departments.map((d) => <option key={d} value={d}>{d}</option>)}
+                            <option value="" disabled className="bg-background text-foreground">Select Department</option>
+                            {departments.map((d) => <option key={d} value={d} className="bg-background text-foreground">{d}</option>)}
                           </select>
                           <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
                             <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>

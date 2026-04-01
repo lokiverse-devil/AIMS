@@ -123,7 +123,7 @@ const facultyPreview = [
   {
     name: "BP Singh",
     designation: "Principal",
-    subjects:"Principal of UGIP Kashipur",
+    subjects: "Principal of UGIP Kashipur",
     avatar: "/assets/faculty/bp.jpeg",
     initials: "BP",
   },
@@ -371,7 +371,7 @@ export default function HomePage() {
     { id: string; data: TeamMember }[]
   >([]);
   const [uiNotices, setUiNotices] = useState<any[]>(notices);
-  
+
   const [dashboardHref, setDashboardHref] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
   const [userPhoto, setUserPhoto] = useState<string | null>(null);
@@ -390,7 +390,7 @@ export default function HomePage() {
           setUserName(name);
           setUserPhoto(u.photo_url || null);
         }
-      } catch (_) {}
+      } catch (_) { }
     })();
   }, []);
 
@@ -424,7 +424,7 @@ export default function HomePage() {
           Object.entries(data).map(([id, member]) => ({ id, data: member }))
         );
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   useEffect(() => {
@@ -435,7 +435,7 @@ export default function HomePage() {
           setBgVideoUrl(data.videos.itBlockBg);
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   return (
@@ -462,7 +462,7 @@ export default function HomePage() {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 pt-36">
           <motion.div
-          
+
             variants={stagger}
             initial="hidden"
             animate="visible"
@@ -498,7 +498,7 @@ export default function HomePage() {
               className="text-lg sm:text-xl leading-relaxed max-w-2xl mb-12 font-medium text-white/90"
             >
               <span className="bg-black/20 backdrop-blur-md px-2 py-1 rounded-md box-decoration-clone">
-                A centralized, high-performance ecosystem for managing academic infrastructure, 
+                A centralized, high-performance ecosystem for managing academic infrastructure,
                 streamlining resources, and empowering the next generation of engineers.
               </span>
             </motion.p>
@@ -669,11 +669,11 @@ export default function HomePage() {
                 <Link href={branch.href} className="block group h-full">
                   <div className="relative p-8 rounded-[3rem] border border-border bg-card hover:border-primary/50 transition-all duration-500 h-full flex flex-col overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-primary/5">
                     <div className="absolute -top-24 -right-24 w-56 h-56 bg-primary/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                    
+
                     <div className={`w-16 h-16 rounded-3xl bg-gradient-to-br ${branch.color} flex items-center justify-center mb-8 shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
                       <branch.icon size={32} className="text-primary" />
                     </div>
-                    
+
                     <div className="flex-1">
                       <div className="inline-flex items-center gap-3 mb-4">
                         <span className={`w-3 h-3 rounded-full ${branch.accent} shadow-lg`} />
@@ -759,7 +759,7 @@ export default function HomePage() {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-             <motion.div
+            <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
@@ -773,7 +773,7 @@ export default function HomePage() {
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-widest mb-4">
                     <Crown size={12} /> 1st Position
                   </div>
-                  <h3 className="text-2xl font-black text-white mb-2 tracking-tight">State Level Hackathon Champions</h3>
+                  <h3 className="text-2xl font-black text-white mb-2 tracking-tight">State Level Hackathon Champeions</h3>
                   <p className="text-sm text-white/70 font-medium">CSE Department · Rajat Jayanti Samaroh</p>
                 </div>
               </div>
@@ -793,11 +793,11 @@ export default function HomePage() {
             >
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-[1.1]">
                 Nurturing the <br />
-                <span className="text-primary italic">Champions of Tomorrow</span>
+                <span className="text-primary italic">Champeions of Tomorrow</span>
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                Our students don't just learn; they compete and win on the biggest stages. 
-                From college and district level hackathons to state level hackathons, the IT Block 
+                Our students don't just learn; they compete and win on the biggest stages.
+                From college and district level hackathons to state level hackathons, the IT Block
                 provides the mentorship and resources needed to excel.
               </p>
               <div className="space-y-4">
@@ -831,22 +831,22 @@ export default function HomePage() {
                 Specialized <br /><span className="text-primary italic">Centers</span>
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-10">
-                From high-compute servers to IoT experimentation boards, 
-                our labs offer everything an engineer needs to turn ideas 
+                From high-compute servers to IoT experimentation boards,
+                our labs offer everything an engineer needs to turn ideas
                 into production-ready software and hardware.
               </p>
               <div className="flex flex-col gap-4">
-                 {[
+                {[
                   "Intel i5/i7 Workstations",
                   "100 Mbps Dedicated LAN",
                   "Open-Source Software Stack",
                   "Hardware Prototyping Kits"
-                 ].map(t => (
-                   <div key={t} className="flex items-center gap-3">
-                     <div className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(20,184,166,0.6)]" />
-                     <span className="text-xs font-black uppercase tracking-widest text-foreground">{t}</span>
-                   </div>
-                 ))}
+                ].map(t => (
+                  <div key={t} className="flex items-center gap-3">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(20,184,166,0.6)]" />
+                    <span className="text-xs font-black uppercase tracking-widest text-foreground">{t}</span>
+                  </div>
+                ))}
               </div>
               <div className="mt-12">
                 <Link
@@ -881,18 +881,18 @@ export default function HomePage() {
                       {lab.available ? "Ready" : "In Use"}
                     </span>
                   </div>
-                  
+
                   <h4 className="font-bold text-foreground text-xl mb-3 tracking-tight group-hover:text-primary transition-colors">{lab.name}</h4>
                   <p className="text-xs text-muted-foreground leading-relaxed mb-8 flex-1">{lab.equipment}</p>
-                  
+
                   <div className="flex items-center gap-6 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">
                     <div className="flex items-center gap-2">
-                       <Building2 size={14} className="opacity-50" />
-                       {lab.wing}
+                      <Building2 size={14} className="opacity-50" />
+                      {lab.wing}
                     </div>
                     <div className="flex items-center gap-2">
-                       <Users size={14} className="opacity-50" />
-                       {lab.capacity} Seats
+                      <Users size={14} className="opacity-50" />
+                      {lab.capacity} Seats
                     </div>
                   </div>
                 </motion.div>
@@ -983,11 +983,10 @@ export default function HomePage() {
                 className="group relative p-6 rounded-[2.5rem] border border-border bg-card hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 flex flex-col md:flex-row gap-8 items-start md:items-center overflow-hidden"
               >
                 <div className="flex-shrink-0">
-                  <div className={`w-16 h-16 rounded-2xl flex flex-col items-center justify-center border ${
-                    notice.urgent 
-                    ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20" 
-                    : "bg-muted/50 text-muted-foreground border-border"
-                  }`}>
+                  <div className={`w-16 h-16 rounded-2xl flex flex-col items-center justify-center border ${notice.urgent
+                      ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20"
+                      : "bg-muted/50 text-muted-foreground border-border"
+                    }`}>
                     <Clock size={24} className="mb-1" />
                     <span className="text-[8px] font-black uppercase tracking-tighter">Latest</span>
                   </div>
@@ -995,15 +994,14 @@ export default function HomePage() {
 
                 <div className="flex-1 space-y-3">
                   <div className="flex flex-wrap items-center gap-3">
-                    <span className={`text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest border transition-colors ${
-                      notice.urgent 
-                      ? "bg-amber-500/10 text-amber-600 border-amber-500/20" 
-                      : "bg-primary/5 text-primary border-primary/20"
-                    }`}>
+                    <span className={`text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest border transition-colors ${notice.urgent
+                        ? "bg-amber-500/10 text-amber-600 border-amber-500/20"
+                        : "bg-primary/5 text-primary border-primary/20"
+                      }`}>
                       {notice.tag}
                     </span>
                     <span className="text-xs font-bold text-muted-foreground flex items-center gap-2">
-                       <Shield size={12} /> {notice.date}
+                      <Shield size={12} /> {notice.date}
                     </span>
                   </div>
                   <h4 className="text-2xl font-black text-foreground group-hover:text-primary transition-colors tracking-tight">{notice.title}</h4>
@@ -1024,7 +1022,7 @@ export default function HomePage() {
       {/* ─── CTA ───────────────────────────────────────────────── */}
       <section className="py-16 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -1033,7 +1031,7 @@ export default function HomePage() {
             {/* Background decorative elements */}
             <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/20 to-transparent pointer-events-none" />
             <div className="absolute -bottom-48 -right-48 w-96 h-96 bg-primary/30 rounded-full blur-[100px] pointer-events-none" />
-            
+
             <div className="relative z-10 max-w-3xl mx-auto">
               <span className="inline-block px-6 py-2 rounded-full bg-white/10 text-white/80 text-[10px] font-black uppercase tracking-[0.4em] border border-white/5 mb-8">
                 Portal Access
@@ -1042,8 +1040,8 @@ export default function HomePage() {
                 Experience <span className="text-primary italic">AIMS</span> Today.
               </h2>
               <p className="text-xl text-white/60 mb-12 leading-relaxed">
-                Unlock a centralized ecosystem where academic performance, 
-                infrastructure, and innovation converge. Join 350+ students 
+                Unlock a centralized ecosystem where academic performance,
+                infrastructure, and innovation converge. Join 350+ students
                 and faculty already using IT Block's advanced platform.
               </p>
               <div className="flex flex-wrap gap-6 justify-center">
@@ -1118,8 +1116,8 @@ export default function HomePage() {
                 <span className="text-xl font-bold tracking-tighter text-foreground">AIMS <span className="text-primary italic">X</span> IT BLOCK</span>
               </div>
               <p className="text-muted-foreground leading-relaxed max-w-sm">
-                A high-performance Academic Management System designed for 
-                UMID Government ITI Polytechnic Kashipur, empowering 
+                A high-performance Academic Management System designed for
+                UMID Government ITI Polytechnic Kashipur, empowering
                 students and faculty with modern tools.
               </p>
             </div>
@@ -1162,7 +1160,7 @@ function TeamMemberCard({ member, isLeader, roles, colors }: any) {
   return (
     <div className={`relative rounded-[3rem] overflow-hidden transition-all duration-700 h-full flex flex-col border-2 ${colors.border} ${colors.hoverBorder} bg-card shadow-xl group-hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.2)] group-hover:-translate-y-4`}>
       <div className={`absolute top-0 left-0 w-full h-2 ${colors.accentBg} shadow-[0_0_20px_${colors.accentBg}] z-20`} />
-      
+
       {isLeader && (
         <div className={`absolute top-6 right-6 w-12 h-12 rounded-2xl ${colors.accentBg} flex items-center justify-center shadow-xl z-20 transform rotate-12 transition-transform duration-500 group-hover:rotate-0`}>
           <Crown size={22} className={colors.accentText} />
@@ -1178,7 +1176,7 @@ function TeamMemberCard({ member, isLeader, roles, colors }: any) {
         </div>
 
         <h4 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors text-center">{member.data.name}</h4>
-        
+
         {isLeader && (
           <span className={`px-4 py-1 rounded-full ${colors.accentBg} ${colors.accentText} text-[10px] font-bold uppercase tracking-[0.2em] mb-6 shadow-lg shadow-black/10`}>
             Team Lead
@@ -1187,14 +1185,14 @@ function TeamMemberCard({ member, isLeader, roles, colors }: any) {
 
         <div className="flex flex-wrap justify-center gap-2 mt-auto">
           {roles.map((role: string) => {
-             const key = role.trim().toLowerCase().replace(/[-\s]/g, "");
-             const RoleIcon = roleIconMap[key] || Award;
-             return (
-               <div key={role} className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-muted/50 text-muted-foreground text-[10px] font-bold uppercase tracking-tighter border border-transparent group-hover:border-primary/20 group-hover:bg-primary/5 group-hover:text-primary transition-all">
-                 <RoleIcon size={12} />
-                 {role.trim()}
-               </div>
-             );
+            const key = role.trim().toLowerCase().replace(/[-\s]/g, "");
+            const RoleIcon = roleIconMap[key] || Award;
+            return (
+              <div key={role} className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-muted/50 text-muted-foreground text-[10px] font-bold uppercase tracking-tighter border border-transparent group-hover:border-primary/20 group-hover:bg-primary/5 group-hover:text-primary transition-all">
+                <RoleIcon size={12} />
+                {role.trim()}
+              </div>
+            );
           })}
         </div>
       </div>
