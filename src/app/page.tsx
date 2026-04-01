@@ -767,13 +767,13 @@ export default function HomePage() {
               className="relative order-2 lg:order-1"
             >
               <div className="aspect-[16/10] rounded-[2.5rem] overflow-hidden bg-card border border-primary/20 shadow-2xl relative group">
-                <img src="/assets/college/hackathon_winner.jpg" alt="Hackathon Winners" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
+                <img src="/assets/college/hackathon_winner.jpg" alt="" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
                 <div className="absolute bottom-8 left-8 right-8">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-widest mb-4">
                     <Crown size={12} /> 1st Position
                   </div>
-                  <h3 className="text-2xl font-black text-white mb-2 tracking-tight">State Level Hackathon Champions</h3>
+                  <h3 className="text-2xl font-black text-white mb-2 tracking-tight">State Level Hackathon Champeions</h3>
                   <p className="text-sm text-white/70 font-medium">CSE Department · Rajat Jayanti Samaroh</p>
                 </div>
               </div>
@@ -793,7 +793,7 @@ export default function HomePage() {
             >
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-[1.1]">
                 Nurturing the <br />
-                <span className="text-primary italic">Champions of Tomorrow</span>
+                <span className="text-primary italic">Champeions of Tomorrow</span>
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">
                 Our students don't just learn; they compete and win on the biggest stages. 
