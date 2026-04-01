@@ -384,6 +384,11 @@ function UploadSection({ teacher }: { teacher: TeacherProfile }) {
   };
 
   const handleStudentsUpload = async () => {
+    if (!studentsFile) { showMsg("error","Please select a CSV file."); return; }
+    setUploading(true);
+    try {
+      const { uploadStudentsCSV } = await import("@/api/users");
+      const result = await uploadStudentsCSV(studentsFile, teacher.department);
       if (result.success) {
         showMsg("success",result.message);
         setStudentsFile(null);
@@ -1274,7 +1279,7 @@ function ProfileSection({ teacher }: { teacher: TeacherProfile }) {
                     availableData.map(branch => (
                       <button key={branch.code} onClick={() => setActiveBranch(branch.code)}
                         className={`w-full text-left px-4 py-3 rounded-2xl text-sm font-bold transition-all flex items-center justify-between ${activeBranch === branch.code ? "bg-primary text-primary-foreground shadow-md shadow-primary/20" : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"}`}>
-                        <span className="truncate pr-2">{branch.name}</span>
+                        <span className="truncate pr-2">{getBranchLabel(branch.name) || branch.name.toUpperCase()}</span>
                       </button>
                     ))
                   )}
