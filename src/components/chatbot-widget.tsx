@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageSquare, X, Send, Bot, User, Play, ExternalLink, ChevronDown } from "lucide-react";
+import { MessageSquare, X, Send, Bot, User, Play, ExternalLink, ChevronDown, Film, MapPin } from "lucide-react";
 import chatbotData from "@/lib/chatbotData.json";
 
 // ── Types ─────────────────────────────────────────────────────────────
@@ -90,47 +90,79 @@ function formatTime() {
 
 function BotBubble({ response }: { response: BotResponse }) {
   const [videoOpen, setVideoOpen] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Replace these placeholder filenames with actual Supabase Storage URLs when available
+  const supabaseBaseUrl = "https://rvamuonqnsbnqdgpskir.supabase.co/storage/v1/object/public/guide-videos"; // e.g. https://xxxx.supabase.co/storage/v1/object/public/guide-videos
+  const videoSrc = supabaseBaseUrl && response.video
+    ? `${supabaseBaseUrl}/${response.video}`
+    : null;
 
   return (
-    <div className="flex flex-col gap-1.5">
+    <div className="flex flex-col gap-2">
       {/* Text answer */}
-      <div className="px-3 py-2 rounded-2xl rounded-tl-sm bg-muted text-foreground text-sm leading-relaxed">
+      <div className="px-3.5 py-2.5 rounded-2xl rounded-tl-sm bg-muted text-foreground text-sm leading-relaxed">
         {response.text}
       </div>
 
-      {/* Navigation video button */}
+      {/* Navigation video card */}
       {response.video && (
-        <div>
+        <div className="rounded-2xl overflow-hidden border border-border/60 bg-card shadow-sm">
+          {/* Card header — clickable toggle */}
           <button
-            onClick={() => setVideoOpen(!videoOpen)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-primary/10 text-primary text-xs font-medium hover:bg-primary/20 transition-colors w-full text-left"
+            onClick={() => {
+              setVideoOpen(!videoOpen);
+              if (videoOpen && videoRef.current) videoRef.current.pause();
+            }}
+            className="w-full flex items-center gap-3 px-3.5 py-2.5 bg-gradient-to-r from-primary/10 to-primary/5 hover:from-primary/20 hover:to-primary/10 transition-all group"
           >
-            <Play size={12} />
-            {response.videoLabel || "Play Navigation Video"}
-            {/* TODO: Replace with Supabase guide video URL */}
-            {/* TODO: https://PROJECT.supabase.co/storage/v1/object/public/guide-videos/{filename} */}
+            <div className="w-7 h-7 rounded-lg bg-primary/15 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/25 transition-colors">
+              {videoOpen ? <ChevronDown size={14} className="text-primary" /> : <Film size={14} className="text-primary" />}
+            </div>
+            <div className="flex-1 text-left">
+              <p className="text-xs font-semibold text-primary leading-tight">
+                {response.videoLabel || "Watch Navigation Video"}
+              </p>
+              <p className="text-[10px] text-muted-foreground mt-0.5">
+                {videoOpen ? "Click to collapse" : "Step-by-step campus navigation"}
+              </p>
+            </div>
+            <Play size={12} className={`text-primary transition-transform flex-shrink-0 ${videoOpen ? "opacity-0" : "opacity-70"}`} />
           </button>
+
+          {/* Video player */}
           <AnimatePresence>
             {videoOpen && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
-                className="mt-2 rounded-xl overflow-hidden border border-border bg-muted"
+                transition={{ duration: 0.25, ease: "easeInOut" }}
+                className="overflow-hidden"
               >
-                <div className="p-3 text-center">
-                  <div className="w-full aspect-video bg-black/20 rounded-lg flex items-center justify-center">
-                    {/* TODO: Replace src with Supabase Storage URL */}
-                    {/* <video src={`https://PROJECT.supabase.co/storage/v1/object/public/guide-videos/${response.video}`} controls className="w-full h-full rounded-lg" /> */}
-                    <div className="text-center">
-                      <Play size={32} className="text-muted-foreground mx-auto mb-2" />
-                      <p className="text-xs text-muted-foreground">Video: {response.video}</p>
-                      <p className="text-[10px] text-muted-foreground/60 mt-1">
-                        {/* TODO: Replace with Supabase guide-videos bucket URL */}
-                        Will load from Supabase guide-videos bucket
+                <div className="p-2.5 pb-3 bg-black/5">
+                  {videoSrc ? (
+                    <video
+                      ref={videoRef}
+                      src={videoSrc}
+                      controls
+                      autoPlay
+                      className="w-full aspect-video rounded-xl object-cover shadow-md border border-border/30"
+                    />
+                  ) : (
+                    <div className="w-full aspect-video rounded-xl bg-gradient-to-br from-primary/10 via-muted to-primary/5 flex flex-col items-center justify-center border border-border/30 gap-2">
+                      <div className="w-10 h-10 rounded-full bg-primary/15 flex items-center justify-center">
+                        <MapPin size={18} className="text-primary" />
+                      </div>
+                      <p className="text-xs font-semibold text-foreground">Navigation Video</p>
+                      <p className="text-[10px] text-muted-foreground text-center px-4 leading-relaxed">
+                        Video will be available once uploaded to the storage bucket.
                       </p>
+                      <code className="text-[9px] bg-muted px-2 py-0.5 rounded font-mono text-muted-foreground border border-border/50">
+                        {response.video}
+                      </code>
                     </div>
-                  </div>
+                  )}
                 </div>
               </motion.div>
             )}
@@ -142,9 +174,9 @@ function BotBubble({ response }: { response: BotResponse }) {
       {response.link && (
         <a
           href={response.link}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-card border border-border text-foreground text-xs font-medium hover:border-primary/40 hover:text-primary transition-colors"
+          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-card border border-border text-foreground text-xs font-medium hover:border-primary/50 hover:text-primary hover:bg-primary/5 transition-all group"
         >
-          <ExternalLink size={11} />
+          <ExternalLink size={11} className="group-hover:translate-x-0.5 transition-transform" />
           {response.linkLabel || "Open Page"}
         </a>
       )}
@@ -364,6 +396,33 @@ export function ChatbotWidget() {
                 </div>
               </>
             )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* FAB Highlight Bubble */}
+      <AnimatePresence>
+        {!open && (
+          <motion.div
+            initial={{ opacity: 0, y: 10, scale: 0.8 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.8 }}
+            className="absolute bottom-20 right-0 mb-2 w-48 sm:w-56"
+          >
+            <div className="relative bg-primary text-primary-foreground p-3 rounded-2xl shadow-xl border border-primary-foreground/20 text-center">
+              <p className="text-[10px] sm:text-xs font-bold leading-tight">
+                Watch IT Block Navigation videos or ask about Labs and Faculty!
+              </p>
+              {/* Triangle pointer */}
+              <div className="absolute -bottom-2 right-6 w-4 h-4 bg-primary rotate-45" />
+              
+              {/* Pulse effect on bubble */}
+              <motion.div 
+                animate={{ opacity: [0.2, 0.4, 0.2], scale: [1, 1.05, 1] }}
+                transition={{ repeat: Infinity, duration: 2 }}
+                className="absolute inset-0 rounded-2xl bg-white pointer-events-none"
+              />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

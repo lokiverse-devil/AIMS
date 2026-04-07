@@ -1,6 +1,21 @@
 {
   "faqs": [
     {
+      "id": "greeting",
+      "keywords": [
+        "hello",
+        "hi",
+        "hey",
+        "good morning",
+        "good evening",
+        "namaste",
+        "help",
+        "start"
+      ],
+      "question": "Hello!",
+      "answer": "Welcome to the AIMS Campus Assistant. I am here to help you navigate the Academic IT Block, locate faculty cabins, find laboratories, and access student services. How may I assist you today?"
+    },
+    {
       "id": "cse_lab",
       "keywords": [
         "cse lab",
@@ -9,12 +24,12 @@
         "lab b",
         "computer lab"
       ],
-      "question": "Where is CSE Lab?",
-      "answer": "The CSE Lab is located on the Ground Floor. From the entrance, walk straight; the CSE Lab is on the right-hand side, Academic IT Block.",
+      "question": "Where is the CSE Lab?",
+      "answer": "The CSE Laboratory is situated on the Ground Floor of the Academic IT Block. Upon entering the building, proceed straight ahead and the laboratory will be on your right-hand side.",
       "video": "cse_lab_navigation.mp4",
-      "videoLabel": "▶ Navigate to CSE Lab",
+      "videoLabel": "Watch Navigation to CSE Lab",
       "link": "/branches/cse",
-      "linkLabel": "Open CSE Department"
+      "linkLabel": "View CSE Department"
     },
     {
       "id": "it_lab",
@@ -26,12 +41,12 @@
         "it computer lab",
         "it laboratory"
       ],
-      "question": "Where is IT Lab?",
-      "answer": "The IT Lab is located on the 3rd Floor. From the entrance, walk straight and take the stairs; the IT Lab is on the left-hand side, Academic IT Block.",
+      "question": "Where is the IT Lab?",
+      "answer": "The IT Laboratory is located on the 3rd Floor of the Academic IT Block. From the main entrance, proceed straight and ascend the staircase. The laboratory is situated on the left-hand side upon reaching the 3rd Floor.",
       "video": "it_lab_navigation.mp4",
-      "videoLabel": "▶ Navigate to IT Lab",
+      "videoLabel": "Watch Navigation to IT Lab",
       "link": "/branches/it",
-      "linkLabel": "Open IT Department"
+      "linkLabel": "View IT Department"
     },
     {
       "id": "elex_lab",
@@ -41,12 +56,12 @@
         "electronic lab",
         "elex department"
       ],
-      "question": "Where is Electronics Lab?",
-      "answer": "The ELEX Lab is located on the 1st Floor. From the entrance, take the left staircase, turn left, walk straight; the lab is on the right-hand side, Academic IT Block.",
+      "question": "Where is the Electronics Lab?",
+      "answer": "The Electronics Laboratory is located on the 1st Floor of the Academic IT Block. From the main entrance, take the left staircase, turn left, and proceed straight ahead. The laboratory will be on your right-hand side.",
       "video": "elex_lab_navigation.mp4",
-      "videoLabel": "▶ Navigate to Electronics Lab",
+      "videoLabel": "Watch Navigation to Electronics Lab",
       "link": "/branches/elex",
-      "linkLabel": "Open ELEX Department"
+      "linkLabel": "View ELEX Department"
     },
     {
       "id": "seminar_hall",
@@ -58,9 +73,9 @@
         "seminar"
       ],
       "question": "Where is the Seminar Hall?",
-      "answer": "The main Seminar Hall is on the Ground Floor near the main entrance. It seats 150 students with projector and sound system. There are 8 seminar halls across the campus.",
+      "answer": "The main Seminar Hall is located on the Ground Floor, adjacent to the main entrance of the campus. The hall has a seating capacity of 150 students and is equipped with a projector and an audio system. There are a total of 8 seminar halls across the campus.",
       "video": "seminar_hall_navigation.mp4",
-      "videoLabel": "▶ Navigate to Seminar Hall"
+      "videoLabel": "Watch Navigation to Seminar Hall"
     },
     {
       "id": "cse_hod",
@@ -71,10 +86,13 @@
         "computer science head",
         "head of cse",
         "hod cse",
-        "cse hod name"
+        "cse hod name",
+        "cse hod cabin"
       ],
-      "question": "Who is the CSE HOD?",
-      "answer": "The HOD of the CSE Department is Mr. Manmohan. Cabin: Left-hand side from the entrance, second room, Ground Floor, Academic IT Block.",
+      "question": "Who is the Head of the CSE Department?",
+      "answer": "The Head of Department for Computer Science and Engineering is Mr. Manmohan. His cabin is located on the Ground Floor of the Academic IT Block, on the left-hand side from the main entrance, in the second room.",
+      "video": "cse_hod_navigation.mp4",
+      "videoLabel": "Watch Navigation to CSE HOD Cabin",
       "link": "/branches/cse",
       "linkLabel": "View CSE Department"
     },
@@ -87,10 +105,13 @@
         "information technology head",
         "head of it",
         "hod it",
-        "it hod name"
+        "it hod name",
+        "it hod cabin"
       ],
-      "question": "Who is the IT HOD?",
-      "answer": "The HOD of the IT Department is Mr. Jagdhish Chandra Pandey. Cabin: Right-hand side from the entrance, Ground Floor, Academic IT Block.",
+      "question": "Who is the Head of the IT Department?",
+      "answer": "The Head of Department for Information Technology is Mr. Jagdhish Chandra Pandey. His cabin is located on the Ground Floor of the Academic IT Block, on the right-hand side from the main entrance.",
+      "video": "it_hod_navigation.mp4",
+      "videoLabel": "Watch Navigation to IT HOD Cabin",
       "link": "/branches/it",
       "linkLabel": "View IT Department"
     },
@@ -103,10 +124,13 @@
         "electronics hod",
         "head of elex",
         "hod elex",
-        "electronics hod name"
+        "electronics hod name",
+        "elex hod cabin"
       ],
-      "question": "Who is the ELEX HOD?",
-      "answer": "The HOD of the ELEX Department is Mr. Manoj Rikhari. Cabin: From the entrance, take the left staircase and reach in front of the cabin, 1st Floor, Academic IT Block.",
+      "question": "Who is the Head of the ELEX Department?",
+      "answer": "The Head of Department for Electronics Engineering is Mr. Manoj Rikhari. His cabin is situated on the 1st Floor of the Academic IT Block. From the main entrance, take the left staircase and proceed straight ahead; the cabin will be directly in front of you.",
+      "video": "elex_hod_navigation.mp4",
+      "videoLabel": "Watch Navigation to ELEX HOD Cabin",
       "link": "/branches/elex",
       "linkLabel": "View ELEX Department"
     },
@@ -122,10 +146,13 @@
         "cse lecturer cabin",
         "cse staff room",
         "cse lecturer office",
-        "cse cabin"
+        "cse cabin",
+        "cse professor"
       ],
-      "question": "Who are the CSE lecturers?",
-      "answer": "CSE lecturers are Mr. Virendra Dharamshaktu and Mr. Neeraj Arya. Cabin: Left-hand side from the entrance, second room, Ground Floor, Academic IT Block.",
+      "question": "Who are the CSE Faculty Members?",
+      "answer": "The faculty members of the Computer Science and Engineering department are Mr. Virendra Dharamshaktu and Mr. Neeraj Arya. Their staff cabin is located on the Ground Floor of the Academic IT Block, on the left-hand side from the main entrance, in the second room — adjacent to the HOD cabin.",
+      "video": "cse_lecturer_navigation.mp4",
+      "videoLabel": "Watch Navigation to CSE Faculty Cabin",
       "link": "/branches/cse",
       "linkLabel": "View CSE Department"
     },
@@ -141,10 +168,13 @@
         "it lecturer cabin",
         "it staff room",
         "it lecturer office",
-        "it cabin"
+        "it cabin",
+        "it professor"
       ],
-      "question": "Who are the IT lecturers?",
-      "answer": "IT lecturers are Ms. Neha Bohra and Mr. Ashok Kumar. Cabin: Left-hand side from the entrance, third room, Ground Floor, Academic IT Block.",
+      "question": "Who are the IT Faculty Members?",
+      "answer": "The faculty members of the Information Technology department are Ms. Neha Bohra and Mr. Ashok Kumar. Their staff cabin is located on the Ground Floor of the Academic IT Block, on the left-hand side from the main entrance, in the third room.",
+      "video": "it_lecturer_navigation.mp4",
+      "videoLabel": "Watch Navigation to IT Faculty Cabin",
       "link": "/branches/it",
       "linkLabel": "View IT Department"
     },
@@ -160,10 +190,13 @@
         "elex lecturer cabin",
         "elex staff room",
         "elex lecturer office",
-        "elex cabin"
+        "elex cabin",
+        "elex professor"
       ],
-      "question": "Who are the ELEX lecturers?",
-      "answer": "ELEX lecturers are Mr. Pankaj Kumar and Mr. Rashid. Cabin: 1st Floor. From the entrance, take the left staircase and reach the cabins on the left second and third room, Academic IT Block.",
+      "question": "Who are the ELEX Faculty Members?",
+      "answer": "The faculty members of the Electronics Engineering department are Mr. Pankaj Kumar and Mr. Rashid. Their cabins are located on the 1st Floor of the Academic IT Block. From the main entrance, take the left staircase and proceed to the left; the second and third rooms are the faculty cabins.",
+      "video": "elex_lecturer_navigation.mp4",
+      "videoLabel": "Watch Navigation to ELEX Faculty Cabin",
       "link": "/branches/elex",
       "linkLabel": "View ELEX Department"
     },
@@ -180,8 +213,8 @@
         "class room",
         "room"
       ],
-      "question": "Where are the classrooms?",
-      "answer": "Classrooms are arranged department-wise and year-wise. IT 2nd Year: Ground Floor - Room 1. CSE 2nd Year: Ground Floor - Room 1. ELEX 2nd Year: 1st Floor - Drone Lab. IT 3rd Year: Ground Floor - Room 4. CSE 3rd Year: Ground Floor - Room 4. ELEX 3rd Year: 1st Floor - Room 6."
+      "question": "Where are the classrooms located?",
+      "answer": "Classrooms are arranged by department and academic year. IT 2nd Year: Ground Floor, Room 1. CSE 2nd Year: Ground Floor, Room 1. ELEX 2nd Year: 1st Floor, Drone Lab. IT 3rd Year: Ground Floor, Room 4. CSE 3rd Year: Ground Floor, Room 4. ELEX 3rd Year: 1st Floor, Room 6."
     },
     {
       "id": "lab_count",
@@ -192,8 +225,8 @@
         "labs count",
         "all labs"
       ],
-      "question": "How many labs are there?",
-      "answer": "There are 12 labs in the IT Block: Computer Lab A & B (CSE), Networking Lab, AI/ML Research Lab, Electronics Lab (×2), IoT Lab, Robotics Lab, Communication Lab, and 2 Project Labs. Open 8 AM–6 PM weekdays."
+      "question": "How many laboratories are there?",
+      "answer": "There are 12 laboratories within the Academic IT Block, including Computer Lab A and B for CSE, a Networking Lab, an AI and ML Research Lab, two Electronics Labs, an IoT Lab, a Robotics Lab, a Communication Lab, and 2 Project Labs. All laboratories are accessible on weekdays from 8:00 AM to 6:00 PM."
     },
     {
       "id": "timetable",
@@ -205,9 +238,9 @@
         "class timing"
       ],
       "question": "How do I view my timetable?",
-      "answer": "Log in to your Student Dashboard and click 'Timetable' to see your full weekly class and lab schedule by semester and branch.",
+      "answer": "To view your class schedule, please log in to your Student Dashboard and navigate to the Timetable section. It displays your full weekly lecture and laboratory schedule, filtered by semester and branch.",
       "link": "/login",
-      "linkLabel": "Go to Dashboard"
+      "linkLabel": "Go to Student Dashboard"
     },
     {
       "id": "marks",
@@ -219,9 +252,9 @@
         "score"
       ],
       "question": "Where can I view my unit test marks?",
-      "answer": "Go to Student Dashboard → 'Unit Test Marks'. You'll see marks for all subjects by test and semester. Marks are uploaded by faculty via CSV.",
+      "answer": "Your unit test marks are available in the Student Dashboard under the Unit Test Marks section. All subject-wise marks, categorized by test and semester, are updated by faculty and reflected in real time.",
       "link": "/login",
-      "linkLabel": "View Marks"
+      "linkLabel": "Go to Student Dashboard"
     },
     {
       "id": "semester_result",
@@ -231,10 +264,10 @@
         "university result",
         "board result"
       ],
-      "question": "Where can I view semester exam results?",
-      "answer": "AIMS does not store university marksheets. Go to Dashboard → 'Semester Results' for the direct link to the official university result portal.",
+      "question": "Where can I view my semester exam results?",
+      "answer": "Official semester marksheets are issued and maintained by the University Portal. Navigate to the Semester Results section in your Student Dashboard for a direct link to the official UBTER result portal.",
       "link": "/login",
-      "linkLabel": "Go to Dashboard"
+      "linkLabel": "Go to Student Dashboard"
     },
     {
       "id": "complaint",
@@ -248,9 +281,9 @@
         "projector"
       ],
       "question": "How do I raise a complaint?",
-      "answer": "Log in → Student Dashboard → 'Complaints' → click '+ New Ticket'. Report infrastructure, academic, or facility issues. You'll get a unique ticket ID to track status.",
+      "answer": "To raise a complaint, log in to your Student Dashboard and navigate to the Complaints section. Click on New Ticket, select an appropriate category such as Infrastructure, Academic, or IT Support, and provide the relevant details. You will receive a unique ticket ID to monitor the status of your request.",
       "link": "/login",
-      "linkLabel": "Go to Dashboard"
+      "linkLabel": "Go to Student Dashboard"
     },
     {
       "id": "resources",
@@ -262,9 +295,9 @@
         "lab manual"
       ],
       "question": "Where can I find study resources?",
-      "answer": "Study materials are in 'Resources' in your Student Dashboard. Faculty upload PDFs, slides, and lab manuals. Filter by subject and semester.",
+      "answer": "Study materials including lecture notes, presentations, and laboratory manuals are available in the Resources section of your Student Dashboard. You may filter content by subject and semester. All materials are uploaded directly by your course faculty.",
       "link": "/login",
-      "linkLabel": "Go to Dashboard"
+      "linkLabel": "Go to Student Dashboard"
     },
     {
       "id": "id_card",
@@ -275,9 +308,9 @@
         "student id"
       ],
       "question": "How do I get my digital ID card?",
-      "answer": "Your Digital ID Card is in Student Dashboard → 'ID Card'. Upload your photo, view the card with roll number and branch, and download a PDF copy.",
+      "answer": "Your Digital Identity Card is accessible through the Student Dashboard under the ID Card section. You may upload your profile photograph, preview the card displaying your roll number, branch, and academic details, and download a verified PDF copy.",
       "link": "/login",
-      "linkLabel": "Access ID Card"
+      "linkLabel": "Access Digital ID Card"
     },
     {
       "id": "departments",
@@ -291,7 +324,7 @@
         "show"
       ],
       "question": "Which departments are in the IT Block?",
-      "answer": "The IT Block has 3 engineering departments: CSE (480 students), IT (360 students), and ELEX (320 students). Each has dedicated labs, faculty, and an HOD cabin.",
+      "answer": "The Academic IT Block houses three engineering departments: Computer Science and Engineering with 480 students, Information Technology with 360 students, and Electronics Engineering with 320 students. Each department is equipped with dedicated laboratories, faculty staff, and an HOD cabin.",
       "link": "/branches/cse",
       "linkLabel": "Explore Departments"
     },
@@ -305,9 +338,9 @@
         "new account"
       ],
       "question": "How do I create an AIMS account?",
-      "answer": "Click 'Create Account' on the homepage. Choose Student or Teacher. Students need roll number + branch. Teachers need a special access key from the administration office.",
+      "answer": "To register on AIMS, click Create Account on the homepage and select your role — Student or Teacher. Student registration requires your roll number and branch. Teacher registration requires an authorized access key, which may be obtained from the administration office.",
       "link": "/signup",
-      "linkLabel": "Create Account"
+      "linkLabel": "Create an Account"
     },
     {
       "id": "notice",
@@ -318,34 +351,19 @@
         "update",
         "circular"
       ],
-      "question": "Where can I find notices?",
-      "answer": "Notices are on the homepage Notice Board. After login, personalized notices and notifications appear in your dashboard.",
+      "question": "Where can I find notices and announcements?",
+      "answer": "General notices and institutional announcements are displayed on the homepage Notice Board. After logging in, personalized and branch-specific notifications will appear directly in your Student or Teacher Dashboard.",
       "link": "/login",
       "linkLabel": "Go to Dashboard"
-    },
-    {
-      "id": "greeting",
-      "keywords": [
-        "hello",
-        "hi",
-        "hey",
-        "good morning",
-        "good evening",
-        "namaste",
-        "help",
-        "start"
-      ],
-      "question": "Hello!",
-      "answer": "Hello! Welcome to AIMS — the Academic Infrastructure Management System. I can help you find labs, locate HOD cabins, navigate the IT Block, or learn about faculty, timetables, and student services. What would you like to know?"
     }
   ],
   "suggestions": [
     "Where is CSE Lab?",
     "Who is IT HOD?",
-    "Show IT Department",
+    "CSE Faculty Cabin",
     "How many labs?",
-    "View my marks"
+    "View my timetable"
   ],
-  "defaultResponse": "I'm not sure about that. Try asking about: labs, HOD cabin, faculty, timetables, marks, complaints, or ID cards. Or contact the admin office for further help.",
-  "greeting": "Hi! I'm the AIMS Assistant — your campus navigation guide. Ask me where anything is, or about student services!"
+  "defaultResponse": "I was unable to find a relevant answer for your query. You may try asking about laboratories, HOD cabins, faculty members, class schedules, unit test marks, or student ID cards. For further assistance, please contact the administration office.",
+  "greeting": "Welcome to the AIMS Campus Assistant. I can help you navigate the Academic IT Block, locate faculty and HOD cabins, find laboratories, or access student services. How may I assist you?"
 }

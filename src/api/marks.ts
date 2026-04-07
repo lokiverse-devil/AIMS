@@ -38,29 +38,31 @@ export async function fetchStudentMarks(rollNo: string): Promise<Mark[]> {
  */
 export async function uploadMarksCSV(
   file: File,
-  teacherId: string,
-  subject: string,
-  testName: string,
+  config: {
+    teacher_id: string
+    subject: string
+    test_name: string
+  },
 ): Promise<{ success: boolean; message: string; rowsInserted?: number }> {
+  const { teacher_id, subject, test_name } = config
   const result = await uploadUnitTestCSV(file)
 
   if (!result.success && result.inserted === 0 && result.errors.length > 0) {
     return { success: false, message: result.errors[0] }
   }
 
-  // After backend inserts rows, store the test_name via direct Supabase upsert
-  if (result.inserted > 0 && testName && subject) {
-    // Update test_name for the rows just inserted (best-effort)
+  // After backend inserts rows, store the metadata via direct Supabase update
+  if (result.inserted > 0 && test_name && subject) {
     await supabase
       .from('unit_test_marks')
-      .update({ test_name: testName, uploaded_by: teacherId })
+      .update({ test_name, uploaded_by: teacher_id })
       .is('test_name', null)
   }
 
   const message =
     result.failed > 0
-      ? `Uploaded ${result.inserted} row(s). ${result.failed} row(s) skipped: ${result.errors.join('; ')}`
-      : `Successfully uploaded ${result.inserted} row(s).`
+      ? `Uploaded ${result.inserted} row(s). ${result.failed} records skipped: ${result.errors.join('; ')}`
+      : `Successfully uploaded ${result.inserted} row(s) for ${test_name}.`
 
   return {
     success: result.inserted > 0,

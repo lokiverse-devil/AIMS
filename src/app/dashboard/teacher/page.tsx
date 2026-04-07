@@ -365,8 +365,8 @@ function UploadSection({ teacher }: { teacher: TeacherProfile }) {
   };
 
   const handleMarksUpload = async () => {
-    if (!marksFile) { showMsg("error","A valid CSV dataset is required."); return; }
-    if (!marksTestName || !marksSubject) { showMsg("error","Assessment name and subject are required."); return; }
+    if (!marksFile) { showMsg("error", "A valid CSV dataset is required."); return; }
+    if (!marksTestName || !marksSubject) { showMsg("error", "Assessment name and subject are required."); return; }
     setUploading(true);
     try {
       const { uploadMarksCSV } = await import("@/api/marks");
@@ -378,26 +378,36 @@ function UploadSection({ teacher }: { teacher: TeacherProfile }) {
       if (result.success) {
         showMsg("success", result.message);
         setMarksFile(null); setMarksTestName(""); setMarksSubject("");
-      } else showMsg("error", result.message);
-    } catch(e) { showMsg("error","Failed to upload marks."); }
-    finally { setUploading(false); }
+      } else {
+        showMsg("error", result.message);
+      }
+    } catch (e) {
+      showMsg("error", "Failed to upload marks.");
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleStudentsUpload = async () => {
-    if (!studentsFile) { showMsg("error","Please select a CSV file."); return; }
+    if (!studentsFile) { showMsg("error", "Please select a CSV file."); return; }
     setUploading(true);
     try {
       const { uploadStudentsCSV } = await import("@/api/users");
       const result = await uploadStudentsCSV(studentsFile, teacher.department);
       if (result.success) {
-        showMsg("success",result.message);
+        showMsg("success", result.message);
         setStudentsFile(null);
-      } else showMsg("error",result.message);
-    } catch(e) { showMsg("error","Failed to update student list."); }
-    finally { setUploading(false); }
+      } else {
+        showMsg("error", result.message);
+      }
+    } catch (e) {
+      showMsg("error", "Failed to update student list.");
+    } finally {
+      setUploading(false);
+    }
   };
 
-  const DropZone = ({ selectedFile, onFileSelect, accept="*", label }: { selectedFile: File|null; onFileSelect: (f: File|null)=>void; accept?: string; label: string }) => {
+  const DropZone = ({ selectedFile, onFileSelect, accept = "*", label }: { selectedFile: File | null; onFileSelect: (f: File | null) => void; accept?: string; label: string }) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [isDragging, setIsDragging] = useState(false);
 

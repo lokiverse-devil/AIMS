@@ -100,11 +100,11 @@ export default function LoginPage() {
         >
           {/* Logo */}
           <div className="flex items-center gap-2.5 mb-8">
-            <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center shadow-md overflow-hidden p-1.5">
+            <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-md overflow-hidden border border-primary/20">
               <img src="/assets/college/logo.png" alt="AIMS Logo" className="w-full h-full object-contain" />
             </div>
             <div>
-              <p className="font-bold text-foreground leading-none">AIMS</p>
+              <p className="font-bold text-foreground leading-none text-lg">AIMS</p>
               <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Academic Portal</p>
             </div>
           </div>

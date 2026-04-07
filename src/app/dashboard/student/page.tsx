@@ -628,8 +628,8 @@ function IDCardSection({ student }: { student: StudentProfile }) {
           
           {/* Header */}
           <div className="bg-primary/90 backdrop-blur-md px-8 py-6 flex items-center gap-4 border-b border-white/10 relative z-10">
-            <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-lg flex items-center justify-center border border-white/20 shadow-inner">
-              <img width={16} height={16} src="/assets/college/logo.png"  alt="AIMS Logo" />
+            <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center border border-white/20 shadow-inner">
+              <img src="/assets/college/logo.png" alt="AIMS Logo" className="w-full h-full object-contain" />
             </div>
             <div className="flex-1">
               <h3 className="text-white font-bold text-lg tracking-tight leading-none uppercase">UGIP</h3>

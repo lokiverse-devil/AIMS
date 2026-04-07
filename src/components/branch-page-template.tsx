@@ -110,14 +110,14 @@ export function BranchPageTemplate({
       <Navbar />
 
       {/* Hero */}
-      <section className="relative min-h-[50vh] flex flex-col justify-center pt-24 pb-16 overflow-hidden aims-grid-bg">
+      <section className="relative min-h-[75vh] flex flex-col justify-center pt-24 pb-16 overflow-hidden aims-grid-bg">
         {/* Background Base */}
-        <div className="absolute inset-0 bg-background/90 z-0" />
-        {/* Translucent Image */}
-        <img src={heroBg} alt={`${name} Block`} className="absolute inset-0 w-full h-full object-cover object-[center_30%] opacity-80 mix-blend-luminosity z-[1]" />
+        <div className="absolute inset-0 bg-background z-0" />
+        {/* Full Visibility Image */}
+        <img src={heroBg} alt={`${name} Block`} className="absolute inset-0 w-full h-full object-cover object-[center_30%] z-[1]" />
         
-        {/* Frosted Glass Overlay */}
-        <div className="absolute inset-0 bg-background/40 backdrop-blur-[2px] z-[2]" />
+        {/* Simple Gradient Overlay to ensure text visibility */}
+        <div className="absolute inset-0 bg-black/40 z-[2]" />
 
         {/* Gradient & grid overlays to maintain theme integration */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-transparent to-accent/20 z-[3]" />
@@ -139,16 +139,18 @@ export function BranchPageTemplate({
               transition={{ duration: 0.55 }}
               className="flex-1"
             >
-              <div className="inline-flex items-center gap-2 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-primary/15 flex items-center justify-center">
-                  <Icon size={20} className="text-primary" />
+              <div className="p-8 rounded-[2rem] bg-black/30 backdrop-blur-md border border-white/10 shadow-2xl inline-block max-w-[90%]">
+                <div className="inline-flex items-center gap-2 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
+                    <Icon size={20} className="text-white" />
+                  </div>
+                  <span className="text-xs font-bold uppercase tracking-[0.18em] text-white/90">{name}</span>
                 </div>
-                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">{name}</span>
-              </div>
 
-              <h1 className="text-3xl font-bold text-foreground mb-3">{fullName}</h1>
-              <p className="text-xl text-muted-foreground mb-6">{tagline}</p>
-              <p className="text-base text-muted-foreground leading-relaxed max-w-2xl">{about}</p>
+                <h1 className="text-4xl font-black text-white mb-4 leading-tight">{fullName}</h1>
+                <p className="text-xl text-white/80 font-bold mb-6 italic leading-relaxed">{tagline}</p>
+                <p className="text-base text-white/70 leading-relaxed font-medium">{about}</p>
+              </div>
 
               <div className="flex flex-wrap gap-3 mt-8">
                 <Link

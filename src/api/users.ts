@@ -139,3 +139,37 @@ export async function fetchStudentByRollNo(rollNo: string): Promise<Student | nu
   if (error) return null
   return data
 }
+
+/**
+ * Upload a student enrollment CSV via the Python FastAPI backend.
+ * 
+ * CSV format: roll_no, name, semester, branch
+ */
+export async function uploadStudentsCSV(
+  file: File,
+  department: string
+): Promise<{ success: boolean; message: string; rowsInserted?: number }> {
+  try {
+    const { uploadStudentCSV } = await import('@/services/csvService')
+    const result = await uploadStudentCSV(file)
+
+    if (!result.success && result.inserted === 0 && result.errors.length > 0) {
+      return { success: false, message: result.errors[0] }
+    }
+
+    const message = result.failed > 0
+      ? `Synchronized ${result.inserted} student(s). ${result.failed} records skipped: ${result.errors.join('; ')}`
+      : `Successfully synchronized ${result.inserted} students for the ${department} department.`
+
+    return {
+      success: result.inserted > 0,
+      message,
+      rowsInserted: result.inserted
+    }
+  } catch (err) {
+    return {
+      success: false,
+      message: 'Network error: Failed to reach the sync service.'
+    }
+  }
+}

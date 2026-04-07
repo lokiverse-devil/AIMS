@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, GraduationCap, LogOut, LayoutDashboard, User } from "lucide-react";
+import { Menu, X, LogOut, LayoutDashboard, User } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 const navLinks = [
@@ -71,8 +71,8 @@ export function Navbar() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shadow-md group-hover:shadow-primary/30 transition-shadow">
-             <img width={16} height={16} src="/assets/college/logo.png" alt="AIMS Logo" />
+          <div className="h-10 w-10 rounded-xl overflow-hidden flex-shrink-0 shadow-md group-hover:shadow-primary/30 transition-shadow border border-primary/20 bg-white">
+             <img src="/assets/college/logo.png" alt="AIMS Logo" className="w-full h-full object-contain" />
           </div>
           <div className="flex flex-col leading-none">
             <span className="text-sm font-bold tracking-wide text-foreground">AIMS X IT BLOCK</span>

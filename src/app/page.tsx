@@ -548,7 +548,7 @@ export default function HomePage() {
             <motion.div
               variants={fadeUp}
               custom={4}
-              className="mt-16 flex flex-wrap gap-8"
+              className="mt-16 inline-flex flex-wrap gap-8 p-6 sm:p-8 rounded-[2.5rem] bg-black/30 backdrop-blur-md border border-white/10 shadow-2xl"
             >
               {[
                 { value: "350", label: "Students Enrolled" },
@@ -558,7 +558,7 @@ export default function HomePage() {
               ].map((stat) => (
                 <div key={stat.label} className="flex flex-col">
                   <span className="text-3xl font-bold text-primary">{stat.value}</span>
-                  <span className="text-sm text-muted-foreground">{stat.label}</span>
+                  <span className="text-sm text-white/70">{stat.label}</span>
                 </div>
               ))}
             </motion.div>
@@ -930,7 +930,7 @@ export default function HomePage() {
                 <h4 className="font-bold text-foreground text-lg mb-2 tracking-tight">{f.name}</h4>
                 <div className="inline-flex items-center justify-center mb-5">
                   <span className="px-4 py-1.5 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/20">
-                    {f.designation} Designation
+                    {f.designation} 
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed italic mb-6">"{f.subjects}"</p>
@@ -1126,15 +1126,14 @@ export default function HomePage() {
               <ul className="space-y-4">
                 <li><Link href="/branches/cse" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">CSE Department</Link></li>
                 <li><Link href="/branches/it" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">IT Department</Link></li>
-                <li><Link href="/branches/elex" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Electronics</Link></li>
+                <li><Link href="/branches/elex" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">ElEX Department</Link></li>
               </ul>
             </div>
             <div>
               <h5 className="font-bold text-xs uppercase tracking-[0.2em] text-foreground mb-6">Connect</h5>
               <ul className="space-y-4">
-                <li><a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Contact Admin</a></li>
-                <li><a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Submit Bug Reports</a></li>
-                <li><a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Support Center</a></li>
+                <li><a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Contact Admin: ompandey2341@gmail.com</a></li>
+                <li><a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Submit Bug Reports: supabasetup@gmail.com</a></li>
               </ul>
             </div>
           </div>
