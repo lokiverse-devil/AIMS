@@ -384,6 +384,11 @@ function UploadSection({ teacher }: { teacher: TeacherProfile }) {
   };
 
   const handleStudentsUpload = async () => {
+    if (!studentsFile) { showMsg("error","Please select a CSV file."); return; }
+    setUploading(true);
+    try {
+      const { uploadStudentsCSV } = await import("@/api/users");
+      const result = await uploadStudentsCSV(studentsFile, teacher.department);
       if (result.success) {
         showMsg("success",result.message);
         setStudentsFile(null);
@@ -1251,9 +1256,9 @@ function ProfileSection({ teacher }: { teacher: TeacherProfile }) {
 
       <AnimatePresence>
         {isManagingSubjects && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+          <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6">
             <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onClick={() => !savingSubjects && setIsManagingSubjects(false)} className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
-            <motion.div initial={{opacity:0, scale:0.95, y:20}} animate={{opacity:1, scale:1, y:0}} exit={{opacity:0, scale:0.95, y:20}} className="relative w-full max-w-4xl max-h-[90vh] flex flex-col bg-card border border-border/60 rounded-[2.5rem] shadow-2xl overflow-hidden">
+            <motion.div initial={{opacity:0, scale:0.95, y:20}} animate={{opacity:1, scale:1, y:0}} exit={{opacity:0, scale:0.95, y:20}} className="relative w-full max-w-4xl max-h-[85vh] flex flex-col bg-card border border-border/60 rounded-[2.5rem] shadow-2xl overflow-hidden">
               
               <div className="p-6 sm:p-8 flex items-center justify-between border-b border-border/50 bg-muted/30">
                 <div>
@@ -1265,7 +1270,7 @@ function ProfileSection({ teacher }: { teacher: TeacherProfile }) {
                 </button>
               </div>
 
-              <div className="flex flex-1 overflow-hidden min-h-[400px] flex-col sm:flex-row">
+              <div className="flex flex-1 overflow-hidden min-h-0 flex-col sm:flex-row">
                 {/* Branch Sidebar */}
                 <div className="w-full sm:w-64 border-r border-border/50 bg-muted/10 overflow-y-auto p-4 space-y-2 border-b sm:border-b-0 max-h-48 sm:max-h-full">
                   {availableData.length === 0 ? (
@@ -1274,7 +1279,7 @@ function ProfileSection({ teacher }: { teacher: TeacherProfile }) {
                     availableData.map(branch => (
                       <button key={branch.code} onClick={() => setActiveBranch(branch.code)}
                         className={`w-full text-left px-4 py-3 rounded-2xl text-sm font-bold transition-all flex items-center justify-between ${activeBranch === branch.code ? "bg-primary text-primary-foreground shadow-md shadow-primary/20" : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"}`}>
-                        <span className="truncate pr-2">{branch.name}</span>
+                        <span className="truncate pr-2">{getBranchLabel(branch.name) || branch.name.toUpperCase()}</span>
                       </button>
                     ))
                   )}
@@ -1309,7 +1314,7 @@ function ProfileSection({ teacher }: { teacher: TeacherProfile }) {
                 </div>
               </div>
 
-              <div className="p-6 border-t border-border/50 bg-muted/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="p-4 sm:p-6 border-t border-border/50 bg-muted/30 flex flex-col sm:flex-row items-center justify-between gap-3 flex-shrink-0">
                 <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
                   <span className="text-primary">{selectedSubjects.length}</span> Subjects Selected Globally
                 </p>
@@ -1484,7 +1489,7 @@ export default function TeacherDashboard() {
         </div>
       </aside>
 
-      <div className="flex-1 lg:ml-72 flex flex-col min-h-screen relative z-10">
+      <div className="flex-1 lg:ml-72 flex flex-col min-h-screen relative">
         <header className="h-20 border-b border-border/50 bg-background/60 backdrop-blur-2xl sticky top-0 z-30 flex items-center px-6 gap-4">
           <button className="lg:hidden w-10 h-10 rounded-xl border border-border/50 flex items-center justify-center bg-card/50" onClick={()=>setSidebarOpen(true)}><Menu size={20}/></button>
           
