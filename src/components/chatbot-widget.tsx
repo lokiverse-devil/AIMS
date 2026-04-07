@@ -39,17 +39,29 @@ function getResponse(input: string): BotResponse {
   const lower = input.toLowerCase().trim();
   const faqs = chatbotData.faqs as FaqEntry[];
 
-  // Find best matching FAQ
+  let bestMatch: FaqEntry | null = null;
+  let maxScore = 0;
+
+  // Find the match with the longest matching keyword (highest specificity)
   for (const faq of faqs) {
-    if (faq.keywords.some((kw: string) => lower.includes(kw))) {
-      return {
-        text: faq.answer,
-        video: faq.video,
-        videoLabel: faq.videoLabel,
-        link: faq.link,
-        linkLabel: faq.linkLabel,
-      };
+    for (const kw of faq.keywords) {
+      if (lower.includes(kw.toLowerCase())) {
+        if (kw.length > maxScore) {
+          maxScore = kw.length;
+          bestMatch = faq;
+        }
+      }
     }
+  }
+
+  if (bestMatch) {
+    return {
+      text: bestMatch.answer,
+      video: bestMatch.video,
+      videoLabel: bestMatch.videoLabel,
+      link: bestMatch.link,
+      linkLabel: bestMatch.linkLabel,
+    };
   }
 
   return { text: chatbotData.defaultResponse };
@@ -137,18 +149,35 @@ function BotBubble({ response }: { response: BotResponse }) {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.25, ease: "easeInOut" }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
                 className="overflow-hidden"
               >
                 <div className="p-2.5 pb-3 bg-black/5">
                   {videoSrc ? (
-                    <video
-                      ref={videoRef}
-                      src={videoSrc}
-                      controls
-                      autoPlay
-                      className="w-full aspect-video rounded-xl object-cover shadow-md border border-border/30"
-                    />
+                    <div className="space-y-3">
+                      <div className="relative rounded-xl overflow-hidden shadow-md border border-border/30 bg-black">
+                        <video
+                          ref={videoRef}
+                          src={videoSrc}
+                          controls
+                          className="w-full aspect-video object-contain"
+                        />
+                      </div>
+                      <div className="flex flex-col items-center gap-2">
+                        <a 
+                          href={videoSrc} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-primary text-primary-foreground text-[10px] font-bold hover:shadow-lg hover:shadow-primary/25 transition-all w-full justify-center"
+                        >
+                          <ExternalLink size={12} />
+                          Direct Browser Playback
+                        </a>
+                        <p className="text-[9px] text-muted-foreground italic">
+                          Use the button above if the video fails to load in the chat bubble.
+                        </p>
+                      </div>
+                    </div>
                   ) : (
                     <div className="w-full aspect-video rounded-xl bg-gradient-to-br from-primary/10 via-muted to-primary/5 flex flex-col items-center justify-center border border-border/30 gap-2">
                       <div className="w-10 h-10 rounded-full bg-primary/15 flex items-center justify-center">

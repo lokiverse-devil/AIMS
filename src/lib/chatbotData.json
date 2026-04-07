@@ -26,7 +26,7 @@
       ],
       "question": "Where is the CSE Lab?",
       "answer": "The CSE Laboratory is situated on the Ground Floor of the Academic IT Block. Upon entering the building, proceed straight ahead and the laboratory will be on your right-hand side.",
-      "video": "cse_lab_navigation.mp4",
+      "video": "lab_cse.mp4",
       "videoLabel": "Watch Navigation to CSE Lab",
       "link": "/branches/cse",
       "linkLabel": "View CSE Department"
@@ -43,7 +43,7 @@
       ],
       "question": "Where is the IT Lab?",
       "answer": "The IT Laboratory is located on the 3rd Floor of the Academic IT Block. From the main entrance, proceed straight and ascend the staircase. The laboratory is situated on the left-hand side upon reaching the 3rd Floor.",
-      "video": "it_lab_navigation.mp4",
+      "video": "lab_it.mp4",
       "videoLabel": "Watch Navigation to IT Lab",
       "link": "/branches/it",
       "linkLabel": "View IT Department"
@@ -58,7 +58,7 @@
       ],
       "question": "Where is the Electronics Lab?",
       "answer": "The Electronics Laboratory is located on the 1st Floor of the Academic IT Block. From the main entrance, take the left staircase, turn left, and proceed straight ahead. The laboratory will be on your right-hand side.",
-      "video": "elex_lab_navigation.mp4",
+      "video": "lab_elex.mp4",
       "videoLabel": "Watch Navigation to Electronics Lab",
       "link": "/branches/elex",
       "linkLabel": "View ELEX Department"
@@ -91,7 +91,7 @@
       ],
       "question": "Who is the Head of the CSE Department?",
       "answer": "The Head of Department for Computer Science and Engineering is Mr. Manmohan. His cabin is located on the Ground Floor of the Academic IT Block, on the left-hand side from the main entrance, in the second room.",
-      "video": "cse_hod_navigation.mp4",
+      "video": "hod_cse.mp4",
       "videoLabel": "Watch Navigation to CSE HOD Cabin",
       "link": "/branches/cse",
       "linkLabel": "View CSE Department"
@@ -110,7 +110,7 @@
       ],
       "question": "Who is the Head of the IT Department?",
       "answer": "The Head of Department for Information Technology is Mr. Jagdhish Chandra Pandey. His cabin is located on the Ground Floor of the Academic IT Block, on the right-hand side from the main entrance.",
-      "video": "it_hod_navigation.mp4",
+      "video": "hod_it.mp4",
       "videoLabel": "Watch Navigation to IT HOD Cabin",
       "link": "/branches/it",
       "linkLabel": "View IT Department"
@@ -129,7 +129,7 @@
       ],
       "question": "Who is the Head of the ELEX Department?",
       "answer": "The Head of Department for Electronics Engineering is Mr. Manoj Rikhari. His cabin is situated on the 1st Floor of the Academic IT Block. From the main entrance, take the left staircase and proceed straight ahead; the cabin will be directly in front of you.",
-      "video": "elex_hod_navigation.mp4",
+      "video": "hod_elex.mp4",
       "videoLabel": "Watch Navigation to ELEX HOD Cabin",
       "link": "/branches/elex",
       "linkLabel": "View ELEX Department"
@@ -151,7 +151,7 @@
       ],
       "question": "Who are the CSE Faculty Members?",
       "answer": "The faculty members of the Computer Science and Engineering department are Mr. Virendra Dharamshaktu and Mr. Neeraj Arya. Their staff cabin is located on the Ground Floor of the Academic IT Block, on the left-hand side from the main entrance, in the second room — adjacent to the HOD cabin.",
-      "video": "cse_lecturer_navigation.mp4",
+      "video": "lectcabin_cse.mp4",
       "videoLabel": "Watch Navigation to CSE Faculty Cabin",
       "link": "/branches/cse",
       "linkLabel": "View CSE Department"
@@ -173,7 +173,7 @@
       ],
       "question": "Who are the IT Faculty Members?",
       "answer": "The faculty members of the Information Technology department are Ms. Neha Bohra and Mr. Ashok Kumar. Their staff cabin is located on the Ground Floor of the Academic IT Block, on the left-hand side from the main entrance, in the third room.",
-      "video": "it_lecturer_navigation.mp4",
+      "video": "lectcabin_it.mp4",
       "videoLabel": "Watch Navigation to IT Faculty Cabin",
       "link": "/branches/it",
       "linkLabel": "View IT Department"
@@ -195,7 +195,7 @@
       ],
       "question": "Who are the ELEX Faculty Members?",
       "answer": "The faculty members of the Electronics Engineering department are Mr. Pankaj Kumar and Mr. Rashid. Their cabins are located on the 1st Floor of the Academic IT Block. From the main entrance, take the left staircase and proceed to the left; the second and third rooms are the faculty cabins.",
-      "video": "elex_lecturer_navigation.mp4",
+      "video": "lectcabin_elex.mp4",
       "videoLabel": "Watch Navigation to ELEX Faculty Cabin",
       "link": "/branches/elex",
       "linkLabel": "View ELEX Department"
