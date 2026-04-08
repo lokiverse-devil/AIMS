@@ -50,7 +50,7 @@ const cseData = {
       initials: "MV",
       photoPath: "/assets/faculty/mannu.jpg",
       // TODO: Replace with Supabase Storage URL
-      // videoUrl: "https://PROJECT.supabase.co/storage/v1/object/public/faculty-videos/sharma_intro.mp4"
+      videoUrl: "https://rvamuonqnsbnqdgpskir.supabase.co/storage/v1/object/public/faculty-videos/manmohan_intro.mp4"
     },
     {
       name: "Neeraj Arya",
@@ -59,6 +59,7 @@ const cseData = {
       experience: "12 years",
       initials: "NA",
       photoPath: "/assets/faculty/arya.jpeg",
+      videoUrl: "https://rvamuonqnsbnqdgpskir.supabase.co/storage/v1/object/public/faculty-videos/neeraj_intro.mp4"
     },
     {
       name: "Virendra Dharamshaktu",
@@ -67,6 +68,7 @@ const cseData = {
       experience: "17 years",
       initials: "VD",
       photoPath: "/assets/faculty/viren.jpg",
+      videoUrl: "https://rvamuonqnsbnqdgpskir.supabase.co/storage/v1/object/public/faculty-videos/viren_intro.mp4"
     },
   ],
   labs: [
