@@ -54,7 +54,7 @@ const itData = {
       initials: "JP",
       photoPath: "/assets/faculty/pandey.jpg",
       // TODO: Replace with Supabase Storage URL
-      videoUrl: "https://rvamuonqnsbnqdgpskir.supabase.co/storage/v1/object/public/faculty-videos/jp_intro.mp4"
+      videoFile: "https://rvamuonqnsbnqdgpskir.supabase.co/storage/v1/object/public/faculty-videos/jp_intro.mp4"
     },
     {
       name: "Neha Bora",
@@ -82,7 +82,7 @@ const itData = {
       experience: "13 years",
       initials: "AK",
       photoPath: "/assets/faculty/ashok.jpg",
-      videoUrl: "https://rvamuonqnsbnqdgpskir.supabase.co/storage/v1/object/public/faculty-videos/ashok_intro.mp4"
+      videoFile: "https://rvamuonqnsbnqdgpskir.supabase.co/storage/v1/object/public/faculty-videos/ashok_intro.mp4"
     },
   ],
 

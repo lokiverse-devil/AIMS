@@ -69,7 +69,7 @@ const elexData = {
       experience: "14 years",
       initials: "PK",
       photoPath: "/assets/faculty/kumar.jpg",
-      videoUrl: "https://rvamuonqnsbnqdgpskir.supabase.co/storage/v1/object/public/faculty-videos/pankaj_intro.mp4"
+      videoFile: "https://rvamuonqnsbnqdgpskir.supabase.co/storage/v1/object/public/faculty-videos/pankaj_intro.mp4"
     },
   ],
   labs: [
