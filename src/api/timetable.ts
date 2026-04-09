@@ -10,6 +10,7 @@ export interface Notice {
   target_value?: string
   priority: 'Normal' | 'High'
   posted_by?: string
+  file_url?: string
   created_at: string
 }
 
@@ -44,6 +45,7 @@ export async function fetchNotices(branch?: string, semester?: string): Promise<
     const branchMatch = notice.target_branch === 'All' || notice.target_branch === branch
     if (!branchMatch) return false
 
+    if (notice.target_type === 'General') return true // General Campus - visible everywhere
     if (notice.target_type === 'All') return true
     if (semester && notice.target_type === 'Semester' && notice.target_value === semester) return true
     if (year && notice.target_type === 'Year' && notice.target_value === year) return true
@@ -64,7 +66,7 @@ export async function postNotice(notice: Omit<Notice, 'id' | 'created_at' | 'aud
 
 export async function updateNotice(
   id: string,
-  updates: Partial<Pick<Notice, 'title' | 'content' | 'target_branch' | 'target_type' | 'target_value' | 'priority'>>,
+  updates: Partial<Pick<Notice, 'title' | 'content' | 'target_branch' | 'target_type' | 'target_value' | 'priority' | 'file_url'>>,
 ): Promise<{ data: Notice | null; error: Error | null }> {
   const { data, error } = await supabase
     .from('notices').update(updates).eq('id', id).select().single()
@@ -75,5 +77,16 @@ export async function updateNotice(
 export async function deleteNotice(noticeId: string): Promise<void> {
   const { error } = await supabase.from('notices').delete().eq('id', noticeId)
   if (error) console.error('deleteNotice error:', error)
+}
+
+/** Fetch only General Campus notices (for the main landing page) */
+export async function fetchGeneralNotices(): Promise<Notice[]> {
+  const { data, error } = await supabase
+    .from('notices')
+    .select('*')
+    .eq('target_type', 'General')
+    .order('created_at', { ascending: false })
+  if (error) { console.error('fetchGeneralNotices error:', error); return [] }
+  return data ?? []
 }
 

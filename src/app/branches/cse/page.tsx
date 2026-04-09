@@ -46,20 +46,11 @@ const cseData = {
       name: "Manmohan",
       designation: "Lecturer & HOD",
       subjects: ["Internet Of Things", "Operating Systems", "Computer System And Organization", "Data Mining and Warehouse"],
-      experience: "15 years",
+      experience: "9 years",
       initials: "MV",
       photoPath: "/assets/faculty/mannu.jpg",
       // TODO: Replace with Supabase Storage URL
       videoFile: "https://rvamuonqnsbnqdgpskir.supabase.co/storage/v1/object/public/faculty-videos/manmohan_intro.mp4"
-    },
-    {
-      name: "Neeraj Arya",
-      designation: "Lecturer",
-      subjects: ["Computer Fundamentals", "Data Structures and Algorithms", "Relational Database Management System"],
-      experience: "12 years",
-      initials: "NA",
-      photoPath: "/assets/faculty/arya.jpeg",
-      videoFile: "https://rvamuonqnsbnqdgpskir.supabase.co/storage/v1/object/public/faculty-videos/neeraj_intro.mp4"
     },
     {
       name: "Virendra Dharamshaktu",
@@ -70,6 +61,16 @@ const cseData = {
       photoPath: "/assets/faculty/viren.jpg",
       videoFile: "https://rvamuonqnsbnqdgpskir.supabase.co/storage/v1/object/public/faculty-videos/viren_intro.mp4"
     },
+    {
+      name: "Neeraj Arya",
+      designation: "Lecturer",
+      subjects: ["Computer Fundamentals", "Data Structures and Algorithms", "Relational Database Management System"],
+      experience: "9 years",
+      initials: "NA",
+      photoPath: "/assets/faculty/arya.jpeg",
+      videoFile: "https://rvamuonqnsbnqdgpskir.supabase.co/storage/v1/object/public/faculty-videos/neeraj_intro.mp4"
+    },
+    
   ],
   labs: [
     { name: "CSE LAB", capacity:23, description: "Intel i5 workstations, Visual Studio, IntelliJ IDEA, Turbo C", available: true },

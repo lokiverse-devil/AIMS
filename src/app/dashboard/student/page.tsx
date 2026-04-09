@@ -576,30 +576,43 @@ function IDCardSection({ student }: { student: StudentProfile }) {
       const el = document.getElementById("student-id-card");
       if (!el) throw new Error("ID Card element not found");
 
-      // Use a slight scale-up for high resolution; logging can help debug.
       const canvas = await html2canvas(el, {
-        scale: 2,
+        scale: 3,
         useCORS: true,
-        allowTaint: false,
-        backgroundColor: null,
+        allowTaint: true,
+        backgroundColor: "#ffffff",
+        logging: false,
         scrollX: 0,
-        scrollY: -window.scrollY, // Fix for capture when scrolled
+        scrollY: -window.scrollY,
+        onclone: (documentClone) => {
+          // html2canvas cannot render backdrop-filter — strip it from the clone
+          documentClone.querySelectorAll("*").forEach((node) => {
+            const n = node as HTMLElement;
+            if (n.style) {
+              n.style.backdropFilter = "none";
+              (n.style as any).webkitBackdropFilter = "none";
+            }
+          });
+        },
       });
 
       const imgData = canvas.toDataURL("image/png", 1.0);
-      const pdf = new jsPDF({ 
-        orientation: "portrait", 
-        unit: "mm", 
-        format: [86, 140] // Standard ID card dimension (approx)
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: [86, 140],
       });
 
-      pdf.addImage(imgData, "PNG", 0, 0, 86, 140, undefined, "FAST");
+      const pdfW = pdf.internal.pageSize.getWidth();
+      const pdfH = pdf.internal.pageSize.getHeight();
+      pdf.addImage(imgData, "PNG", 0, 0, pdfW, pdfH, undefined, "FAST");
       pdf.save(`ID-CARD-${student.rollNumber}.pdf`);
-    } catch (e) { 
-      console.error("PDF generation error:", e); 
-      alert("Failed to generate PDF. If the error persists, please ensure your profile photo is properly loaded."); 
+    } catch (e) {
+      console.error("PDF generation error:", e);
+      alert("Failed to generate PDF. Please try again.");
+    } finally {
+      setDownloading(false);
     }
-    finally { setDownloading(false); }
   };
 
   return (
@@ -756,9 +769,15 @@ function NotificationsSection({ branch, semester }: { branch: string; semester: 
                       <span className="text-[10px] font-bold text-muted-foreground/40 uppercase tracking-wider">{new Date(n.created_at).toLocaleDateString()}</span>
                     </div>
                     {n.content && <p className="text-xs text-muted-foreground font-medium leading-relaxed mt-1 opacity-80">{n.content}</p>}
+                    {n.file_url && (
+                      <a href={n.file_url} target="_blank" rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 mt-2 text-xs font-bold text-primary hover:underline">
+                        <Download size={12}/> View Attachment
+                      </a>
+                    )}
                     <div className="flex items-center gap-2 mt-4">
                       <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${isUrgent?"bg-rose-500/10 text-rose-500 border-rose-500/20":"bg-muted text-muted-foreground border-border/50"}`}>
-                        {n.audience}
+                        {n.target_type === 'General' ? '🌐 General Campus' : n.audience}
                       </span>
                       {isUrgent && <span className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-rose-500 text-white animate-pulse">Urgent</span>}
                     </div>

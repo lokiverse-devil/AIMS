@@ -53,6 +53,15 @@ const elexData = {
       // videoUrl: "https://PROJECT.supabase.co/storage/v1/object/public/faculty-videos/sharma_intro.mp4"
     },
     {
+      name: "Pankaj Kumar",
+      designation: "Lecturer",
+      subjects: ["Microprocessor and App", "Microcontroller and embedded systems", "Electronic Circuits"],
+      experience: "14 years",
+      initials: "PK",
+      photoPath: "/assets/faculty/kumar.jpg",
+      videoFile: "https://rvamuonqnsbnqdgpskir.supabase.co/storage/v1/object/public/faculty-videos/pankaj_intro.mp4"
+    },
+    {
       name: "Rashid",
       designation: "Lecturer",
       subjects: ["Optical Fibre Communication", "Electronic Measurement", "Signal Sensing"],
@@ -61,15 +70,6 @@ const elexData = {
       photoPath: "/assets/faculty/rashid.jpg",
       // TODO: Replace with Supabase Storage URL
       // videoUrl: "https://PROJECT.supabase.co/storage/v1/object/public/faculty-videos/patel_intro.mp4"
-    },
-    {
-      name: "Pankaj Kumar",
-      designation: "Lecturer",
-      subjects: ["Microprocessor and App", "Microcontroller and embedded systems", "Electronic Circuits"],
-      experience: "14 years",
-      initials: "PK",
-      photoPath: "/assets/faculty/kumar.jpg",
-      videoFile: "https://rvamuonqnsbnqdgpskir.supabase.co/storage/v1/object/public/faculty-videos/pankaj_intro.mp4"
     },
   ],
   labs: [

@@ -721,7 +721,15 @@ function StudentsSection({ department }: { department: string }) {
 function NoticesSection({ userId, department }: { userId: string; department: string }) {
   const [showForm, setShowForm] = useState(false);
   const [editId, setEditId] = useState<string|null>(null);
-  const [form, setForm] = useState({ title:"", target_branch:getBranchKey(department)||"All", target_type:"All", target_value:"", content:"", priority:"Normal" as "Normal"|"High" });
+  const [form, setForm] = useState({
+    title: "",
+    audience_type: "general_campus" as "general_campus" | "all_sem" | "specific_sem",
+    target_branch: getBranchKey(department) || "CSE",
+    target_semester: "",
+    content: "",
+    priority: "Normal" as "Normal" | "High",
+  });
+  const [noticeFile, setNoticeFile] = useState<File|null>(null);
   const [notices, setNotices] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [posting, setPosting] = useState(false);
@@ -737,13 +745,38 @@ function NoticesSection({ userId, department }: { userId: string; department: st
     if (!form.title) { alert("Core announcement details are required."); return; }
     setPosting(true);
     try {
+      // Map audience_type → DB fields
+      let target_branch = "All";
+      let target_type = "General";
+      let target_value = "";
+      if (form.audience_type === "all_sem") {
+        target_branch = form.target_branch;
+        target_type = "All";
+      } else if (form.audience_type === "specific_sem") {
+        target_branch = form.target_branch;
+        target_type = "Semester";
+        target_value = form.target_semester;
+      }
+
+      // Upload PDF attachment if selected
+      let file_url: string | undefined;
+      if (noticeFile) {
+        const { supabase: sb } = await import("@/lib/supabaseClient");
+        const path = `notices/${Date.now()}_${noticeFile.name}`;
+        const { error: storErr } = await sb.storage.from("resources").upload(path, noticeFile, { upsert: false });
+        if (!storErr) {
+          const { data: urlData } = sb.storage.from("resources").getPublicUrl(path);
+          file_url = urlData.publicUrl;
+        }
+      }
+
       const { postNotice, updateNotice } = await import("@/api/timetable");
       if (editId) {
-        const { data, error } = await updateNotice(editId, { title:form.title, content:form.content, target_branch:form.target_branch, target_type:form.target_type, target_value:form.target_value, priority:form.priority });
+        const { data, error } = await updateNotice(editId, { title:form.title, content:form.content, target_branch, target_type, target_value, priority:form.priority, ...(file_url ? { file_url } : {}) });
         if (error) alert("Sync failed: "+error.message);
         else if (data) { setNotices(prev=>prev.map(n=>n.id===editId?{...n,...data}:n)); closeForm(); }
       } else {
-        const { data, error } = await postNotice({ title:form.title, content:form.content, target_branch:form.target_branch, target_type:form.target_type, target_value:form.target_value, posted_by:userId, priority:form.priority });
+        const { data, error } = await postNotice({ title:form.title, content:form.content, target_branch, target_type, target_value, posted_by:userId, priority:form.priority, ...(file_url ? { file_url } : {}) });
         if (error) alert("Broadcast failed: "+error.message);
         else if (data) { setNotices([data,...notices]); closeForm(); }
       }
@@ -759,13 +792,25 @@ function NoticesSection({ userId, department }: { userId: string; department: st
 
   const startEdit = (n: any) => {
     setEditId(n.id);
-    setForm({ title:n.title, target_branch:n.target_branch||"All", target_type:n.target_type||"All", target_value:n.target_value||"", content:n.content||"", priority:n.priority });
+    let audience_type: "general_campus" | "all_sem" | "specific_sem" = "general_campus";
+    if (n.target_type === "All") audience_type = "all_sem";
+    else if (n.target_type === "Semester") audience_type = "specific_sem";
+    setForm({
+      title: n.title,
+      audience_type,
+      target_branch: (n.target_branch && n.target_branch !== "All") ? n.target_branch : (getBranchKey(department) || "CSE"),
+      target_semester: n.target_value || "",
+      content: n.content || "",
+      priority: n.priority,
+    });
+    setNoticeFile(null);
     setShowForm(true);
   };
 
   const closeForm = () => {
     setShowForm(false); setEditId(null);
-    setForm({ title:"", target_branch:getBranchKey(department)||"All", target_type:"All", target_value:"", content:"", priority:"Normal" });
+    setForm({ title:"", audience_type:"general_campus", target_branch:getBranchKey(department)||"CSE", target_semester:"", content:"", priority:"Normal" });
+    setNoticeFile(null);
   };
 
   const inputCls = "w-full px-4 py-3 rounded-2xl border border-border bg-background/50 text-foreground text-sm font-medium focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all";
@@ -804,29 +849,29 @@ function NoticesSection({ userId, department }: { userId: string; department: st
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground ml-1">Target Branch</label>
-                  <select value={form.target_branch} onChange={e=>setForm({...form,target_branch:e.target.value})} className={inputCls}>
-                    <option value="All">All Branches</option>
-                    {Object.entries(BRANCH_MAP).map(([k, v])=><option key={k} value={k}>{v}</option>)}
+                  <label className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground ml-1">Select Audience</label>
+                  <select value={form.audience_type} onChange={e=>setForm({...form, audience_type:e.target.value as any})} className={inputCls}>
+                    <option value="general_campus">🌐 General Campus</option>
+                    <option value="all_sem">📚 All Sem (Branch)</option>
+                    <option value="specific_sem">🎯 Specific Sem</option>
                   </select>
                 </div>
-                <div className="space-y-1.5">
-                  <label className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground ml-1">Target Type</label>
-                  <select value={form.target_type} onChange={e=>setForm({...form,target_type:e.target.value})} className={inputCls}>
-                    <option value="All">Entire Branch</option>
-                    <option value="Semester">Specific Semester</option>
-                  </select>
-                </div>
-                {form.target_type === "Semester" ? (
+                {(form.audience_type === "all_sem" || form.audience_type === "specific_sem") && (
                   <div className="space-y-1.5">
-                    <label className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground ml-1">Semester Value</label>
-                    <select value={form.target_value} onChange={e=>setForm({...form,target_value:e.target.value})} className={inputCls}>
-                      <option value="" disabled>Select Sem</option>
-                      {["1","2","3","4","5","6"].map(s=><option key={s} value={s}>{s}</option>)}
+                    <label className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground ml-1">Target Branch</label>
+                    <select value={form.target_branch} onChange={e=>setForm({...form,target_branch:e.target.value})} className={inputCls}>
+                      {Object.entries(BRANCH_MAP).map(([k, v])=><option key={k} value={k}>{v}</option>)}
                     </select>
                   </div>
-                ) : (
-                  <div />
+                )}
+                {form.audience_type === "specific_sem" && (
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground ml-1">Semester</label>
+                    <select value={form.target_semester} onChange={e=>setForm({...form,target_semester:e.target.value})} className={inputCls}>
+                      <option value="" disabled>Select Semester</option>
+                      {["1","2","3","4","5","6"].map(s=><option key={s} value={s}>Semester {s}</option>)}
+                    </select>
+                  </div>
                 )}
                 <div className="space-y-1.5">
                   <label className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground ml-1">Priority Level</label>
@@ -839,6 +884,24 @@ function NoticesSection({ userId, department }: { userId: string; department: st
               <div className="space-y-1.5">
                 <label className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground ml-1">Announcement Content</label>
                 <textarea rows={4} placeholder="Detail the announcement here..." value={form.content} onChange={e=>setForm({...form,content:e.target.value})} className={`${inputCls} resize-none`}/>
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground ml-1">Attach PDF (Optional)</label>
+                <div
+                  className={`relative flex items-center gap-3 ${inputCls} cursor-pointer`}
+                  onClick={() => document.getElementById("notice-file-input")?.click()}
+                >
+                  <FileText size={16} className="text-muted-foreground flex-shrink-0"/>
+                  <span className="text-sm text-muted-foreground truncate flex-1">
+                    {noticeFile ? noticeFile.name : "Click to attach a PDF file…"}
+                  </span>
+                  {noticeFile && (
+                    <button type="button" onClick={e=>{e.stopPropagation(); setNoticeFile(null);}} className="p-1 rounded-lg hover:bg-red-500/10 text-red-500 transition-colors">
+                      <X size={14}/>
+                    </button>
+                  )}
+                  <input id="notice-file-input" type="file" accept=".pdf" className="hidden" onChange={e=>setNoticeFile(e.target.files?.[0]||null)}/>
+                </div>
               </div>
             </div>
             <div className="flex gap-3 pt-2">
@@ -864,7 +927,9 @@ function NoticesSection({ userId, department }: { userId: string; department: st
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2">
                   <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${n.priority==="High"?"bg-red-500/10 text-red-500 border-red-500/20":"bg-primary/10 text-primary border-primary/20"}`}>
-                    {n.target_branch ? `${n.target_branch} ${n.target_type !== 'All' ? '- ' + n.target_type + ' ' + n.target_value : ''}` : n.audience}
+                    {n.target_type === 'General' ? '🌐 General Campus' :
+                      n.target_branch ? (n.target_type === 'Semester' ? `${n.target_branch} — Sem ${n.target_value}` : `${n.target_branch} — All Sems`) :
+                      (n.audience || 'General')}
                   </span>
                   {n.priority==="High" && (
                     <span className="flex items-center gap-1 text-[10px] font-bold text-red-500 uppercase tracking-wider animate-pulse">
@@ -879,6 +944,12 @@ function NoticesSection({ userId, department }: { userId: string; department: st
               <div>
                 <h4 className="font-bold text-foreground text-base tracking-tight leading-tight group-hover:text-primary transition-colors">{n.title}</h4>
                 {n.content && <p className="text-sm text-muted-foreground mt-2 line-clamp-3 font-medium leading-relaxed">{n.content}</p>}
+                {n.file_url && (
+                  <a href={n.file_url} target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 mt-3 text-xs font-bold text-primary hover:underline">
+                    <FileText size={12}/> View Attachment
+                  </a>
+                )}
               </div>
             </div>
 

@@ -397,16 +397,17 @@ export default function HomePage() {
   useEffect(() => {
     async function loadNotices() {
       try {
-        const { fetchNotices } = await import('@/api/timetable');
-        const fetched = await fetchNotices();
+        const { fetchGeneralNotices } = await import('@/api/timetable');
+        const fetched = await fetchGeneralNotices();
         if (fetched && fetched.length > 0) {
           setUiNotices(fetched.map((n: any) => ({
             id: n.id,
-            tag: n.audience || 'General',
+            tag: 'General Campus',
             title: n.title,
             desc: n.content,
             date: new Date(n.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-            urgent: n.priority === 'High'
+            urgent: n.priority === 'High',
+            file_url: n.file_url,
           })));
         }
       } catch (err) {
@@ -1006,6 +1007,12 @@ export default function HomePage() {
                   </div>
                   <h4 className="text-2xl font-black text-foreground group-hover:text-primary transition-colors tracking-tight">{notice.title}</h4>
                   <p className="text-muted-foreground leading-relaxed max-w-4xl">{notice.desc}</p>
+                  {notice.file_url && (
+                    <a href={notice.file_url} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-xs font-bold text-primary hover:underline mt-1">
+                      <FileText size={13}/> View Attached Document
+                    </a>
+                  )}
                 </div>
 
                 <div className="md:border-l border-border md:pl-8 flex-shrink-0 self-stretch flex items-center">
