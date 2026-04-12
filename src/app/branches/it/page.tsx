@@ -66,7 +66,7 @@ const itData = {
         "Computer Hardware and Systems",
         "Employability Skills",
       ],
-      experience: "16 years",
+      experience: "18 years",
       initials: "NB",
       photoPath: "/assets/faculty/bora.jpg",
     },
@@ -79,7 +79,7 @@ const itData = {
         "Computer System And Organization",
         "Data Mining and Warehouse",
       ],
-      experience: "13 years",
+      experience: "4 years",
       initials: "AK",
       photoPath: "/assets/faculty/ashok.jpg",
       videoFile: "https://rvamuonqnsbnqdgpskir.supabase.co/storage/v1/object/public/faculty-videos/ashok_intro.mp4"

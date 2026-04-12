@@ -56,16 +56,16 @@ const elexData = {
       name: "Pankaj Kumar",
       designation: "Lecturer",
       subjects: ["Microprocessor and App", "Microcontroller and embedded systems", "Electronic Circuits"],
-      experience: "14 years",
+      experience: "10 years",
       initials: "PK",
-      photoPath: "/assets/faculty/kumar.jpg",
+      photoPath: "/assets/faculty/kumar.JPG",
       videoFile: "https://rvamuonqnsbnqdgpskir.supabase.co/storage/v1/object/public/faculty-videos/pankaj_intro.mp4"
     },
     {
       name: "Rashid",
       designation: "Lecturer",
       subjects: ["Optical Fibre Communication", "Electronic Measurement", "Signal Sensing"],
-      experience: "15 years",
+      experience: "10 years",
       initials: "R",
       photoPath: "/assets/faculty/rashid.jpg",
       // TODO: Replace with Supabase Storage URL

@@ -794,7 +794,7 @@ export default function HomePage() {
             >
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-[1.1]">
                 Nurturing the <br />
-                <span className="text-primary italic">Champeions of Tomorrow</span>
+                <span className="text-primary italic">Champions of Tomorrow</span>
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">
                 Our students don't just learn; they compete and win on the biggest stages.
