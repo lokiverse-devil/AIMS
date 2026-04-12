@@ -487,16 +487,16 @@ export function BranchPageTemplate({
                 <div className="w-16 h-16 rounded-[1.5rem] bg-primary flex items-center justify-center mb-8 shadow-xl shadow-primary/20">
                   <GraduationCap size={32} className="text-primary-foreground" />
                 </div>
-                <h3 className="text-2xl font-bold text-foreground mb-4 tracking-tight">Catalyzing Your Tech Journey</h3>
+                <h3 className="text-2xl font-bold text-foreground mb-4 tracking-tight">Start your diploma journey with us</h3>
                 <p className="text-base text-muted-foreground mb-10 leading-relaxed font-medium">
-                  Enroll in the {name} department to gain access to world-class laboratories, 
-                  bespoke research opportunities, and a network of industry-leading mentors.
+                  Enroll in the {name} department to gain access to laboratories, 
+                  , and a network of industry-leading mentors.
                 </p>
                 <Link
                   href="/signup"
                   className="w-full inline-flex items-center justify-center gap-3 px-8 py-5 rounded-2xl bg-primary text-primary-foreground font-bold text-sm shadow-xl shadow-primary/25 hover:shadow-2xl hover:shadow-primary/35 hover:-translate-y-1 transition-all uppercase tracking-widest"
                 >
-                  Accelerate Career <ChevronRight size={18} />
+                  Join Us <ChevronRight size={18} />
                 </Link>
               </div>
             </div>

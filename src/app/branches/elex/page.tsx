@@ -69,7 +69,7 @@ const elexData = {
       initials: "R",
       photoPath: "/assets/faculty/rashid.jpg",
       // TODO: Replace with Supabase Storage URL
-      // videoUrl: "https://PROJECT.supabase.co/storage/v1/object/public/faculty-videos/patel_intro.mp4"
+      "https://rvamuonqnsbnqdgpskir.supabase.co/storage/v1/object/public/faculty-videos/rashid_intro.mp4"
     },
   ],
   labs: [
