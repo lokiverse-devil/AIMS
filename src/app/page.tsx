@@ -1168,7 +1168,7 @@ function TeamMemberCard({ member, isLeader, roles, colors }: any) {
       <div className={`absolute top-0 left-0 w-full h-2 ${colors.accentBg} shadow-[0_0_20px_${colors.accentBg}] z-20`} />
 
       {isLeader && (
-        <div className={`absolute top-6 right-6 w-12 h-12 rounded-2xl ${colors.accentBg} flex items-center justify-center shadow-xl z-20 transform rotate-12 transition-transform duration-500 group-hover:rotate-0`}>
+        <div className={`absolute top-6 left-6 w-12 h-12 rounded-2xl ${colors.accentBg} flex items-center justify-center shadow-xl z-20 transform rotate-12 transition-transform duration-500 group-hover:rotate-0`}>
           <Crown size={22} className={colors.accentText} />
         </div>
       )}
