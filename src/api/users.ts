@@ -115,7 +115,11 @@ export async function fetchStudentList(
   }
   
   if (semester && semester !== 'All') {
-    query = query.eq('semester', semester)
+    const semNum = semester.replace(/\D/g, '')
+    // Match both numeric "6" and ordinal "6th"/"6st"/"6nd"/"6rd" stored in DB
+    const suffixes = ['', 'th', 'st', 'nd', 'rd']
+    const orParts = suffixes.map(s => `semester.eq.${semNum}${s}`).join(',')
+    query = query.or(orParts)
   }
 
   const { data, error } = await query

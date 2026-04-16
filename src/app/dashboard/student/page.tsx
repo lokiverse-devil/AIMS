@@ -82,7 +82,7 @@ function Avatar({ photoUrl, initials, size = 36, className = "" }: { photoUrl?: 
 }
 
 // ── Timetable Section (live from DB by branch+year) ────────────────
-const DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday"];
+const DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
 function TimetableSection({ branch, semester }: { branch: string; semester: string }) {
   const today = new Date().toLocaleDateString("en-US", { weekday: "long" });
@@ -568,48 +568,116 @@ function ComplaintsSection({ userId, rollNumber, onNewActivity }: { userId: stri
 function IDCardSection({ student }: { student: StudentProfile }) {
   const [downloading, setDownloading] = useState(false);
 
-  const handleDownloadPDF = async () => {
+  const handleDownloadPDF = () => {
     setDownloading(true);
     try {
-      const html2canvas = (await import("html2canvas")).default;
-      const { jsPDF } = await import("jspdf");
-      const el = document.getElementById("student-id-card");
-      if (!el) throw new Error("ID Card element not found");
+      const photoHtml = student.photoUrl
+        ? `<img src="${student.photoUrl}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:20px;" crossorigin="anonymous" />`
+        : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:700;color:#6366f1;border-radius:20px;">${student.initials}</div>`;
 
-      const canvas = await html2canvas(el, {
-        scale: 3,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: "#ffffff",
-        logging: false,
-        scrollX: 0,
-        scrollY: -window.scrollY,
-        onclone: (documentClone) => {
-          // html2canvas cannot render backdrop-filter — strip it from the clone
-          documentClone.querySelectorAll("*").forEach((node) => {
-            const n = node as HTMLElement;
-            if (n.style) {
-              n.style.backdropFilter = "none";
-              (n.style as any).webkitBackdropFilter = "none";
-            }
-          });
-        },
-      });
+      const win = window.open("", "_blank", "width=480,height=760");
+      if (!win) { setDownloading(false); alert("Please allow popups to download the ID card."); return; }
 
-      const imgData = canvas.toDataURL("image/png", 1.0);
-      const pdf = new jsPDF({
-        orientation: "portrait",
-        unit: "mm",
-        format: [86, 140],
-      });
-
-      const pdfW = pdf.internal.pageSize.getWidth();
-      const pdfH = pdf.internal.pageSize.getHeight();
-      pdf.addImage(imgData, "PNG", 0, 0, pdfW, pdfH, undefined, "FAST");
-      pdf.save(`ID-CARD-${student.rollNumber}.pdf`);
+      win.document.write(`<!DOCTYPE html>
+<html>
+<head>
+  <title>ID Card — ${student.name}</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Inter',sans-serif;background:#f1f5f9;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;}
+    @page{size:86mm 140mm;margin:0;}
+    @media print{body{background:white;padding:0;}#card{box-shadow:none !important;border-radius:0 !important;width:86mm !important;min-height:140mm !important;}window.print();}
+    #card{width:340px;background:white;border-radius:28px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.15);border:1px solid rgba(99,102,241,0.15);}
+    .header{background:linear-gradient(135deg,#4f46e5 0%,#6366f1 100%);padding:24px;display:flex;align-items:center;gap:14px;position:relative;}
+    .header::before{content:'';position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:rgba(255,255,255,0.08);border-radius:50%;}
+    .logo-box{width:44px;height:44px;background:white;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+    .logo-box img{width:36px;height:36px;object-fit:contain;}
+    .header-text{flex:1;}
+    .header-title{color:white;font-weight:800;font-size:16px;letter-spacing:-0.5px;text-transform:uppercase;}
+    .header-sub{color:rgba(255,255,255,0.55);font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-top:3px;}
+    .header-branch{text-align:right;}
+    .header-branch p:first-child{color:rgba(255,255,255,0.45);font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;}
+    .header-branch p:last-child{color:white;font-size:10px;font-weight:700;text-transform:uppercase;}
+    .body{padding:24px;}
+    .photo-row{display:flex;align-items:center;gap:20px;margin-bottom:20px;}
+    .photo-wrap{position:relative;flex-shrink:0;}
+    .photo{width:88px;height:88px;border-radius:22px;border:3px solid rgba(99,102,241,0.2);overflow:hidden;background:linear-gradient(135deg,rgba(99,102,241,0.1),rgba(99,102,241,0.05));}
+    .badge{position:absolute;bottom:-6px;right:-6px;width:26px;height:26px;border-radius:8px;background:#22c55e;border:3px solid white;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(34,197,94,0.4);}
+    .badge svg{width:12px;height:12px;stroke:white;stroke-width:3;fill:none;}
+    .photo-info p:first-child{font-size:9px;font-weight:700;color:#6366f1;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px;}
+    .photo-info h3{font-size:17px;font-weight:800;color:#1e293b;letter-spacing:-0.5px;line-height:1.2;margin-bottom:4px;}
+    .photo-info p:last-child{font-size:11px;font-weight:600;color:#64748b;}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;}
+    .field p:first-child{font-size:8px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:2px;}
+    .field p:last-child{font-size:12px;font-weight:700;color:#1e293b;}
+    .status{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:#22c55e;}
+    .dot{width:6px;height:6px;border-radius:50%;background:#22c55e;}
+    .divider{border:none;border-top:1px solid #f1f5f9;margin-bottom:14px;}
+    .sig-row{display:flex;align-items:center;justify-content:space-between;}
+    .sig-label{font-size:7px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1.5px;}
+    .sig-name{font-size:10px;color:#475569;font-style:italic;margin-top:2px;}
+    .sig-line{width:70px;height:20px;border-bottom:1px solid #e2e8f0;}
+    .footer{background:#fafafa;padding:10px;border-top:1px solid #f1f5f9;text-align:center;}
+    .footer p{font-size:7px;font-weight:700;color:#94a3b8;letter-spacing:3px;text-transform:uppercase;}
+    .print-btn{margin-top:16px;width:340px;padding:14px;background:linear-gradient(135deg,#4f46e5,#6366f1);color:white;font-weight:700;font-size:13px;border:none;border-radius:16px;cursor:pointer;letter-spacing:0.5px;}
+    .print-btn:hover{opacity:0.9;}
+    @media print{.print-btn{display:none;}}
+  </style>
+</head>
+<body>
+  <div style="display:flex;flex-direction:column;align-items:center;">
+    <div id="card">
+      <div class="header">
+        <div class="logo-box"><img src="/assets/college/logo.png" alt="AIMS" onerror="this.style.display='none'"/></div>
+        <div class="header-text">
+          <div class="header-title">UGIP</div>
+          <div class="header-sub">Verification Secured</div>
+        </div>
+        <div class="header-branch">
+          <p>Branch</p>
+          <p>${student.branch}</p>
+        </div>
+      </div>
+      <div class="body">
+        <div class="photo-row">
+          <div class="photo-wrap">
+            <div class="photo">${photoHtml}</div>
+            <div class="badge"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          </div>
+          <div class="photo-info">
+            <p>Student Academic</p>
+            <h3>${student.name}</h3>
+            <p>${student.branch} Department</p>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="field"><p>Roll Number</p><p style="font-family:monospace;">${student.rollNumber}</p></div>
+          <div class="field"><p>Branch</p><p>${student.branch}</p></div>
+          <div class="field"><p>Academic Year</p><p>${student.yearLabel}</p></div>
+          <div class="field"><p>Section</p><p>${student.section || "N/A"}</p></div>
+          <div class="field"><p>Status</p><div class="status"><div class="dot"></div>Active</div></div>
+        </div>
+        <hr class="divider"/>
+        <div class="sig-row">
+          <div><div class="sig-label">Authorized By</div><div class="sig-name">Principal, UGIP</div></div>
+          <div class="sig-line"></div>
+        </div>
+      </div>
+      <div class="footer"><p>UBTER ( AICTE APPROVED )</p></div>
+    </div>
+    <button class="print-btn" onclick="window.print()">⬇ Save as PDF</button>
+  </div>
+  <script>
+    // Auto-trigger print after images load
+    window.addEventListener('load', () => setTimeout(() => {}, 300));
+  </script>
+</body>
+</html>`);
+      win.document.close();
     } catch (e) {
       console.error("PDF generation error:", e);
-      alert("Failed to generate PDF. Please try again.");
+      alert("Failed to open ID card. Please try again.");
     } finally {
       setDownloading(false);
     }
@@ -959,7 +1027,9 @@ export default function StudentDashboard() {
             const sd = await fetchStudentByRollNo(rollNo);
             if (sd) {
               name=(sd as any).name||name;
-              semester=(sd as any).year||(sd as any).semester||semester;
+              // Normalize semester: strip non-digits so '6th' → '6'
+              const rawSem = (sd as any).year||(sd as any).semester||semester;
+              semester = rawSem.replace(/\D/g, '') || semester;
               section=(sd as any).section||"";
               phone=(sd as any).phone||"";
               photoUrl=(sd as any).photo_url||null;

@@ -25,7 +25,7 @@ interface TEntry {
 }
 
 // ── Constants ──────────────────────────────────────────────────────
-const DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday"];
+const DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 const SEMESTERS = ["All","1","2","3","4","5","6"];
 import { getBranchLabel, getBranchKey, BRANCH_MAP } from "@/lib/constants";
 
@@ -762,9 +762,14 @@ function NoticesSection({ userId, department }: { userId: string; department: st
       let file_url: string | undefined;
       if (noticeFile) {
         const { supabase: sb } = await import("@/lib/supabaseClient");
-        const path = `notices/${Date.now()}_${noticeFile.name}`;
+        const safeName = noticeFile.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+        const path = `notice-files/${Date.now()}_${safeName}`;
         const { error: storErr } = await sb.storage.from("resources").upload(path, noticeFile, { upsert: false });
-        if (!storErr) {
+        if (storErr) {
+          console.error("Notice file upload error:", storErr);
+          const proceed = confirm(`File upload failed: ${storErr.message}\n\nPost the notice without the attachment?`);
+          if (!proceed) { setPosting(false); return; }
+        } else {
           const { data: urlData } = sb.storage.from("resources").getPublicUrl(path);
           file_url = urlData.publicUrl;
         }
@@ -1107,7 +1112,7 @@ function TicketsSection({ userId, department }: { userId: string; department: st
 
 // ── Profile + ID Card ─────────────────────────────────────────────
 function ProfileSection({ teacher }: { teacher: TeacherProfile }) {
-  const [photoUrl, setPhotoUrl] = useState<string|null>(null);
+  const [photoUrl, setPhotoUrl] = useState<string|null>(teacher.photo_url || null);
   const [uploading, setUploading] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -1446,7 +1451,7 @@ export default function TeacherDashboard() {
         } catch(_) { /* use defaults */ }
 
         const initials = name.split(" ").map((n:string)=>n[0]).join("").toUpperCase().slice(0,2);
-        setTeacher({ id:u.id, name, designation, department, subjects, email, initials });
+        setTeacher({ id:u.id, name, designation, department, subjects, email, initials, photo_url: td?.photo_url || undefined });
       } catch(err) { console.error(err); router.replace("/login"); }
       finally { setAuthLoading(false); }
     })();
