@@ -81,20 +81,20 @@ export async function updateStudentProfile(
 }
 
 /**
- * Update a teacher's profile in the `teachers` table (phone, photo_url, designation, etc.)
+ * Update teacher profile.
  */
 export async function updateTeacherProfile(
   teacherId: string,
   updates: Partial<{ phone: string; photo_url: string; designation: string; name: string }>,
 ): Promise<{ data: any; error: Error | null }> {
-  const { data, error } = await supabase
-    .from('teachers')
-    .update(updates)
-    .eq('id', teacherId)
-    .select()
-    .single()
-
-  if (error) return { data: null, error }
+  // Update both teachers and users tables to keep names/photos in sync
+  const { data, error: err1 } = await supabase.from('teachers').update(updates).eq('id', teacherId).select().single()
+  const { error: err2 } = await supabase.from('users').update(updates).eq('id', teacherId)
+  
+  if (err1 || err2) {
+    console.error('Update teacher error:', err1 || err2)
+    return { data: null, error: (err1 || err2) as any }
+  }
   return { data, error: null }
 }
 
@@ -177,3 +177,4 @@ export async function uploadStudentsCSV(
     }
   }
 }
+

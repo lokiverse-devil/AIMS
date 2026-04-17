@@ -62,21 +62,21 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-xl ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "aims-glass-card border-b bg-background/70"
-          : "bg-background/30 border-transparent"
+          ? "top-2 left-4 right-4 aims-glass-card shadow-xl"
+          : "bg-transparent border-transparent py-2"
       }`}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="h-10 w-10 rounded-xl overflow-hidden flex-shrink-0 shadow-md group-hover:shadow-primary/30 transition-shadow border border-primary/20 bg-white">
+          <div className="h-10 w-10 rounded-[14px] overflow-hidden flex-shrink-0 shadow-[0_2px_10px_rgba(0,0,0,0.1)] group-hover:shadow-[0_4px_15px_rgba(0,0,0,0.2)] transition-all border border-black/5 dark:border-white/10 bg-white">
              <img src="/assets/college/logo.png" alt="AIMS Logo" className="w-full h-full object-contain" />
           </div>
           <div className="flex flex-col leading-none">
-            <span className="text-sm font-bold tracking-wide text-foreground">AIMS X IT BLOCK</span>
-            <span className="text-[9px] font-medium text-muted-foreground uppercase tracking-widest hidden sm:block">
+            <span className={`text-lg font-serif font-bold tracking-tight transition-colors ${!scrolled && pathname === "/" ? "text-white" : "text-foreground"}`}>AIMS X IT BLOCK</span>
+            <span className={`text-[9px] font-medium uppercase tracking-widest hidden sm:block transition-colors ${!scrolled && pathname === "/" ? "text-white/70" : "text-muted-foreground"}`}>
               Academic Infrastructure
             </span>
           </div>
@@ -91,6 +91,8 @@ export function Navbar() {
               className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                 pathname === link.href
                   ? "bg-primary text-primary-foreground shadow-sm"
+                  : !scrolled && pathname === "/"
+                  ? "text-white/80 hover:text-white hover:bg-white/10"
                   : "text-muted-foreground hover:text-foreground hover:bg-accent"
               }`}
             >
@@ -151,17 +153,20 @@ export function Navbar() {
               </AnimatePresence>
             </div>
           ) : (
-            /* Not logged in */
             <>
               <Link
                 href="/login"
-                className="hidden md:inline-flex items-center px-3.5 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-all"
+                className={`hidden md:inline-flex items-center px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+                  !scrolled && pathname === "/"
+                  ? "text-white/80 hover:text-white hover:bg-white/10"
+                  : "text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5"
+                }`}
               >
                 Login
               </Link>
               <Link
                 href="/signup"
-                className="hidden md:inline-flex items-center px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium shadow-sm hover:shadow-primary/30 transition-all duration-200 hover:-translate-y-0.5"
+                className="hidden md:inline-flex items-center px-5 py-2 rounded-xl aims-btn-primary text-sm font-medium transition-all"
               >
                 Sign Up
               </Link>

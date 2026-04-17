@@ -12,6 +12,7 @@ export interface TimetableEntry {
   subject: string
   room: string
   class_name: string
+  year: string          // "1" | "2" | "3" | "4"
   created_at: string
 }
 
@@ -63,14 +64,16 @@ export async function fetchClassTimetable(
 export async function insertTimetableEntry(
   entry: NewEntry,
 ): Promise<{ data: TimetableEntry | null; error: Error | null }> {
+  const { teacher_name, ...dbEntry } = entry as any;
+
   const { data, error } = await supabase
     .from('timetable_entries')
-    .insert(entry)
+    .insert(dbEntry)
     .select()
     .single()
 
   if (error) return { data: null, error }
-  return { data, error: null }
+  return { data: { ...data, teacher_name } as TimetableEntry, error: null }
 }
 
 /**
@@ -80,15 +83,17 @@ export async function updateTimetableEntry(
   id: string,
   updates: Partial<Omit<TimetableEntry, 'id' | 'teacher_id' | 'created_at'>>,
 ): Promise<{ data: TimetableEntry | null; error: Error | null }> {
+  const { teacher_name, ...dbUpdates } = updates as any;
+
   const { data, error } = await supabase
     .from('timetable_entries')
-    .update(updates)
+    .update(dbUpdates)
     .eq('id', id)
     .select()
     .single()
 
   if (error) return { data: null, error }
-  return { data, error: null }
+  return { data: { ...data, teacher_name } as TimetableEntry, error: null }
 }
 
 /**

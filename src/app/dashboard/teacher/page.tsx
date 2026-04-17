@@ -119,7 +119,13 @@ function TimetableSection({ teacher }: { teacher: TeacherProfile }) {
         setEntries(prev => prev.map(e => e.id===editId ? { ...e, ...data } as TEntry : e));
       } else {
         const { insertTimetableEntry } = await import("@/api/timetable_entries");
-        const { data, error } = await insertTimetableEntry({ ...form, teacher_id: teacher.id, teacher_name: teacher.name });
+        const year = Math.ceil(Number(form.semester) / 2).toString();
+        const { data, error } = await insertTimetableEntry({ 
+          ...form, 
+          year,
+          teacher_id: teacher.id, 
+          teacher_name: teacher.name 
+        });
         if (error) { alert("Error: "+error.message); return; }
         if (data) setEntries(prev => [...prev, data as TEntry]);
       }
@@ -148,10 +154,10 @@ function TimetableSection({ teacher }: { teacher: TeacherProfile }) {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-foreground tracking-tight flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-primary/10 text-primary">
-              <Calendar size={22} strokeWidth={2}/>
-            </div>
+          <h2 className="text-3xl font-serif font-bold text-foreground tracking-tight flex items-center gap-4">
+            <span className="w-12 h-12 rounded-[14px] aims-glass-card flex items-center justify-center text-primary shadow-inner bg-primary/5">
+              <Calendar size={20} className="drop-shadow-sm" />
+            </span>
             Teaching Schedule
           </h2>
           <p className="text-sm text-muted-foreground mt-1 ml-11 font-medium">Manage your weekly lectures and lab sessions.</p>
@@ -166,8 +172,8 @@ function TimetableSection({ teacher }: { teacher: TeacherProfile }) {
       <AnimatePresence>
         {showEditor && (
           <motion.div initial={{ opacity: 0, y: -20, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -20, scale: 0.98 }}
-            className="p-6 rounded-3xl border border-primary/20 bg-primary/[0.02] backdrop-blur-sm space-y-5 relative overflow-hidden group">
-            <div className="absolute top-0 left-0 w-1 h-full bg-primary/50" />
+            className="p-8 rounded-[2.5rem] aims-glass-card space-y-5 relative overflow-hidden group shadow-xl">
+            <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-primary/80 to-transparent" />
             <div className="flex items-center justify-between">
               <h3 className="font-bold text-foreground flex items-center gap-2">
                 <Edit2 size={16} className="text-primary"/>
@@ -253,7 +259,7 @@ function TimetableSection({ teacher }: { teacher: TeacherProfile }) {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ delay: idx * 0.05 }}
-                className="group relative flex flex-col sm:flex-row items-start sm:items-center gap-4 p-5 rounded-3xl border border-border/50 bg-card/40 backdrop-blur-md hover:border-primary/30 transition-all hover:shadow-xl hover:shadow-primary/[0.03]">
+                className="group relative flex flex-col sm:flex-row items-start sm:items-center gap-4 p-5 aims-glass-card hover:aims-glass-card-hover rounded-[2rem] transition-all hover:shadow-xl shadow-sm">
                 
                 <div className="flex items-center gap-4 w-full sm:w-auto">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-transparent border border-primary/10 flex flex-col items-center justify-center flex-shrink-0">
@@ -447,20 +453,20 @@ function UploadSection({ teacher }: { teacher: TeacherProfile }) {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-foreground tracking-tight flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-primary/10 text-primary">
-              <Upload size={22} strokeWidth={2.5}/>
-            </div>
+          <h2 className="text-3xl font-serif font-bold text-foreground tracking-tight flex items-center gap-4">
+            <span className="w-12 h-12 rounded-[14px] aims-glass-card flex items-center justify-center text-primary shadow-inner bg-primary/5">
+              <Upload size={20} className="drop-shadow-sm" />
+            </span>
             Faculty Upload Center
           </h2>
           <p className="text-sm text-muted-foreground mt-1 ml-11 font-medium">Distribute resources and synchronize academic data.</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-2 p-1.5 rounded-3xl bg-muted/40 border border-border/50">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-2 p-2 rounded-[2rem] aims-glass-card bg-primary/5">
         {tabs.map(tab=>(
           <button key={tab.id} onClick={()=>{setActiveTab(tab.id);setMessage(null);}}
-            className={`flex flex-col items-center gap-1 px-4 py-3 rounded-2xl text-sm font-bold transition-all relative ${activeTab===tab.id?"bg-card text-primary shadow-xl shadow-black/5 border border-border/50 ring-1 ring-primary/10":"text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}>
+            className={`flex flex-col items-center gap-1 px-4 py-3 rounded-xl text-sm font-bold transition-all relative ${activeTab===tab.id?"bg-card text-primary shadow-lg border border-border/50":"text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}>
             <tab.icon size={18} className="mb-1"/>
             {tab.label}
             <span className="text-[10px] font-medium opacity-60 hidden lg:block">{tab.desc}</span>
@@ -470,7 +476,7 @@ function UploadSection({ teacher }: { teacher: TeacherProfile }) {
 
       <AnimatePresence mode="wait">
         <motion.div key={activeTab} initial={{opacity:0, y:15}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-15}} transition={{duration:0.3}}>
-          <div className="p-8 rounded-[2.5rem] border border-border/50 bg-card/40 backdrop-blur-xl shadow-2xl shadow-black/5 space-y-6 relative overflow-hidden">
+          <div className="p-8 aims-glass-card rounded-[2.5rem] space-y-6 relative overflow-hidden shadow-sm">
             <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none" />
             
             {message && (
@@ -630,10 +636,10 @@ function StudentsSection({ department }: { department: string }) {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-foreground tracking-tight flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-accent/10 text-accent-foreground">
-              <Users size={22} strokeWidth={2.5}/>
-            </div>
+          <h2 className="text-3xl font-serif font-bold text-foreground tracking-tight flex items-center gap-4">
+            <span className="w-12 h-12 rounded-[14px] aims-glass-card flex items-center justify-center text-accent shadow-inner bg-accent/5">
+              <Users size={20} className="drop-shadow-sm" />
+            </span>
             Departmental Registry
           </h2>
           <p className="text-sm text-muted-foreground mt-1 ml-11 font-medium">Viewing students enrolled in {department}.</p>
@@ -665,8 +671,8 @@ function StudentsSection({ department }: { department: string }) {
           {filtered.length===0 ? (
             <EmptyState text={students.length===0 ? "The registry is currently empty for this department." : "No records match your search query."} />
           ) : (
-            <div className="overflow-hidden rounded-[2rem] border border-border/50 bg-card/30 backdrop-blur-md shadow-2xl shadow-black/[0.02]">
-              <div className="overflow-x-auto">
+            <div className="overflow-hidden aims-glass-card rounded-[2.5rem] p-4 shadow-sm">
+              <div className="overflow-x-auto rounded-[1.5rem] border border-border/30">
                 <table className="w-full text-left border-collapse">
                   <thead>
                     <tr className="bg-muted/30 border-b border-border/50">
@@ -824,10 +830,10 @@ function NoticesSection({ userId, department }: { userId: string; department: st
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-foreground tracking-tight flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-primary/10 text-primary">
-              <Bell size={22} strokeWidth={2.5}/>
-            </div>
+          <h2 className="text-3xl font-serif font-bold text-foreground tracking-tight flex items-center gap-4">
+            <span className="w-12 h-12 rounded-[14px] aims-glass-card flex items-center justify-center text-primary shadow-inner bg-primary/5">
+              <Bell size={20} className="drop-shadow-sm" />
+            </span>
             Broadcast Hub
           </h2>
           <p className="text-sm text-muted-foreground mt-1 ml-11 font-medium">Issue institutional notices and critical updates.</p>
@@ -842,8 +848,8 @@ function NoticesSection({ userId, department }: { userId: string; department: st
       <AnimatePresence>
         {showForm && (
           <motion.div initial={{opacity:0, y:-20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}}
-            className="p-8 rounded-[2.5rem] border border-primary/20 bg-primary/[0.02] backdrop-blur-md space-y-5 relative overflow-hidden shadow-2xl shadow-primary/5">
-            <div className="absolute top-0 left-0 w-1 h-full bg-primary/50" />
+            className="p-8 aims-glass-card rounded-[2.5rem] bg-primary/5 space-y-5 relative overflow-hidden shadow-xl border border-primary/20">
+            <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-primary/80 to-transparent" />
             <div className="flex items-center justify-between">
               <h3 className="font-bold text-foreground text-base tracking-tight">{editId ? "Refine Announcement" : "Draft New Broadcast"}</h3>
             </div>
@@ -927,7 +933,7 @@ function NoticesSection({ userId, department }: { userId: string; department: st
         ) : notices.map((n, idx)=>(
           <motion.div 
             initial={{opacity:0, scale:0.95}} animate={{opacity:1, scale:1}} transition={{delay: idx * 0.05}}
-            key={n.id} className="p-6 rounded-[2rem] border border-border/50 bg-card/40 backdrop-blur-md hover:border-primary/30 transition-all group flex flex-col justify-between shadow-xl shadow-black/[0.01]">
+            key={n.id} className="p-6 aims-glass-card hover:aims-glass-card-hover rounded-[2rem] flex flex-col justify-between shadow-sm">
             <div className="space-y-3">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2">
@@ -1014,10 +1020,10 @@ function TicketsSection({ userId, department }: { userId: string; department: st
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-foreground tracking-tight flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-amber-500/10 text-amber-500">
-              <MessageSquare size={22} strokeWidth={2}/>
-            </div>
+          <h2 className="text-3xl font-serif font-bold text-foreground tracking-tight flex items-center gap-4">
+            <span className="w-12 h-12 rounded-[14px] aims-glass-card flex items-center justify-center text-amber-500 shadow-inner bg-amber-500/5">
+              <MessageSquare size={20} className="drop-shadow-sm" />
+            </span>
             Support Intelligence
           </h2>
           <p className="text-sm text-muted-foreground mt-1 ml-11 font-medium">Manage student grievances and academic inquiries.</p>
@@ -1041,7 +1047,7 @@ function TicketsSection({ userId, department }: { userId: string; department: st
           {filtered.map((t, idx) => (
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: idx * 0.05 }}
-              key={t.id} className="p-8 rounded-[2.5rem] border border-border/50 bg-card/40 backdrop-blur-xl hover:border-primary/30 transition-all flex flex-col justify-between shadow-2xl shadow-black/[0.01] relative overflow-hidden group">
+              key={t.id} className="p-8 aims-glass-card hover:aims-glass-card-hover rounded-[2.5rem] flex flex-col justify-between shadow-sm relative group">
               <div className="absolute top-0 right-0 p-5">
                 <div className={`text-[9px] font-bold uppercase tracking-[0.2em] px-3.5 py-1.5 rounded-full border ${t.status === "Pending" ? "bg-amber-500/10 text-amber-500 border-amber-500/20" : "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"}`}>
                   {t.status}
@@ -1111,7 +1117,7 @@ function TicketsSection({ userId, department }: { userId: string; department: st
 }
 
 // ── Profile + ID Card ─────────────────────────────────────────────
-function ProfileSection({ teacher }: { teacher: TeacherProfile }) {
+function ProfileSection({ teacher, onUpdate }: { teacher: TeacherProfile, onUpdate?: (updates: Partial<TeacherProfile>) => void }) {
   const [photoUrl, setPhotoUrl] = useState<string|null>(teacher.photo_url || null);
   const [uploading, setUploading] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -1172,7 +1178,13 @@ function ProfileSection({ teacher }: { teacher: TeacherProfile }) {
       if (error) { console.error("Photo upload error:", error); return; }
       const { data: urlData } = supabase.storage.from("teacher-photos").getPublicUrl(path);
       const publicUrl = urlData.publicUrl + "?t=" + Date.now();
+      
+      // Update local preview state
       setPhotoUrl(publicUrl);
+      
+      // Update the main teacher object in parent state to reflect everywhere (ID card, header, etc.)
+      if (onUpdate) onUpdate({ photo_url: publicUrl });
+
       try {
         const { updateTeacherProfile } = await import("@/api/users");
         await updateTeacherProfile(teacher.id, { photo_url: publicUrl });
@@ -1205,10 +1217,10 @@ function ProfileSection({ teacher }: { teacher: TeacherProfile }) {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-foreground tracking-tight flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-primary/10 text-primary">
-              <User size={22} strokeWidth={2.5}/>
-            </div>
+          <h2 className="text-3xl font-serif font-bold text-foreground tracking-tight flex items-center gap-4">
+            <span className="w-12 h-12 rounded-[14px] aims-glass-card flex items-center justify-center text-primary shadow-inner bg-primary/5">
+              <User size={20} className="drop-shadow-sm" />
+            </span>
             Faculty Profile
           </h2>
           <p className="text-sm text-muted-foreground mt-1 ml-11 font-medium">Manage your academic identity and credentials.</p>
@@ -1217,7 +1229,7 @@ function ProfileSection({ teacher }: { teacher: TeacherProfile }) {
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
         <div className="space-y-6">
-          <div className="p-8 rounded-[2.5rem] border border-border/50 bg-card/40 backdrop-blur-xl shadow-2xl shadow-black/[0.02] relative overflow-hidden group">
+          <div className="p-8 aims-glass-card rounded-[2.5rem] shadow-sm relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none" />
             
             <div className="flex flex-col sm:flex-row items-center gap-8 mb-10">
@@ -1344,7 +1356,7 @@ function ProfileSection({ teacher }: { teacher: TeacherProfile }) {
         {isManagingSubjects && (
           <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6">
             <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onClick={() => !savingSubjects && setIsManagingSubjects(false)} className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
-            <motion.div initial={{opacity:0, scale:0.95, y:20}} animate={{opacity:1, scale:1, y:0}} exit={{opacity:0, scale:0.95, y:20}} className="relative w-full max-w-4xl max-h-[85vh] flex flex-col bg-card border border-border/60 rounded-[2.5rem] shadow-2xl overflow-hidden">
+            <motion.div initial={{opacity:0, scale:0.95, y:20}} animate={{opacity:1, scale:1, y:0}} exit={{opacity:0, scale:0.95, y:20}} className="relative w-full max-w-4xl max-h-[85vh] flex flex-col aims-glass-card rounded-[2.5rem] overflow-hidden">
               
               <div className="p-6 sm:p-8 flex items-center justify-between border-b border-border/50 bg-muted/30">
                 <div>
@@ -1484,7 +1496,7 @@ export default function TeacherDashboard() {
     students: <StudentsSection department={teacher.department} />,
     notices: <NoticesSection userId={teacher.id} department={teacher.department} />,
     tickets: <TicketsSection userId={teacher.id} department={teacher.department} />,
-    profile: <ProfileSection teacher={teacher} />
+    profile: <ProfileSection teacher={teacher} onUpdate={(updates) => setTeacher(prev => prev ? { ...prev, ...updates } : prev)} />
   };
 
 
@@ -1498,9 +1510,9 @@ export default function TeacherDashboard() {
       </div>
 
       {/* Sidebar */}
-      <aside className={`fixed inset-y-0 left-0 z-50 w-72 bg-card/40 backdrop-blur-2xl border-r border-border/50 flex flex-col transition-all duration-300 lg:translate-x-0 ${sidebarOpen?"translate-x-0 shadow-2xl":"-translate-x-full"}`}>
+      <aside className={`fixed inset-y-0 left-0 z-50 w-72 bg-white dark:bg-black rounded-r-3xl my-4 ml-4 flex flex-col transition-all duration-300 border border-border/80 lg:translate-x-0 ${sidebarOpen?"translate-x-0 shadow-2xl":"-translate-x-full"}`}>
         {/* Logo */}
-        <div className="h-20 flex items-center gap-3 px-6 border-b border-border/50">
+        <div className="h-20 flex items-center gap-3 px-6 border-b border-border/20">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg shadow-primary/20">
              <img width={16} height={16} src="/assets/college/logo.png" alt="AIMS Logo" />
           </div>
@@ -1512,8 +1524,8 @@ export default function TeacherDashboard() {
         </div>
 
         {/* User profile card in sidebar */}
-        <div className="mx-4 mt-6 mb-4 p-4 rounded-2xl bg-gradient-to-br from-primary/[0.07] to-transparent border border-primary/10 shadow-sm relative overflow-hidden group text-center sm:text-left">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl -mr-8 -mt-8 group-hover:bg-primary/10 transition-colors" />
+        <div className="mx-4 mt-6 mb-4 p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-border/40 shadow-sm relative overflow-hidden group text-center sm:text-left">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-primary/10 rounded-full blur-2xl -mr-8 -mt-8 group-hover:bg-primary/20 transition-colors" />
           <div className="flex items-center gap-3 relative z-10">
             <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20 flex-shrink-0">
               <span className="text-sm font-bold text-primary">{teacher.initials}</span>
@@ -1577,8 +1589,8 @@ export default function TeacherDashboard() {
         </div>
       </aside>
 
-      <div className="flex-1 lg:ml-72 flex flex-col min-h-screen relative">
-        <header className="h-20 border-b border-border/50 bg-background/60 backdrop-blur-2xl sticky top-0 z-30 flex items-center px-6 gap-4">
+      <div className="flex-1 lg:ml-80 flex flex-col min-h-screen relative z-10">
+        <header className="h-20 bg-white dark:bg-black mx-4 mt-4 rounded-2xl sticky top-4 z-30 flex items-center px-6 gap-4 shadow-md border border-border/80">
           <button className="lg:hidden w-10 h-10 rounded-xl border border-border/50 flex items-center justify-center bg-card/50" onClick={()=>setSidebarOpen(true)}><Menu size={20}/></button>
           
           <div className="flex-1">

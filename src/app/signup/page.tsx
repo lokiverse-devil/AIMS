@@ -59,7 +59,7 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen bg-background aims-grid-bg">
       {/* Top bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 px-4 py-3 flex items-center justify-between border-b border-border bg-background/80 backdrop-blur">
+      <div className="fixed top-0 left-0 right-0 z-50 px-4 py-3 flex items-center justify-between border-b border-border/30 bg-background/60 backdrop-blur-3xl shadow-sm">
         <Link href="/" className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors">
           <ArrowLeft size={14} /> Back to Home
         </Link>
@@ -79,12 +79,12 @@ export default function SignupPage() {
           transition={{ duration: 0.5 }}
         >
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-foreground">Create your AIMS account</h1>
+            <h1 className="text-4xl font-serif font-bold text-foreground">Create your AIMS account</h1>
             <p className="text-muted-foreground mt-2">Choose your role and fill in your details below.</p>
           </div>
 
           {/* Role Selector */}
-          <div className="flex gap-3 mb-8 p-1.5 rounded-2xl bg-muted border border-border">
+          <div className="flex gap-3 mb-10 p-2 rounded-[1.5rem] aims-glass-card bg-primary/5">
             {(["student", "teacher"] as Role[]).map((r) => (
               <button
                 key={r}
@@ -92,8 +92,8 @@ export default function SignupPage() {
                 onClick={() => { setRole(r); setError(null); }}
                 className={`flex-1 flex items-center justify-center gap-2.5 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${
                   role === r
-                    ? "bg-card text-foreground shadow-sm border border-border"
-                    : "text-muted-foreground hover:text-foreground"
+                    ? "bg-card text-foreground shadow-sm border-[0.5px] border-white/20 dark:border-white/5"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
                 }`}
               >
                 {r === "student" ? <StudentIcon size={16} /> : <BookOpen size={16} />}
@@ -103,7 +103,8 @@ export default function SignupPage() {
           </div>
 
           {/* Form Card */}
-          <div className="p-6 rounded-2xl border border-border bg-card shadow-sm">
+          <div className="p-8 rounded-[2rem] aims-glass-card shadow-sm space-y-4 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none" />
             <AnimatePresence mode="wait">
               <motion.form
                 key={role}
@@ -124,7 +125,7 @@ export default function SignupPage() {
                           value={studentForm.name}
                           onChange={(e) => setStudentForm({ ...studentForm, name: e.target.value })}
                           placeholder="Rahul Sharma"
-                          className="w-full px-4 py-2.5 rounded-xl border border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
+                          className="w-full px-4 py-3 rounded-xl border border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm shadow-inner"
                         />
                       </div>
                       <div className="space-y-1.5">
@@ -134,7 +135,7 @@ export default function SignupPage() {
                           value={studentForm.rollNumber}
                           onChange={(e) => setStudentForm({ ...studentForm, rollNumber: e.target.value })}
                           placeholder="CSE2022001"
-                          className="w-full px-4 py-2.5 rounded-xl border border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
+                          className="w-full px-4 py-3 rounded-xl border border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm shadow-inner"
                         />
                       </div>
                     </div>
@@ -184,7 +185,7 @@ export default function SignupPage() {
                         value={studentForm.email}
                         onChange={(e) => setStudentForm({ ...studentForm, email: e.target.value })}
                         placeholder="rollno@college.edu"
-                        className="w-full px-4 py-2.5 rounded-xl border border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
+                        className="w-full px-4 py-3 rounded-xl border border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm shadow-inner"
                       />
                     </div>
 
@@ -198,7 +199,7 @@ export default function SignupPage() {
                           value={studentForm.password}
                           onChange={(e) => setStudentForm({ ...studentForm, password: e.target.value })}
                           placeholder="Minimum 8 characters"
-                          className="w-full px-4 py-2.5 pr-11 rounded-xl border border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
+                          className="w-full px-4 py-3 pr-11 rounded-xl border border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm shadow-inner"
                         />
                         <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
                           {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
@@ -217,7 +218,7 @@ export default function SignupPage() {
                           value={teacherForm.name}
                           onChange={(e) => setTeacherForm({ ...teacherForm, name: e.target.value })}
                           placeholder="Prof. Anil Sharma"
-                          className="w-full px-4 py-2.5 rounded-xl border border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
+                          className="w-full px-4 py-3 rounded-xl border border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm shadow-inner"
                         />
                       </div>
                       <div className="space-y-1.5">
@@ -249,7 +250,7 @@ export default function SignupPage() {
                         value={teacherForm.email}
                         onChange={(e) => setTeacherForm({ ...teacherForm, email: e.target.value })}
                         placeholder="faculty@college.edu"
-                        className="w-full px-4 py-2.5 rounded-xl border border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
+                        className="w-full px-4 py-3 rounded-xl border border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm shadow-inner"
                       />
                     </div>
 
@@ -263,7 +264,7 @@ export default function SignupPage() {
                           value={teacherForm.password}
                           onChange={(e) => setTeacherForm({ ...teacherForm, password: e.target.value })}
                           placeholder="Minimum 8 characters"
-                          className="w-full px-4 py-2.5 pr-11 rounded-xl border border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
+                          className="w-full px-4 py-3 pr-11 rounded-xl border border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm shadow-inner"
                         />
                         <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
                           {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
@@ -281,7 +282,7 @@ export default function SignupPage() {
                         value={teacherForm.teacherAccessKey}
                         onChange={(e) => setTeacherForm({ ...teacherForm, teacherAccessKey: e.target.value })}
                         placeholder="e.g. AIMS-TEACH-001"
-                        className="w-full px-4 py-2.5 rounded-xl border border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
+                        className="w-full px-4 py-3 rounded-xl border border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm shadow-inner"
                       />
                       <p className="text-xs text-muted-foreground">
                         Enter the one-time key provided by the faculty administration office.
@@ -300,7 +301,7 @@ export default function SignupPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm flex items-center justify-center gap-2 shadow-md shadow-primary/25 hover:shadow-lg hover:shadow-primary/35 hover:-translate-y-0.5 transition-all disabled:opacity-60 disabled:pointer-events-none mt-2"
+                  className="w-full py-4 rounded-2xl bg-primary text-primary-foreground font-semibold text-sm flex items-center justify-center gap-2 shadow-md shadow-primary/25 hover:shadow-lg hover:shadow-primary/35 hover:-translate-y-0.5 transition-all disabled:opacity-60 disabled:pointer-events-none mt-4 relative overflow-hidden"
                 >
                   {loading ? (
                     <span className="w-4 h-4 rounded-full border-2 border-primary-foreground/30 border-t-primary-foreground animate-spin" />

@@ -53,10 +53,10 @@ export default function LoginPage() {
           transition={{ duration: 0.6 }}
           className="relative text-center max-w-md"
         >
-          <div className="w-20 h-20 rounded-2xl bg-primary/20 flex items-center justify-center mx-auto mb-6 border border-primary/20">
-            <GraduationCap size={36} className="text-primary" />
+          <div className="w-20 h-20 rounded-[1.5rem] aims-glass-card bg-primary/20 flex items-center justify-center mx-auto mb-6 shadow-inner">
+            <GraduationCap size={36} className="text-primary drop-shadow-sm" />
           </div>
-          <h2 className="text-4xl font-bold text-foreground mb-3">
+          <h2 className="text-4xl font-serif font-bold text-foreground mb-3">
             AIMS Portal
           </h2>
           <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
@@ -69,7 +69,7 @@ export default function LoginPage() {
               { label: "Lab Booking", desc: "Real-time availability" },
               { label: "Resources Hub", desc: "Notes & materials" },
             ].map((item) => (
-              <div key={item.label} className="p-3.5 rounded-xl bg-card/60 border border-border">
+              <div key={item.label} className="p-4 rounded-[1rem] aims-glass-card bg-card/40 border-[0.5px] border-white/20 dark:border-white/5 shadow-sm">
                 <p className="font-semibold text-sm text-foreground">{item.label}</p>
                 <p className="text-xs text-muted-foreground mt-0.5">{item.desc}</p>
               </div>
@@ -109,12 +109,12 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <h1 className="text-3xl font-bold text-foreground mb-1">Welcome back</h1>
+          <h1 className="text-4xl font-serif font-bold text-foreground mb-2">Welcome back</h1>
           <p className="text-muted-foreground mb-8">
             Sign in to access your dashboard and academic resources.
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             {/* Email */}
             <div className="space-y-1.5">
               <label className="text-sm font-medium text-foreground">Email Address</label>
@@ -124,7 +124,7 @@ export default function LoginPage() {
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 placeholder="your@email.com"
-                className="w-full px-4 py-3 rounded-xl border border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
+                className="w-full px-4 py-3 rounded-xl border border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm shadow-inner"
               />
             </div>
 
@@ -143,7 +143,7 @@ export default function LoginPage() {
                   value={form.password}
                   onChange={(e) => setForm({ ...form, password: e.target.value })}
                   placeholder="••••••••"
-                  className="w-full px-4 py-3 pr-11 rounded-xl border border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm"
+                  className="w-full px-4 py-3 pr-11 rounded-xl border border-border bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm shadow-inner"
                 />
                 <button
                   type="button"

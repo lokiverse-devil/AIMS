@@ -49,7 +49,7 @@ const branches = [
     students: 150,
     faculty: 3,
     description:
-      "Cutting-edge knowledge in Computer Science Fundamentals.",
+      "From operating systems to full-stack development — building engineers who can design, build, and ship real software.",
     href: "/branches/cse",
   },
   {
@@ -62,7 +62,7 @@ const branches = [
     students: 150,
     faculty: 3,
     description:
-      "Cutting-edge knowledge in Information Technology Fundamentals,",
+      "Networking, security, and application development — IT graduates are ready for the practical demands of the modern industry.",
     href: "/branches/it",
   },
   {
@@ -75,7 +75,7 @@ const branches = [
     students: 150,
     faculty: 3,
     description:
-      "Cutting-edge knowledge in Electronics Fundamentals.",
+      "Hands-on with embedded systems, signal processing, and circuit design — the hardware layer that powers the modern world.",
     href: "/branches/elex",
   },
 ];
@@ -196,12 +196,11 @@ const stagger = {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex items-center gap-2 mb-3">
-      <div className="h-0.5 w-8 aims-accent-bar rounded-full" />
-      <span className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+    <div className="flex items-center gap-3 mb-4">
+      <span className="w-1.5 h-1.5 rounded-full bg-primary block flex-shrink-0" />
+      <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary/80">
         {children}
       </span>
-      <div className="h-0.5 w-8 aims-accent-bar rounded-full" />
     </div>
   );
 }
@@ -444,9 +443,7 @@ export default function HomePage() {
       <Navbar />
 
       {/* ─── HERO ──────────────────────────────────────────────── */}
-      <section
-        className="relative min-h-screen flex items-center overflow-hidden aims-grid-bg"
-      >
+      <section className="py-24 relative overflow-hidden relative z-10 aims-grid-bg">
         {/* Background Video */}
         <video
           className="absolute inset-0 w-full h-full object-cover z-0"
@@ -457,23 +454,25 @@ export default function HomePage() {
           playsInline
         />
 
-
-        {/* Gradient & grid overlays */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/15 z-[2]" />
+        {/* 3D Depth Overlays */}
+        <div className="absolute inset-0 bg-black/30 dark:bg-black/50 backdrop-blur-[1px] z-[1]" />
+        <div className="absolute bottom-0 w-full h-24 bg-gradient-to-t from-background via-background/20 to-transparent z-[2]" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 pt-36">
           <motion.div
-
             variants={stagger}
             initial="hidden"
             animate="visible"
-            className="max-w-4xl"
+            className="max-w-4xl p-8 md:p-12 rounded-[2.5rem] bg-black/30 backdrop-blur-xl border border-white/10 shadow-2xl relative overflow-hidden group"
           >
-            <motion.div variants={fadeUp} custom={0} className="mb-6">
-              <span className="inline-flex items-center gap-2.5 bg-background/40 backdrop-blur-xl px-4 py-2 rounded-2xl border border-white/10 shadow-lg">
-                <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
-                <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-foreground/80">
-                  IT BLOCK X AIMS · ACADEMIC EXCELLENCE
+            {/* Inner glow effect */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none" />
+
+            <motion.div variants={fadeUp} custom={0} className="mb-8">
+              <span className="inline-flex items-center gap-2.5 border border-white/10 bg-white/5 backdrop-blur-md px-4 py-2 rounded-full">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                <span className="text-[10px] font-medium tracking-[0.3em] text-white/70 uppercase">
+                  IT Block &nbsp;·&nbsp; UGIP Kashipur &nbsp;·&nbsp; Est. 2005
                 </span>
               </span>
             </motion.div>
@@ -481,43 +480,36 @@ export default function HomePage() {
             <motion.h1
               variants={fadeUp}
               custom={1}
-              className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight tracking-tighter mb-8"
+              className="text-6xl sm:text-7xl lg:text-8xl font-serif font-bold leading-[1.05] tracking-tight mb-8"
             >
-              <span className="relative inline-block">
-                <span className="relative z-10 text-white drop-shadow-2xl">
-                  IT BLOCK:
-                </span>
-                <span className="absolute -inset-x-4 inset-y-2 bg-primary/20 blur-2xl -z-10 rounded-full" />
-              </span>
+              <span className="text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)]">IT Block:</span>
               <br />
-              <span className="text-primary italic">UGIP KASHIPUR</span>
+              <span className="text-primary drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)]">UGIP Kashipur</span>
             </motion.h1>
 
             <motion.p
               variants={fadeUp}
               custom={2}
-              className="text-lg sm:text-xl leading-relaxed max-w-2xl mb-12 font-medium text-white/90"
+              className="text-base sm:text-lg leading-relaxed max-w-xl mb-12 text-white/70 font-normal"
             >
-              <span className="bg-black/20 backdrop-blur-md px-2 py-1 rounded-md box-decoration-clone">
-                A centralized, high-performance ecosystem for managing academic infrastructure,
-                streamlining resources, and empowering the next generation of engineers.
-              </span>
+              A centralized system for managing academic schedules, resources,
+              and infrastructure across the CSE, IT, and Electronics departments.
             </motion.p>
 
             <motion.div
               variants={fadeUp}
               custom={3}
-              className="flex flex-wrap gap-4"
+              className="flex flex-wrap gap-3"
             >
               {dashboardHref ? (
                 <>
                   <Link
                     href={dashboardHref}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/35 hover:-translate-y-0.5 transition-all duration-200"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-[14px] aims-btn-primary font-semibold text-sm transition-all duration-200"
                   >
-                    Go to Dashboard <ArrowRight size={16} />
+                    Go to Dashboard <ArrowRight size={15} />
                   </Link>
-                  <div className="inline-flex items-center gap-3 px-4 py-2 rounded-xl border border-border bg-card/80 backdrop-blur text-foreground font-semibold text-sm">
+                  <div className="inline-flex items-center gap-3 px-4 py-3 rounded-xl border border-white/10 bg-white/5 backdrop-blur text-white/80 font-medium text-sm">
                     {userPhoto && (
                       <div className="w-6 h-6 rounded-lg overflow-hidden border border-primary/20">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -531,15 +523,15 @@ export default function HomePage() {
                 <>
                   <Link
                     href="/login"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/35 hover:-translate-y-0.5 transition-all duration-200"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-[14px] aims-btn-primary font-semibold text-sm transition-all duration-200"
                   >
-                    Access Dashboard <ArrowRight size={16} />
+                    Access Dashboard <ArrowRight size={15} />
                   </Link>
                   <Link
                     href="/signup"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-border bg-card/80 backdrop-blur text-foreground font-semibold text-sm hover:border-primary/50 hover:bg-accent/30 transition-all duration-200"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/10 bg-white/5 backdrop-blur text-white/70 font-medium text-sm hover:bg-white/10 hover:text-white transition-all duration-200"
                   >
-                    Create Account <ChevronRight size={16} />
+                    Create Account <ChevronRight size={15} />
                   </Link>
                 </>
               )}
@@ -549,17 +541,20 @@ export default function HomePage() {
             <motion.div
               variants={fadeUp}
               custom={4}
-              className="mt-16 inline-flex flex-wrap gap-8 p-6 sm:p-8 rounded-[2.5rem] bg-black/30 backdrop-blur-md border border-white/10 shadow-2xl"
+              className="mt-16 flex flex-wrap items-center gap-0 border-t border-white/10 pt-8"
             >
               {[
-                { value: "350", label: "Students Enrolled" },
-                { value: "9", label: "Faculty Members" },
-                { value: "6", label: "Labs & Facilities" },
-                { value: "3", label: "Engineering Branches" },
-              ].map((stat) => (
-                <div key={stat.label} className="flex flex-col">
-                  <span className="text-3xl font-bold text-primary">{stat.value}</span>
-                  <span className="text-sm text-white/70">{stat.label}</span>
+                { value: "350+", label: "Students" },
+                { value: "9", label: "Faculty" },
+                { value: "6", label: "Labs" },
+                { value: "3", label: "Branches" },
+              ].map((stat, i) => (
+                <div key={stat.label} className="flex items-center">
+                  <div className="px-6 py-4 flex flex-col">
+                    <span className="text-2xl font-bold text-white tracking-tight">{stat.value}</span>
+                    <span className="text-[10px] font-medium text-white/40 uppercase tracking-widest mt-0.5">{stat.label}</span>
+                  </div>
+                  {i < 3 && <div className="w-px h-8 bg-white/10" />}
                 </div>
               ))}
             </motion.div>
@@ -568,12 +563,12 @@ export default function HomePage() {
 
         {/* Scroll indicator */}
         <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
+          animate={{ y: [0, 8, 0] }}
+          transition={{ repeat: Infinity, duration: 2.5 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         >
-          <span className="text-xs text-muted-foreground">DIVE IN</span>
-          <div className="w-0.5 h-8 rounded-full bg-gradient-to-b from-primary/60 to-transparent" />
+          <span className="text-[9px] tracking-[0.3em] text-white/30 uppercase">Scroll</span>
+          <div className="w-px h-6 rounded-full bg-gradient-to-b from-white/20 to-transparent" />
         </motion.div>
       </section>
 
@@ -588,10 +583,10 @@ export default function HomePage() {
               viewport={{ once: true }}
             >
               <SectionLabel>Academic Block</SectionLabel>
-              <h2 className="text-3xl font-bold text-foreground mb-4">
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-6 leading-tight">
                 The IT & Engineering Block
               </h2>
-              <p className="text-muted-foreground leading-relaxed mb-6">
+              <p className="text-muted-foreground leading-relaxed mb-6 text-lg">
                 The state-of-the-art IT block houses the CSE, IT, and Electronics
                 departments across two floors, equipped with modern labs,
                 seminar halls, faculty cabins, and a digitally-enabled learning
@@ -609,95 +604,103 @@ export default function HomePage() {
                 ].map(({ icon: Icon, label }) => (
                   <div
                     key={label}
-                    className="flex items-center gap-3 p-3 rounded-xl border border-border bg-card"
+                    className="flex items-center gap-4 py-4 px-2 border-b border-border/40 last:border-0"
                   >
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <Icon size={16} className="text-primary" />
+                    <div className="w-10 h-10 rounded-xl aims-glass-card flex items-center justify-center">
+                      <Icon size={18} className="text-foreground" />
                     </div>
-                    <span className="text-sm font-medium text-foreground">{label}</span>
+                    <span className="text-base font-medium text-foreground">{label}</span>
                   </div>
                 ))}
               </div>
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8 }}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
               viewport={{ once: true }}
               className="relative"
             >
-              <div className="aspect-video lg:aspect-square rounded-[2.5rem] overflow-hidden bg-muted border-4 border-background shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2)] dark:shadow-[0_32px_64px_-16px_rgba(0,0,0,1)] relative group">
-                <img src="/assets/college/it_block.jpeg" alt="IT Block" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-gradient-to-tr from-primary/40 via-transparent to-transparent opacity-60 mix-blend-overlay" />
-                <div className="absolute inset-x-0 bottom-0 p-8 pt-20 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="p-2 rounded-xl bg-primary/20 backdrop-blur-md border border-white/10">
-                      <Building2 size={24} className="text-white" />
+              <motion.div 
+                animate={{ y: [0, -15, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                className="aspect-video lg:aspect-[4/5] rounded-[2.5rem] bg-white dark:bg-zinc-950 border border-border overflow-hidden relative group p-2 shadow-2xl"
+              >
+                <div className="absolute inset-2 rounded-[2rem] overflow-hidden">
+                  <img src="/assets/college/it_block.jpeg" alt="IT Block" className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-black/60 to-transparent mix-blend-overlay" />
+                  <div className="absolute inset-x-0 bottom-0 p-8 pt-24 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="p-3 rounded-[14px] aims-glass-card bg-white/10 flex items-center justify-center">
+                        <Building2 size={24} className="text-white drop-shadow-sm" />
+                      </div>
+                      <p className="text-2xl font-serif font-bold text-white tracking-tight">Academic IT Block</p>
                     </div>
-                    <p className="text-xl font-bold text-white tracking-tight">Academic IT Block</p>
+                    <p className="text-sm text-white/70 font-medium ml-1">Equipped for excellence since 2005</p>
                   </div>
-                  <p className="text-sm text-white/70 font-medium">Equipped for excellence since 2005</p>
                 </div>
-              </div>
+              </motion.div>
               {/* Decorative side element */}
-              <div className="absolute -bottom-6 -right-6 w-32 h-32 rounded-3xl bg-primary border-4 border-background flex flex-col items-center justify-center shadow-xl z-20">
-                <Award size={24} className="text-primary-foreground mb-1" />
-                <span className="text-xs font-bold text-primary-foreground uppercase tracking-widest">Est. 2005</span>
+              <div className="absolute -bottom-6 -right-6 w-32 h-32 rounded-[2rem] aims-glass-card bg-card/60 flex flex-col items-center justify-center z-20">
+                <Award size={28} className="text-foreground mb-2" />
+                <span className="text-xs font-bold text-foreground focus-visible uppercase tracking-widest">Est. 2005</span>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
+      <div className="h-24 bg-gradient-to-b from-muted/30 to-muted/20" />
 
       {/* ─── BRANCHES ──────────────────────────────────────────── */}
-      <section className="py-16 bg-muted/30 relative">
+      <section className="py-20 bg-muted/20 relative border-t border-border/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-20">
             <SectionLabel>Our Specializations</SectionLabel>
-            <h2 className="text-3xl font-bold text-foreground tracking-tighter">Engineering Departments</h2>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground tracking-tight">Engineering Departments</h2>
+            <p className="text-muted-foreground mt-4 text-lg max-w-lg mx-auto">Three focused programs, one integrated block.</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-6">
             {branches.map((branch, i) => (
               <motion.div
                 key={branch.id}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
                 viewport={{ once: true }}
               >
                 <Link href={branch.href} className="block group h-full">
-                  <div className="relative p-8 rounded-[3rem] border border-border bg-card hover:border-primary/50 transition-all duration-500 h-full flex flex-col overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-primary/5">
-                    <div className="absolute -top-24 -right-24 w-56 h-56 bg-primary/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  <div className="relative p-8 h-full flex flex-col aims-glass-card hover:aims-glass-card-hover overflow-hidden">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -mr-20 -mt-20" />
 
-                    <div className={`w-16 h-16 rounded-3xl bg-gradient-to-br ${branch.color} flex items-center justify-center mb-8 shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
-                      <branch.icon size={32} className="text-primary" />
+                    <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${branch.color} flex items-center justify-center mb-7 shadow-sm group-hover:scale-105 transition-all duration-300`}>
+                      <branch.icon size={22} className="text-primary" />
                     </div>
 
                     <div className="flex-1">
-                      <div className="inline-flex items-center gap-3 mb-4">
-                        <span className={`w-3 h-3 rounded-full ${branch.accent} shadow-lg`} />
-                        <span className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground">{branch.short}</span>
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className={`w-2 h-2 rounded-full ${branch.accent}`} />
+                        <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">{branch.short}</span>
                       </div>
-                      <h3 className="text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors leading-tight">{branch.name}</h3>
-                      <p className="text-muted-foreground leading-relaxed mb-10">{branch.description}</p>
+                      <h3 className="text-2xl font-serif font-bold text-foreground mb-4 group-hover:text-primary transition-colors leading-snug">{branch.name}</h3>
+                      <p className="text-base text-muted-foreground leading-relaxed mb-8">{branch.description}</p>
                     </div>
 
-                    <div className="mt-auto pt-8 border-t border-border flex items-center justify-between">
-                      <div className="flex items-center gap-6">
+                    <div className="mt-auto pt-6 border-t border-border/50 flex items-center justify-between">
+                      <div className="flex items-center gap-5">
                         <div>
-                          <span className="text-foreground block text-lg font-black tracking-tight">{branch.students}</span>
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Students</span>
+                          <span className="text-foreground block text-base font-bold tracking-tight">{branch.students}</span>
+                          <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground">Students</span>
                         </div>
-                        <div className="w-px h-8 bg-border" />
+                        <div className="w-px h-6 bg-border" />
                         <div>
-                          <span className="text-foreground block text-lg font-black tracking-tight">{branch.faculty}</span>
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Faculty</span>
+                          <span className="text-foreground block text-base font-bold tracking-tight">{branch.faculty}</span>
+                          <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground">Faculty</span>
                         </div>
                       </div>
-                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
-                        <ArrowRight size={22} />
+                      <div className="w-9 h-9 rounded-full border border-border flex items-center justify-center text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all duration-300">
+                        <ArrowRight size={16} />
                       </div>
                     </div>
                   </div>
@@ -707,81 +710,38 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* ─── FACILITIES ────────────────────────────────────────── */}
-      <section className="py-16 relative overflow-hidden bg-background">
-        <div className="absolute inset-0 bg-primary/[0.02] -z-10" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <SectionLabel>Infrastructure</SectionLabel>
-            <h2 className="text-3xl font-bold text-foreground tracking-tight">
-              Premium Campus Facilities
-            </h2>
-          </motion.div>
-
-          <div className="max-w-6xl mx-auto">
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
-              {facilities.map((f, i) => (
-                <motion.div
-                  key={f.label}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: i * 0.05, duration: 0.4 }}
-                  viewport={{ once: true }}
-                  className="group relative p-6 rounded-[2rem] border border-border bg-card hover:border-primary/40 hover:shadow-2xl transition-all duration-300 flex flex-col items-center text-center"
-                >
-                  <div className="w-16 h-16 rounded-2xl bg-primary/5 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary/10 transition-all">
-                    <f.icon size={32} className="text-primary" />
-                  </div>
-                  <p className="text-2xl font-black text-foreground mb-1 tracking-tighter">{f.count}</p>
-                  <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground whitespace-nowrap">
-                    {f.label}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ─── SUCCESS STORIES ───────────────────────────────────── */}
-      <section className="py-16 bg-primary/5 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+      <section className="py-20 bg-slate-950/5 relative overflow-hidden border-t border-border/50">
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2 mb-12">
-            <div className="h-0.5 w-8 aims-accent-bar rounded-full" />
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Center of Excellence</span>
+          <div className="flex items-center gap-3 mb-14">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary block flex-shrink-0" />
+            <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary/80">Center of Excellence</span>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.96 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
               className="relative order-2 lg:order-1"
             >
-              <div className="aspect-[16/10] rounded-[2.5rem] overflow-hidden bg-card border border-primary/20 shadow-2xl relative group">
+              <div className="aspect-[16/10] rounded-[2.5rem] overflow-hidden bg-card border border-primary/20 shadow-xl relative group">
                 <img src="/assets/college/hackathon_winner.jpeg" alt="Hackathon Winners" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80" />
-                <div className="absolute bottom-8 left-8 right-8">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-widest mb-4">
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-8">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-widest mb-4 shadow-sm">
                     <Crown size={12} /> 1st Position
                   </div>
-                  <h3 className="text-2xl font-black text-white mb-2 tracking-tight">State Level Hackathon Champeions</h3>
+                  <h3 className="text-2xl font-bold text-white mb-2 tracking-tight">State Level Hackathon Champions</h3>
                   <p className="text-sm text-white/70 font-medium">CSE Department · Rajat Jayanti Samaroh</p>
                 </div>
               </div>
               {/* Floating Badge */}
-              <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-background border-4 border-primary flex flex-col items-center justify-center shadow-2xl z-20 transform rotate-12">
-                <span className="text-xl font-black text-primary">#1</span>
-                <span className="text-[8px] font-bold text-muted-foreground uppercase tracking-widest">Rank</span>
+              <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-slate-900 border-4 border-background flex flex-col items-center justify-center shadow-2xl z-20">
+                <span className="text-xl font-bold text-white">#1</span>
+                <span className="text-[9px] font-semibold text-white/50 uppercase tracking-widest">Rank</span>
               </div>
             </motion.div>
 
@@ -792,27 +752,30 @@ export default function HomePage() {
               viewport={{ once: true }}
               className="order-1 lg:order-2"
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-[1.1]">
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-6 leading-tight">
                 Nurturing the <br />
                 <span className="text-primary italic">Champions of Tomorrow</span>
               </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                Our students don't just learn; they compete and win on the biggest stages.
-                From college and district level hackathons to state level hackathons, the IT Block
-                provides the mentorship and resources needed to excel.
+              <p className="text-lg text-muted-foreground leading-relaxed mb-10">
+                Our students do more than learn; they compete and win. 
+                From college and district-level events to state-level hackathons, the IT Block 
+                provides the mentorship and technical resources needed to excel anywhere.
               </p>
+              
+              <div className="h-px w-full bg-border/60 mb-8" />
+              
               <div className="space-y-4">
                 {[
                   { title: "Technical Excellence", desc: "Mastering complex algorithms and real-world system design." },
                   { title: "Collaborative Innovation", desc: "Working in agile teams to solve critical infrastructure problems." }
                 ].map((item) => (
-                  <div key={item.title} className="flex gap-4 p-4 rounded-2xl bg-background/50 border border-border backdrop-blur-sm">
+                  <div key={item.title} className="flex gap-4 p-4 rounded-2xl border border-transparent hover:border-border/50 hover:bg-card/50 transition-colors">
                     <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <Zap size={20} className="text-primary" />
+                      <Zap size={18} className="text-primary" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-foreground text-sm">{item.title}</h4>
-                      <p className="text-xs text-muted-foreground mt-1">{item.desc}</p>
+                      <h4 className="font-semibold text-foreground text-sm">{item.title}</h4>
+                      <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{item.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -822,77 +785,117 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── LABS ─────────────────────────────────────────────── */}
-      <section className="py-20 bg-muted/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-12 gap-24 items-center">
-            <div className="lg:col-span-5">
-              <SectionLabel>Labs & Workspaces</SectionLabel>
-              <h2 className="text-3xl md:text-4xl font-black text-foreground mb-8 tracking-tighter leading-none">
-                Specialized <br /><span className="text-primary italic">Centers</span>
+      {/* ─── PREMIUM FACILITIES ────────────────────────────────── */}
+      <section className="py-24 bg-background relative overflow-hidden">
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+            <div className="max-w-2xl">
+              <SectionLabel>Premium Facilities</SectionLabel>
+              <h2 className="text-4xl lg:text-5xl font-serif font-bold text-foreground tracking-tight mb-4">
+                World-class Infrastructure <br />for Modern Learning.
               </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-10">
-                From high-compute servers to IoT experimentation boards,
-                our labs offer everything an engineer needs to turn ideas
-                into production-ready software and hardware.
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                From high-speed connectivity to digitally enabled libraries, we provide the environment 
+                you need to excel in your technical journey.
               </p>
-              <div className="flex flex-col gap-4">
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            {facilities.map((f, i) => (
+              <motion.div
+                key={f.label}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: i * 0.1 }}
+                viewport={{ once: true }}
+                className="group relative p-8 rounded-[2.5rem] bg-white dark:bg-zinc-950 border border-border/80 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col items-center text-center"
+              >
+                <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary group-hover:scale-110 transition-all duration-500">
+                  <f.icon size={28} className="text-primary group-hover:text-white transition-colors" />
+                </div>
+                <h4 className="text-xl font-bold text-foreground mb-2 tracking-tight group-hover:text-primary transition-colors">{f.label}</h4>
+                <p className="text-xs font-bold text-primary/60 uppercase tracking-widest">{f.count}</p>
+                
+                {/* Decorative depth element */}
+                <div className="absolute inset-0 rounded-[2.5rem] border-2 border-primary/0 group-hover:border-primary/10 transition-all duration-500 pointer-events-none" />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── LABS ─────────────────────────────────────────────── */}
+      <section className="py-20 bg-muted/20 border-t border-border/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-12 gap-16 lg:gap-24 items-center">
+            <div className="lg:col-span-4">
+              <SectionLabel>Labs & Workspaces</SectionLabel>
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-6 tracking-tight leading-snug">
+                Specialized <br /><span className="text-primary">Engineering Centers</span>
+              </h2>
+              <p className="text-base text-muted-foreground leading-relaxed mb-10">
+                From high-compute servers for data modeling to hands-on hardware prototyping kits, 
+                our labs give you exactly what you need to take concepts into production.
+              </p>
+              <div className="flex flex-col gap-4 pl-1">
                 {[
-                  "Intel i5/i7 Workstations",
-                  "100 Mbps Dedicated LAN",
-                  "Open-Source Software Stack",
-                  "Hardware Prototyping Kits"
+                  "Workstation-Grade Desktop Environments",
+                  "Dedicated 100 Mbps Connectivity",
+                  "Fully Integrated Open-Source Toolchains",
+                  "Rapid Prototyping Hardware"
                 ].map(t => (
                   <div key={t} className="flex items-center gap-3">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(20,184,166,0.6)]" />
-                    <span className="text-xs font-black uppercase tracking-widest text-foreground">{t}</span>
+                    <span className="w-[3px] h-[3px] rounded-full bg-primary overflow-visible ring-4 ring-primary/20" />
+                    <span className="text-xs font-semibold text-foreground/80 tracking-wide">{t}</span>
                   </div>
                 ))}
               </div>
-              <div className="mt-12">
-                <Link
-                  href="/login"
-                  className="group inline-flex items-center gap-3 text-sm font-black text-primary uppercase tracking-[0.3em] hover:gap-5 transition-all"
-                >
-                  Explore Lab Details <ArrowRight size={18} />
-                </Link>
-              </div>
             </div>
 
-            <div className="lg:col-span-7 grid sm:grid-cols-2 gap-6">
+            <div className="lg:col-span-8 grid sm:grid-cols-2 gap-5">
               {labs.map((lab, i) => (
                 <motion.div
                   key={lab.name}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
+                  transition={{ delay: i * 0.08 }}
                   viewport={{ once: true }}
-                  className="group p-6 rounded-[2.5rem] border border-border bg-background hover:border-primary/50 hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] transition-all duration-500 relative overflow-hidden"
+                  className="group p-7 aims-glass-card hover:aims-glass-card-hover relative overflow-hidden flex flex-col"
                 >
-                  <div className="flex items-center justify-between mb-8">
-                    <div className="w-14 h-14 rounded-2xl bg-primary/5 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:bg-primary/10 transition-all duration-500">
-                      <FlaskConical size={28} className="text-primary" />
+                  {/* Left availability stripe */}
+                  <div className={`absolute top-0 bottom-0 left-0 w-1 ${lab.available ? 'bg-emerald-500/80' : 'bg-slate-500/50'}`} />
+
+                  <div className="flex items-start justify-between mb-6">
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-all duration-300">
+                      <FlaskConical size={20} className="text-primary" />
                     </div>
                     <span
-                      className={`text-[9px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-sm ${lab.available
-                        ? "bg-emerald-500/10 text-emerald-600 border border-emerald-500/20"
-                        : "bg-red-500/10 text-red-500 border border-red-500/20"
-                        }`}
+                      className={`text-[9px] font-semibold uppercase tracking-[0.2em] px-3 py-1 rounded-full border ${
+                        lab.available
+                          ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
+                          : "bg-slate-500/10 text-slate-500 border-slate-500/20"
+                      }`}
                     >
                       {lab.available ? "Ready" : "In Use"}
                     </span>
                   </div>
 
-                  <h4 className="font-bold text-foreground text-xl mb-3 tracking-tight group-hover:text-primary transition-colors">{lab.name}</h4>
-                  <p className="text-xs text-muted-foreground leading-relaxed mb-8 flex-1">{lab.equipment}</p>
+                  <h4 className="font-bold text-foreground text-lg mb-2 tracking-tight group-hover:text-primary transition-colors">{lab.name}</h4>
+                  
+                  {/* Format equipment visually cleanly */}
+                  <p className="text-xs text-muted-foreground leading-relaxed mb-8 flex-1">
+                    {lab.equipment.split(',').join(' • ')}
+                  </p>
 
-                  <div className="flex items-center gap-6 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                      <Building2 size={14} className="opacity-50" />
+                  <div className="mt-auto pt-5 border-t border-border/40 flex items-center justify-between text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                    <div className="flex items-center gap-1.5">
+                      <Building2 size={13} className="text-primary/60" />
                       {lab.wing}
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Users size={14} className="opacity-50" />
+                    <div className="flex items-center gap-1.5">
+                      <Users size={13} className="text-primary/60" />
                       {lab.capacity} Seats
                     </div>
                   </div>
@@ -904,48 +907,51 @@ export default function HomePage() {
       </section>
 
       {/* ─── FACULTY PREVIEW ───────────────────────────────────── */}
-      <section className="py-20 relative">
+      <section className="py-20 relative bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-24">
+          <div className="text-center mb-20">
             <SectionLabel>Mentorship</SectionLabel>
-            <h2 className="text-3xl font-bold text-foreground tracking-tighter uppercase">Academic Leadership</h2>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground tracking-tight">Academic Leadership</h2>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {facultyPreview.map((f, i) => (
               <motion.div
                 key={f.name}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                whileHover={{ y: -10 }}
-                className="p-6 rounded-[3rem] border border-border bg-card hover:border-primary/50 transition-all duration-500 text-center flex flex-col shadow-sm hover:shadow-2xl"
+                className="p-8 rounded-[2rem] aims-glass-card hover:aims-glass-card-hover text-center flex flex-col group"
               >
-                <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6 border-4 border-background shadow-xl overflow-hidden relative">
+                <div className="w-24 h-24 rounded-full aims-glass-card flex items-center justify-center mx-auto mb-6 p-1 relative group-hover:scale-[1.03] transition-transform shadow-lg">
                   {f.avatar ? (
-                    <img src={f.avatar} alt={f.name} className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
+                    <div className="w-full h-full rounded-full overflow-hidden">
+                      <img src={f.avatar} alt={f.name} className="w-full h-full object-cover" />
+                    </div>
                   ) : (
-                    <span className="text-2xl font-black text-primary uppercase">{f.initials}</span>
+                    <span className="text-xl font-bold text-primary uppercase">{f.initials}</span>
                   )}
                 </div>
-                <h4 className="font-bold text-foreground text-lg mb-2 tracking-tight">{f.name}</h4>
-                <div className="inline-flex items-center justify-center mb-5">
-                  <span className="px-4 py-1.5 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/20">
+                <h4 className="font-semibold text-foreground text-lg mb-1 tracking-tight">{f.name}</h4>
+                <div className="mb-4">
+                  <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
                     {f.designation} 
                   </span>
                 </div>
-                <p className="text-xs text-muted-foreground leading-relaxed italic mb-6">"{f.subjects}"</p>
-                <div className="mt-auto h-1 w-12 bg-primary/30 rounded-full mx-auto" />
+                <p className="text-sm text-foreground/70 leading-relaxed mb-6 group-hover:text-primary/90 transition-colors line-clamp-2">
+                  {f.subjects}
+                </p>
+                <div className="mt-auto h-0.5 w-8 bg-border group-hover:bg-primary/50 transition-colors rounded-full mx-auto" />
               </motion.div>
             ))}
           </div>
 
-          <div className="mt-20 text-center">
+          <div className="mt-16 text-center">
             <Link
               href="/branches/cse"
-              className="inline-flex items-center gap-3 px-10 py-5 rounded-3xl bg-foreground text-background font-black text-sm uppercase tracking-widest hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-2xl"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-primary uppercase tracking-[0.2em] border-b border-primary/30 pb-1 hover:border-primary transition-all"
             >
-              Meet Entire Faculty <ArrowRight size={20} />
+              Meet the Entire Faculty <ArrowRight size={16} />
             </Link>
           </div>
         </div>
@@ -953,73 +959,64 @@ export default function HomePage() {
 
 
       {/* ─── NOTICE BOARD ──────────────────────────────────────── */}
-      <section className="py-20 bg-background relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/5 blur-[120px] rounded-full -z-10" />
+      <section className="py-20 bg-muted/30 relative overflow-hidden border-t border-border/50">
+        <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/5 blur-[100px] rounded-full -z-10" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
             <div className="max-w-2xl">
-              <SectionLabel>Live Updates</SectionLabel>
-              <h2 className="text-3xl font-bold text-foreground tracking-tighter">Academic Notice Board</h2>
-              <p className="text-lg text-muted-foreground mt-4">Stay informed with the latest official announcements, exam schedules, and campus events.</p>
+              <SectionLabel>Infrastructure</SectionLabel>
+              <h2 className="text-4xl lg:text-5xl font-serif font-bold text-foreground tracking-tight mb-4">
+                Experience the AIMS platform.
+              </h2>
+              <p className="text-lg text-foreground/70 dark:text-muted-foreground leading-relaxed">
+                Stay informed with the latest official announcements, exam schedules, and campus events.
+              </p>
             </div>
-            <div className="flex items-center gap-4 bg-muted/30 px-6 py-3 rounded-2xl border border-border backdrop-blur-sm">
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center animate-pulse">
-                <Bell size={20} className="text-primary" />
-              </div>
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground block leading-none mb-1">Status</span>
-                <span className="text-sm font-bold text-foreground">AIMS Real-time Sync Active</span>
-              </div>
+            <div className="flex items-center gap-3 bg-background px-5 py-2.5 rounded-xl border border-border/50 shadow-sm">
+              <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)] animate-pulse" />
+              <span className="text-xs font-semibold text-foreground">Live Feed Active</span>
             </div>
           </div>
 
-          <div className="grid gap-6">
+          <div className="grid gap-4">
             {uiNotices.map((notice, i) => (
               <motion.div
                 key={notice.id}
-                initial={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, x: -10 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.1 }}
                 viewport={{ once: true }}
-                className="group relative p-6 rounded-[2.5rem] border border-border bg-card hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 flex flex-col md:flex-row gap-8 items-start md:items-center overflow-hidden"
+                className="group relative p-6 md:p-8 aims-glass-card hover:aims-glass-card-hover flex flex-col md:flex-row gap-6 items-start md:items-center"
               >
                 <div className="flex-shrink-0">
-                  <div className={`w-16 h-16 rounded-2xl flex flex-col items-center justify-center border ${notice.urgent
-                      ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20"
-                      : "bg-muted/50 text-muted-foreground border-border"
-                    }`}>
-                    <Clock size={24} className="mb-1" />
-                    <span className="text-[8px] font-black uppercase tracking-tighter">Latest</span>
+                  <div className="px-4 py-3 rounded-xl bg-muted border border-border/50 flex flex-col items-center justify-center min-w-[80px]">
+                    <span className="text-[10px] font-semibold text-muted-foreground uppercase">{notice.date.split(' ')[1]}</span>
+                    <span className="text-xl font-bold text-foreground">{notice.date.split(' ')[0]}</span>
                   </div>
                 </div>
 
-                <div className="flex-1 space-y-3">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <span className={`text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest border transition-colors ${notice.urgent
-                        ? "bg-amber-500/10 text-amber-600 border-amber-500/20"
-                        : "bg-primary/5 text-primary border-primary/20"
+                <div className="flex-1 space-y-2">
+                  <div className="flex flex-wrap items-center gap-3 mb-1">
+                    <span className={`text-[9px] font-bold px-3 py-1 rounded-md uppercase tracking-widest ${notice.urgent
+                        ? "bg-amber-500/10 text-amber-600"
+                        : "bg-primary/10 text-primary"
                       }`}>
                       {notice.tag}
                     </span>
-                    <span className="text-xs font-bold text-muted-foreground flex items-center gap-2">
-                      <Shield size={12} /> {notice.date}
-                    </span>
+                    {notice.urgent && <span className="text-[10px] font-bold text-red-500 flex items-center gap-1 uppercase tracking-wider"><Bell size={10}/> Urgent</span>}
                   </div>
-                  <h4 className="text-2xl font-black text-foreground group-hover:text-primary transition-colors tracking-tight">{notice.title}</h4>
-                  <p className="text-muted-foreground leading-relaxed max-w-4xl">{notice.desc}</p>
-                  {notice.file_url && (
-                    <a href={notice.file_url} target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-xs font-bold text-primary hover:underline mt-1">
-                      <FileText size={13}/> View Attached Document
-                    </a>
-                  )}
+                  <h4 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors">{notice.title}</h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2 max-w-4xl">{notice.desc}</p>
                 </div>
 
-                <div className="md:border-l border-border md:pl-8 flex-shrink-0 self-stretch flex items-center">
-                  <div className="w-12 h-12 rounded-full border border-border flex items-center justify-center text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all duration-300">
-                    <ChevronRight size={24} />
+                {notice.file_url && (
+                  <div className="md:pl-6 flex-shrink-0 self-stretch flex items-center">
+                    <a href={notice.file_url} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/5 text-primary text-xs font-semibold hover:bg-primary hover:text-primary-foreground transition-colors group-hover:bg-primary/10 border border-primary/10 hover:border-primary/30">
+                      <FileText size={14} /> Document
+                    </a>
                   </div>
-                </div>
+                )}
               </motion.div>
             ))}
           </div>
@@ -1027,42 +1024,38 @@ export default function HomePage() {
       </section>
 
       {/* ─── CTA ───────────────────────────────────────────────── */}
-      <section className="py-16 px-4 sm:px-6">
+      <section className="py-20 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.97 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="relative rounded-[4rem] overflow-hidden bg-foreground p-10 md:p-16 text-center"
+            className="relative rounded-[2.5rem] overflow-hidden aims-glass-card dark bg-black/80 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] p-12 md:p-20 text-center"
           >
             {/* Background decorative elements */}
-            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/20 to-transparent pointer-events-none" />
-            <div className="absolute -bottom-48 -right-48 w-96 h-96 bg-primary/30 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-transparent to-white/5 pointer-events-none" />
+            <div className="absolute -bottom-48 left-1/2 -translate-x-1/2 w-[600px] h-96 bg-primary/20 rounded-full blur-[100px] pointer-events-none" />
 
             <div className="relative z-10 max-w-3xl mx-auto">
-              <span className="inline-block px-6 py-2 rounded-full bg-white/10 text-white/80 text-[10px] font-black uppercase tracking-[0.4em] border border-white/5 mb-8">
-                Portal Access
-              </span>
-              <h2 className="text-3xl md:text-5xl font-bold text-white mb-8 tracking-tighter leading-none">
-                Experience <span className="text-primary italic">AIMS</span> Today.
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 tracking-tight leading-tight">
+                Experience the AIMS Platform
               </h2>
-              <p className="text-xl text-white/60 mb-12 leading-relaxed">
-                Unlock a centralized ecosystem where academic performance,
-                infrastructure, and innovation converge. Join 350+ students
-                and faculty already using IT Block's advanced platform.
+              <p className="text-lg text-slate-400 mb-10 leading-relaxed max-w-2xl mx-auto font-medium">
+                A unified digital space designed exclusively for the students and faculty 
+                of the IT Block, UGIP Kashipur.
               </p>
-              <div className="flex flex-wrap gap-6 justify-center">
+              <div className="flex flex-wrap gap-4 justify-center">
                 <Link
                   href="/login"
-                  className="px-10 py-5 rounded-[2rem] bg-primary text-primary-foreground font-black text-sm uppercase tracking-widest shadow-[0_20px_40px_rgba(20,184,166,0.4)] hover:-translate-y-1 transition-all"
+                  className="px-8 py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold text-sm shadow-lg shadow-primary/20 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/30 transition-all"
                 >
-                  Launch Dashboard
+                  Access Portal
                 </Link>
                 <Link
                   href="/signup"
-                  className="px-10 py-5 rounded-[2rem] border border-white/20 text-white font-black text-sm uppercase tracking-widest hover:bg-white/5 transition-all"
+                  className="px-8 py-3.5 rounded-xl aims-glass-card border border-white/20 bg-white/10 text-white font-semibold text-sm hover:bg-white/20 transition-all shadow-lg"
                 >
-                  Create Identity
+                  Create Account
                 </Link>
               </div>
             </div>
@@ -1073,9 +1066,9 @@ export default function HomePage() {
       {/* ─── MEET THE TEAM ─────────────────────────────────────── */}
       <section className="py-16 relative bg-muted/20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="text-center mb-16">
+          <div className="text-center mb-20">
             <SectionLabel>The Architects</SectionLabel>
-            <h2 className="text-4xl font-bold text-foreground tracking-tighter mb-6">Minds Behind AIMS</h2>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground tracking-tighter mb-6">Minds Behind AIMS</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto italic font-medium">
               "Building the future of academic infrastructure, one line of code at a time."
             </p>
@@ -1112,43 +1105,41 @@ export default function HomePage() {
       </section>
 
       {/* ─── FOOTER ────────────────────────────────────────────── */}
-      <footer className="pt-32 pb-12 bg-background border-t border-border">
+      <footer className="pt-24 pb-8 bg-slate-950 border-t border-slate-900 text-slate-400">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-12 mb-20">
-            <div className="md:col-span-2">
+          <div className="grid md:grid-cols-4 gap-12 mb-16">
+            <div className="md:col-span-2 text-slate-300">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
-                  <BookOpen size={20} className="text-primary-foreground" />
+                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20">
+                  <BookOpen size={16} className="text-primary" />
                 </div>
-                <span className="text-xl font-bold tracking-tighter text-foreground">AIMS <span className="text-primary italic">X</span> IT BLOCK</span>
+                <span className="text-lg font-bold tracking-tight text-white">AIMS Portal</span>
               </div>
-              <p className="text-muted-foreground leading-relaxed max-w-sm">
-                A high-performance Academic Management System designed for
-                UMID Government ITI Polytechnic Kashipur, empowering
-                students and faculty with modern tools.
+              <p className="text-sm leading-relaxed max-w-xs text-slate-400 font-medium">
+                Academic Operations & Management System for UMID Government ITI Polytechnic Kashipur.
               </p>
             </div>
             <div>
-              <h5 className="font-bold text-xs uppercase tracking-[0.2em] text-foreground mb-6">Resources</h5>
-              <ul className="space-y-4">
-                <li><Link href="/branches/cse" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">CSE Department</Link></li>
-                <li><Link href="/branches/it" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">IT Department</Link></li>
-                <li><Link href="/branches/elex" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">ElEX Department</Link></li>
+              <h5 className="font-semibold text-xs text-white mb-5 uppercase tracking-widest">Resources</h5>
+              <ul className="space-y-3">
+                <li><Link href="/branches/cse" className="text-sm hover:text-primary transition-colors">CSE Department</Link></li>
+                <li><Link href="/branches/it" className="text-sm hover:text-primary transition-colors">IT Department</Link></li>
+                <li><Link href="/branches/elex" className="text-sm hover:text-primary transition-colors">Electronics Department</Link></li>
               </ul>
             </div>
             <div>
-              <h5 className="font-bold text-xs uppercase tracking-[0.2em] text-foreground mb-6">Connect</h5>
-              <ul className="space-y-4">
-                <li><a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Contact Admin: ompandey2341@gmail.com</a></li>
-                <li><a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Submit Bug Reports: supabasetup@gmail.com</a></li>
+              <h5 className="font-semibold text-xs text-white mb-5 uppercase tracking-widest">Support</h5>
+              <ul className="space-y-3">
+                <li><a href="mailto:ompandey2341@gmail.com" className="text-sm hover:text-primary transition-colors flex items-center gap-2"><ArrowRight size={12}/> Contact Administrator</a></li>
+                <li><a href="mailto:supabasetup@gmail.com" className="text-sm hover:text-primary transition-colors flex items-center gap-2"><ArrowRight size={12}/> Report Technical Issue</a></li>
               </ul>
             </div>
           </div>
-          <div className="pt-12 border-t border-border flex flex-col md:flex-row items-center justify-between gap-6">
-            <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">© 2026 AIMS PORTAL · UGIP KASHIPUR</p>
-            <div className="flex items-center gap-6">
-              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground">System Online · Stable</span>
+          <div className="pt-8 border-t border-slate-900/50 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-xs font-semibold uppercase tracking-widest">© {new Date().getFullYear()} AIMS Portal · UGIP Kashipur</p>
+            <div className="flex items-center gap-3 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800">
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
+              <span className="text-[10px] font-semibold text-slate-300 uppercase tracking-widest">All Systems Operational</span>
             </div>
           </div>
         </div>
@@ -1164,7 +1155,7 @@ export default function HomePage() {
 
 function TeamMemberCard({ member, isLeader, roles, colors }: any) {
   return (
-    <div className={`relative rounded-[3rem] overflow-hidden transition-all duration-700 h-full flex flex-col border-2 ${colors.border} ${colors.hoverBorder} bg-card shadow-xl group-hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.2)] group-hover:-translate-y-4`}>
+    <div className={`relative rounded-[2.5rem] overflow-hidden aims-glass-card hover:aims-glass-card-hover h-full flex flex-col group`}>
       <div className={`absolute top-0 left-0 w-full h-2 ${colors.accentBg} shadow-[0_0_20px_${colors.accentBg}] z-20`} />
 
       {isLeader && (

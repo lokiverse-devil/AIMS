@@ -108,9 +108,9 @@ function TimetableSection({ branch, semester }: { branch: string; semester: stri
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-foreground tracking-tight flex items-center gap-3">
-            <span className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shadow-inner">
-              <Calendar size={20} />
+          <h2 className="text-3xl font-serif font-bold text-foreground tracking-tight flex items-center gap-4">
+            <span className="w-12 h-12 rounded-[14px] aims-glass-card flex items-center justify-center text-primary shadow-inner bg-primary/5">
+              <Calendar size={20} className="drop-shadow-sm" />
             </span>
             Schedule
           </h2>
@@ -139,7 +139,7 @@ function TimetableSection({ branch, semester }: { branch: string; semester: stri
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.05 }}
-                className="group relative flex items-center gap-6 p-5 rounded-3xl border border-border/50 bg-card/40 backdrop-blur-md hover:border-primary/40 hover:bg-card/60 transition-all duration-300 shadow-sm"
+                className="group relative flex items-center gap-6 p-5 aims-glass-card hover:aims-glass-card-hover rounded-3xl transition-all duration-300 shadow-sm"
               >
                 <div className="flex flex-col items-center justify-center w-24 flex-shrink-0 py-2 rounded-2xl bg-primary/[0.03] border border-primary/5">
                   <span className="text-xs font-bold text-primary uppercase tracking-tight">{slot.start_time}</span>
@@ -199,9 +199,9 @@ function MarksSection({ rollNumber }: { rollNumber: string }) {
     <div className="space-y-6">
       <div className="flex items-center justify-between mb-2 gap-4 flex-wrap">
         <div>
-          <h2 className="text-2xl font-bold text-foreground tracking-tight flex items-center gap-3">
-            <span className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shadow-inner">
-              <BarChart2 size={20} />
+          <h2 className="text-3xl font-serif font-bold text-foreground tracking-tight flex items-center gap-4">
+            <span className="w-12 h-12 rounded-[14px] aims-glass-card flex items-center justify-center text-primary shadow-inner bg-primary/5">
+              <BarChart2 size={20} className="drop-shadow-sm" />
             </span>
             Performance
           </h2>
@@ -227,7 +227,7 @@ function MarksSection({ rollNumber }: { rollNumber: string }) {
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: idx * 0.04 }}
-                className="p-6 rounded-[32px] border border-border/50 bg-card/40 backdrop-blur-md hover:border-primary/30 transition-all group overflow-hidden relative shadow-sm"
+                className="p-6 aims-glass-card hover:aims-glass-card-hover rounded-[32px] transition-all group overflow-hidden relative shadow-sm"
               >
                 <div className={`absolute top-0 right-0 w-32 h-32 ${theme.light} rounded-full blur-3xl -mr-16 -mt-16 opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
                 
@@ -281,14 +281,14 @@ function SemesterResultsSection({ semester }: { semester: string }) {
   const semNum = parseInt(semester.replace(/\D/g,"")) || 6;
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-foreground tracking-tight flex items-center gap-3">
-        <span className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shadow-inner">
-          <Award size={20} />
+      <h2 className="text-3xl font-serif font-bold text-foreground tracking-tight flex items-center gap-4">
+        <span className="w-12 h-12 rounded-[14px] aims-glass-card flex items-center justify-center text-primary shadow-inner bg-primary/5">
+          <Award size={20} className="drop-shadow-sm" />
         </span>
         Results
       </h2>
       
-      <div className="p-8 rounded-[32px] border border-border/50 bg-card/40 backdrop-blur-md space-y-8 relative overflow-hidden shadow-sm">
+      <div className="p-8 aims-glass-card rounded-[32px] space-y-8 relative overflow-hidden shadow-sm">
         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] -mr-32 -mt-32" />
         
         <div className="flex items-start gap-4 p-5 rounded-2xl bg-amber-500/5 border border-amber-500/10 relative z-10">
@@ -336,9 +336,9 @@ function ResourcesSection({ branch, semester }: { branch: string; semester: stri
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-foreground tracking-tight flex items-center gap-3">
-        <span className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shadow-inner">
-          <BookOpen size={20} />
+      <h2 className="text-3xl font-serif font-bold text-foreground tracking-tight flex items-center gap-4">
+        <span className="w-12 h-12 rounded-[14px] aims-glass-card flex items-center justify-center text-primary shadow-inner bg-primary/5">
+          <BookOpen size={20} className="drop-shadow-sm" />
         </span>
         Knowledge Hub
       </h2>
@@ -350,7 +350,7 @@ function ResourcesSection({ branch, semester }: { branch: string; semester: stri
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.04 }}
-              className="flex flex-col p-6 rounded-[28px] border border-border/50 bg-card/40 backdrop-blur-md hover:border-primary/40 hover:bg-card/60 hover:-translate-y-1 transition-all duration-300 group shadow-sm"
+              className="flex flex-col p-6 aims-glass-card hover:aims-glass-card-hover rounded-[28px] hover:-translate-y-1 transition-all duration-300 group shadow-sm"
             >
               <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary/20 transition-all shadow-inner">
                 <BookMarked size={22} className="text-primary" />
@@ -378,9 +378,9 @@ function ResourcesSection({ branch, semester }: { branch: string; semester: stri
 function LabsSection() {
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-foreground tracking-tight flex items-center gap-3">
-        <span className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shadow-inner">
-          <FlaskConical size={20} />
+      <h2 className="text-3xl font-serif font-bold text-foreground tracking-tight flex items-center gap-4">
+        <span className="w-12 h-12 rounded-[14px] aims-glass-card flex items-center justify-center text-primary shadow-inner bg-primary/5">
+          <FlaskConical size={20} className="drop-shadow-sm" />
         </span>
         Laboratory Status
       </h2>
@@ -391,7 +391,7 @@ function LabsSection() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.05 }}
-            className="p-6 rounded-[32px] border border-border/50 bg-card/40 backdrop-blur-md hover:border-primary/20 hover:bg-card/60 transition-all group relative overflow-hidden shadow-sm"
+            className="p-6 aims-glass-card hover:aims-glass-card-hover rounded-[32px] transition-all group relative overflow-hidden shadow-sm"
           >
             <div className={`absolute top-0 right-0 w-2 h-full ${lab.available ? "bg-emerald-500/20" : "bg-rose-500/20"}`} />
             
@@ -473,9 +473,9 @@ function ComplaintsSection({ userId, rollNumber, onNewActivity }: { userId: stri
     <div className="space-y-6">
       <div className="flex items-center justify-between mb-2">
         <div>
-          <h2 className="text-2xl font-bold text-foreground tracking-tight flex items-center gap-3">
-            <span className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shadow-inner">
-              <MessageSquare size={20} />
+          <h2 className="text-3xl font-serif font-bold text-foreground tracking-tight flex items-center gap-4">
+            <span className="w-12 h-12 rounded-[14px] aims-glass-card flex items-center justify-center text-primary shadow-inner bg-primary/5">
+              <MessageSquare size={20} className="drop-shadow-sm" />
             </span>
             Help Desk
           </h2>
@@ -490,7 +490,7 @@ function ComplaintsSection({ userId, rollNumber, onNewActivity }: { userId: stri
       <AnimatePresence>
         {showForm && (
           <motion.div initial={{ opacity:0, y: -20, scale: 0.95 }} animate={{ opacity:1, y: 0, scale: 1 }} exit={{ opacity:0, y: -20, scale: 0.95 }}
-            className="p-8 rounded-[32px] border border-primary/30 bg-primary/[0.03] backdrop-blur-md space-y-4 overflow-hidden shadow-xl shadow-primary/5">
+            className="p-8 aims-glass-card rounded-[32px] space-y-4 overflow-hidden shadow-xl shadow-primary/5 bg-primary/5 border border-primary/20">
             <div className="grid sm:grid-cols-2 gap-4">
                <div className="space-y-1.5">
                   <label className="text-[10px] font-bold text-muted-foreground uppercase ml-1">Issue Category</label>
@@ -526,7 +526,7 @@ function ComplaintsSection({ userId, rollNumber, onNewActivity }: { userId: stri
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.04 }}
-              className="p-6 rounded-[28px] border border-border/50 bg-card/40 backdrop-blur-md hover:border-primary/30 transition-all group overflow-hidden relative shadow-sm"
+              className="p-6 aims-glass-card hover:aims-glass-card-hover rounded-[28px] transition-all group overflow-hidden relative shadow-sm"
             >
               <div className="flex items-start justify-between gap-4 mb-4">
                 <div className="flex flex-col gap-1">
@@ -686,9 +686,9 @@ function IDCardSection({ student }: { student: StudentProfile }) {
   return (
     <div className="space-y-8">
       <div className="text-center md:text-left">
-        <h2 className="text-2xl font-bold text-foreground tracking-tight flex items-center justify-center md:justify-start gap-3">
-          <span className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shadow-inner">
-            <CreditCard size={20} />
+        <h2 className="text-3xl font-serif font-bold text-foreground tracking-tight flex items-center justify-center md:justify-start gap-4">
+          <span className="w-12 h-12 rounded-[14px] aims-glass-card flex items-center justify-center text-primary shadow-inner bg-primary/5">
+            <CreditCard size={20} className="drop-shadow-sm" />
           </span>
           UGIP
         </h2>
@@ -807,9 +807,9 @@ function NotificationsSection({ branch, semester }: { branch: string; semester: 
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-foreground tracking-tight flex items-center gap-3">
-        <span className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shadow-inner">
-          <Bell size={20} />
+      <h2 className="text-3xl font-serif font-bold text-foreground tracking-tight flex items-center gap-4">
+        <span className="w-12 h-12 rounded-[14px] aims-glass-card flex items-center justify-center text-primary shadow-inner bg-primary/5">
+          <Bell size={20} className="drop-shadow-sm" />
         </span>
         Updates & Notices
       </h2>
@@ -823,7 +823,7 @@ function NotificationsSection({ branch, semester }: { branch: string; semester: 
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.05 }}
-                className={`p-6 rounded-[28px] border transition-all hover:bg-card/60 relative overflow-hidden group ${isUrgent?"bg-rose-500/[0.03] border-rose-500/20 hover:border-rose-500/40":"bg-card/40 border-border/50 hover:border-primary/30"}`}
+                className={`p-6 rounded-[28px] aims-glass-card relative overflow-hidden group ${isUrgent?"bg-rose-500/[0.03] border-rose-500/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] hover:border-rose-500/40":"hover:aims-glass-card-hover"}`}
               >
                 {isUrgent && <div className="absolute top-0 right-0 w-24 h-24 bg-rose-500/5 rounded-full blur-3xl -mr-12 -mt-12" />}
                 
@@ -900,16 +900,16 @@ function ProfileSection({ student, onUpdate }: { student: StudentProfile; onUpda
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-foreground tracking-tight flex items-center gap-3">
-        <span className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shadow-inner">
-          <User size={20} />
+      <h2 className="text-3xl font-serif font-bold text-foreground tracking-tight flex items-center gap-4">
+        <span className="w-12 h-12 rounded-[14px] aims-glass-card flex items-center justify-center text-primary shadow-inner bg-primary/5">
+          <User size={20} className="drop-shadow-sm" />
         </span>
         Account Settings
       </h2>
       
       <div className="max-w-4xl grid md:grid-cols-3 gap-6">
         <div className="md:col-span-1 space-y-6">
-          <div className="p-8 rounded-[40px] border border-border/50 bg-card/40 backdrop-blur-md text-center group relative overflow-hidden shadow-sm">
+          <div className="p-8 aims-glass-card rounded-[40px] text-center group relative overflow-hidden shadow-sm">
             <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-primary/10 to-transparent" />
             <div className="relative z-10">
               <div className="relative mx-auto w-32 h-32 mb-6 group cursor-pointer" onClick={()=>fileRef.current?.click()}>
@@ -925,7 +925,7 @@ function ProfileSection({ student, onUpdate }: { student: StudentProfile; onUpda
             </div>
           </div>
           
-          <div className="p-6 rounded-[32px] border border-border/50 bg-primary/[0.03] backdrop-blur-md">
+          <div className="p-6 rounded-[32px] aims-glass-card bg-primary/5">
              <div className="flex items-center gap-3 mb-4">
                 <div className="w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center text-primary"><Award size={16}/></div>
                 <p className="text-[10px] font-bold uppercase tracking-wider text-foreground">Verified ID</p>
@@ -935,7 +935,7 @@ function ProfileSection({ student, onUpdate }: { student: StudentProfile; onUpda
         </div>
 
         <div className="md:col-span-2 space-y-6">
-          <div className="p-8 rounded-[40px] border border-border/50 bg-card/40 backdrop-blur-md shadow-sm">
+          <div className="p-8 aims-glass-card rounded-[40px] shadow-sm">
             <div className="flex items-center justify-between mb-8 pb-4 border-b border-border/40">
               <h4 className="font-bold text-foreground text-base tracking-tight italic opacity-80">Academic Profile</h4>
               {!editing && (
@@ -1131,9 +1131,9 @@ export default function StudentDashboard() {
       </div>
 
       {/* Sidebar */}
-      <aside className={`fixed inset-y-0 left-0 z-50 w-72 bg-card/40 backdrop-blur-2xl border-r border-border/50 flex flex-col transition-all duration-300 lg:translate-x-0 ${sidebarOpen?"translate-x-0 shadow-2xl":"-translate-x-full"}`}>
+      <aside className={`fixed inset-y-0 left-0 z-50 w-72 bg-white dark:bg-black rounded-r-3xl my-4 ml-4 flex flex-col transition-all duration-300 border border-border/80 lg:translate-x-0 ${sidebarOpen?"translate-x-0 shadow-2xl":"-translate-x-full"}`}>
         {/* Logo */}
-        <div className="h-20 flex items-center gap-3 px-6 border-b border-border/50">
+        <div className="h-20 flex items-center gap-3 px-6 border-b border-border/20">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg shadow-primary/20">
             <img width={16} height={16} src="/assets/college/logo.png" alt="" />
           </div>
@@ -1145,8 +1145,8 @@ export default function StudentDashboard() {
         </div>
 
         {/* User profile card in sidebar */}
-        <div className="mx-4 mt-6 mb-4 p-4 rounded-2xl bg-gradient-to-br from-primary/[0.07] to-transparent border border-primary/10 shadow-sm relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl -mr-8 -mt-8 group-hover:bg-primary/10 transition-colors" />
+        <div className="mx-4 mt-6 mb-4 p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900 shadow-sm relative overflow-hidden group border border-border/40">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-primary/10 rounded-full blur-2xl -mr-8 -mt-8 group-hover:bg-primary/20 transition-colors" />
           <div className="flex items-center gap-3 relative z-10">
             <Avatar photoUrl={student.photoUrl} initials={student.initials} size={42} className="shadow-sm border-white/20 dark:border-black/20" />
             <div className="min-w-0">
@@ -1194,8 +1194,8 @@ export default function StudentDashboard() {
       </aside>
 
 
-      <div className="flex-1 lg:ml-72 flex flex-col min-h-screen relative z-10">
-        <header className="h-20 border-b border-border/50 bg-background/60 backdrop-blur-2xl sticky top-0 z-30 flex items-center px-6 gap-4">
+      <div className="flex-1 lg:ml-80 flex flex-col min-h-screen relative z-10">
+        <header className="h-20 bg-white dark:bg-black mx-4 mt-4 rounded-2xl sticky top-4 z-30 flex items-center px-6 gap-4 shadow-md border border-border/80">
           <button className="lg:hidden w-10 h-10 rounded-xl border border-border/50 flex items-center justify-center bg-card/50" onClick={()=>setSidebarOpen(true)}><Menu size={20}/></button>
           
           <div className="flex-1">
