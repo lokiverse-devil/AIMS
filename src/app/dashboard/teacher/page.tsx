@@ -1444,14 +1444,16 @@ export default function TeacherDashboard() {
         let subjects: string[] = [];
         let email = u.email || "";
 
+        let td: any = null;
         try {
           const { supabase } = await import("@/lib/supabaseClient");
-          const { data: td } = await supabase.from("teachers").select("*").eq("id",u.id).single();
+          const { data } = await supabase.from("teachers").select("*").eq("id",u.id).single();
+          td = data;
           if (td) { name=td.name||name; department=td.department||department; subjects=td.subjects||[]; email=td.email||email; designation=td.designation||"Faculty"; }
         } catch(_) { /* use defaults */ }
 
         const initials = name.split(" ").map((n:string)=>n[0]).join("").toUpperCase().slice(0,2);
-        setTeacher({ id:u.id, name, designation, department, subjects, email, initials, photo_url: td?.photo_url || undefined });
+        setTeacher({ id:u.id, name, designation, department, subjects, email, initials, photo_url: td?.photo_url || (u as any).photo_url || undefined });
       } catch(err) { console.error(err); router.replace("/login"); }
       finally { setAuthLoading(false); }
     })();
