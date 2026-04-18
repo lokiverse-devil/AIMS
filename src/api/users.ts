@@ -69,14 +69,14 @@ export async function updateStudentProfile(
   rollNo: string,
   updates: Partial<Pick<Student, 'phone' | 'photo_url' | 'section' | 'name' | 'email'>>,
 ): Promise<{ data: Student | null; error: Error | null }> {
-  const { data, error } = await supabase
-    .from('students')
-    .update(updates)
-    .eq('roll_no', rollNo)
-    .select()
-    .single()
+  // Update both students and users tables to keep names/photos in sync
+  const { data, error: err1 } = await supabase.from('students').update(updates).eq('roll_no', rollNo).select().single()
+  const { error: err2 } = await supabase.from('users').update(updates).eq('roll_no', rollNo)
 
-  if (error) return { data: null, error }
+  if (err1 || err2) {
+    console.error('Update student error:', err1 || err2)
+    return { data: null, error: (err1 || err2) as any }
+  }
   return { data, error: null }
 }
 

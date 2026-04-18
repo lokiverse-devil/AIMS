@@ -454,9 +454,9 @@ export default function HomePage() {
           playsInline
         />
 
-        {/* 3D Depth Overlays */}
-        <div className="absolute inset-0 bg-black/30 dark:bg-black/50 backdrop-blur-[1px] z-[1]" />
-        <div className="absolute bottom-0 w-full h-24 bg-gradient-to-t from-background via-background/20 to-transparent z-[2]" />
+        {/* 3D Depth Overlays - Targeted gradient for legibility without obscuring the video */}
+        <div className="absolute inset-y-0 left-0 w-3/4 bg-gradient-to-r from-black/80 via-black/20 to-transparent z-[1]" />
+        <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-background via-transparent to-transparent z-[2]" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 pt-36">
           <motion.div

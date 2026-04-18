@@ -62,11 +62,9 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "top-2 left-4 right-4 aims-glass-card shadow-xl"
-          : "bg-transparent border-transparent py-2"
-      }`}
+      className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 py-4 
+        bg-background/95 backdrop-blur-xl border-b border-border shadow-sm
+        before:absolute before:inset-0 before:bg-gradient-to-r before:from-primary/5 before:via-transparent before:to-primary/5 before:pointer-events-none`}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
@@ -75,8 +73,8 @@ export function Navbar() {
              <img src="/assets/college/logo.png" alt="AIMS Logo" className="w-full h-full object-contain" />
           </div>
           <div className="flex flex-col leading-none">
-            <span className={`text-lg font-serif font-bold tracking-tight transition-colors ${!scrolled && pathname === "/" ? "text-white" : "text-foreground"}`}>AIMS X IT BLOCK</span>
-            <span className={`text-[9px] font-medium uppercase tracking-widest hidden sm:block transition-colors ${!scrolled && pathname === "/" ? "text-white/70" : "text-muted-foreground"}`}>
+            <span className="text-lg font-serif font-bold tracking-tight transition-colors text-foreground">AIMS X IT BLOCK</span>
+            <span className="text-[9px] font-medium uppercase tracking-widest hidden sm:block transition-colors text-muted-foreground">
               Academic Infrastructure
             </span>
           </div>
@@ -91,8 +89,6 @@ export function Navbar() {
               className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                 pathname === link.href
                   ? "bg-primary text-primary-foreground shadow-sm"
-                  : !scrolled && pathname === "/"
-                  ? "text-white/80 hover:text-white hover:bg-white/10"
                   : "text-muted-foreground hover:text-foreground hover:bg-accent"
               }`}
             >

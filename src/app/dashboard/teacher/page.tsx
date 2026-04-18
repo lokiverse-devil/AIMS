@@ -1527,8 +1527,12 @@ export default function TeacherDashboard() {
         <div className="mx-4 mt-6 mb-4 p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-border/40 shadow-sm relative overflow-hidden group text-center sm:text-left">
           <div className="absolute top-0 right-0 w-24 h-24 bg-primary/10 rounded-full blur-2xl -mr-8 -mt-8 group-hover:bg-primary/20 transition-colors" />
           <div className="flex items-center gap-3 relative z-10">
-            <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20 flex-shrink-0">
-              <span className="text-sm font-bold text-primary">{teacher.initials}</span>
+            <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20 flex-shrink-0 overflow-hidden">
+              {teacher.photo_url ? (
+                <img src={teacher.photo_url} alt="Profile" className="w-full h-full object-cover" />
+              ) : (
+                <span className="text-sm font-bold text-primary">{teacher.initials}</span>
+              )}
             </div>
             <div className="min-w-0">
               <p className="text-sm font-bold text-foreground truncate">{teacher.name}</p>
@@ -1604,8 +1608,12 @@ export default function TeacherDashboard() {
             <div className="hidden sm:flex items-center gap-2 p-1 rounded-xl bg-muted/60 border border-border/50">
               <ThemeToggle />
             </div>
-            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center border border-border/50 shadow-sm ring-1 ring-primary/10">
-              <span className="text-sm font-bold text-primary">{teacher.initials}</span>
+            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center border border-border/50 shadow-sm ring-1 ring-primary/10 overflow-hidden">
+              {teacher.photo_url ? (
+                <img src={teacher.photo_url} alt="Profile" className="w-full h-full object-cover" />
+              ) : (
+                <span className="text-sm font-bold text-primary">{teacher.initials}</span>
+              )}
             </div>
           </div>
         </header>

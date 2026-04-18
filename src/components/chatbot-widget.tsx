@@ -372,7 +372,7 @@ export function ChatbotWidget() {
 
             {/* Expandable body */}
             {!minimized && (
-              <>
+              <div className="flex-1 min-h-0 flex flex-col">
                 {/* Messages Container */}
                 <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-5 space-y-4 relative z-10 scrollbar-thin scrollbar-thumb-primary/10 hover:scrollbar-thumb-primary/20">
                   {messages.map((msg) => (
@@ -426,7 +426,9 @@ export function ChatbotWidget() {
 
                 {/* Suggestion chips */}
                 {showSuggestions && messages.length <= 1 && (
-                  <SuggestionChips onSelect={handleSuggestion} />
+                  <div className="flex-shrink-0">
+                    <SuggestionChips onSelect={handleSuggestion} />
+                  </div>
                 )}
 
                 {/* Input */}
@@ -451,7 +453,7 @@ export function ChatbotWidget() {
                     Ask for navigation help, faculty info & student services
                   </p>
                 </div>
-              </>
+              </div>
             )}
           </motion.div>
         )}
