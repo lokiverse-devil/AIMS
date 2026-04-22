@@ -39,13 +39,13 @@ const cseData = {
     // TODO: Replace with /assets/faculty/sharma.jpg
     photoPath: "/assets/faculty/mannu.jpg",
     cabin: "Left-hand side from the entrance, second room, Ground Floor, Academic IT Block",
-    officeHours: "Mon–Fri, 10:00 AM – 5:00 PM",
+    officeHours: "Mon–Fri, 10:00 AM – 05:00 PM",
   },
   faculty: [
     {
       name: "Manmohan",
       designation: "Lecturer & HOD",
-      subjects: ["Internet Of Things", "Operating Systems", "Computer System And Organization", "Data Mining and Warehouse"],
+      subjects: ["Internet Of Things", "Operating Systems", "Computer System Organization and Architecture", "Data Mining & Warehousing"],
       experience: "9 years",
       initials: "MV",
       photoPath: "/assets/faculty/mannu.jpg",
@@ -55,7 +55,7 @@ const cseData = {
     {
       name: "Virendra Dharamshaktu",
       designation: "Lecturer",
-      subjects: ["Computer Network Security", "Computer Hardware Systems", "Employbility Skills", "Multimedia System"],
+      subjects: ["Computer Network and Security", "Computer Hardware and Servicing", "Employbility Skills", "Multimedia System"],
       experience: "17 years",
       initials: "VD",
       photoPath: "/assets/faculty/viren.jpg",
@@ -64,16 +64,16 @@ const cseData = {
     {
       name: "Neeraj Arya",
       designation: "Lecturer",
-      subjects: ["Computer Fundamentals", "Data Structures and Algorithms", "Relational Database Management System"],
-      experience: "9 years",
+      subjects: ["Computer Fundamentals", "Data Structure Using C", "Relational Database Management System"],
+      experience: "10 years",
       initials: "NA",
       photoPath: "/assets/faculty/arya.jpeg",
       videoFile: "https://rvamuonqnsbnqdgpskir.supabase.co/storage/v1/object/public/faculty-videos/neeraj_intro.mp4"
     },
-    
+
   ],
   labs: [
-    { name: "CSE LAB", capacity:23, description: "Intel i5 workstations, Visual Studio, IntelliJ IDEA, Turbo C", available: true },
+    { name: "CSE LAB", capacity: 23, description: "Intel i5 workstations, Visual Studio, IntelliJ IDEA, Turbo C", available: true },
     { name: "IOT LAB", capacity: 20, description: "Iot Kit, Rapberry, Esp's, 3d Printer, Mechanical Arm", available: false },
   ],
   achievements: [
