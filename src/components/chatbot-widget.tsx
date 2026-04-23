@@ -165,9 +165,9 @@ function BotBubble({ response }: { response: BotResponse }) {
                         />
                       </div>
                       <div className="flex flex-col items-center gap-2">
-                        <a 
-                          href={videoSrc} 
-                          target="_blank" 
+                        <a
+                          href={videoSrc}
+                          target="_blank"
                           rel="noopener noreferrer"
                           className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-foreground text-background text-[11px] font-bold hover:shadow-lg hover:-translate-y-0.5 transition-all w-full justify-center"
                         >
@@ -249,7 +249,7 @@ export function ChatbotWidget() {
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(true);
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const resetChat = () => {
     setMessages([
@@ -265,8 +265,11 @@ export function ChatbotWidget() {
   };
 
   useEffect(() => {
-    if (open && !minimized) {
-      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (open && !minimized && scrollRef.current) {
+      scrollRef.current.scrollTo({
+        top: scrollRef.current.scrollHeight,
+        behavior: "smooth"
+      });
     }
   }, [messages, open, minimized]);
 
@@ -312,7 +315,7 @@ export function ChatbotWidget() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-6 right-6 z-40">
       {/* Chat Window – absolutely positioned above the FAB */}
       <AnimatePresence>
         {open && (
@@ -321,49 +324,50 @@ export function ChatbotWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.92 }}
             transition={{ duration: 0.22 }}
-            className="fixed bottom-24 right-6 w-[22rem] sm:w-[24rem] bg-white dark:bg-zinc-950 rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] flex flex-col border border-border/80 z-50 transition-all duration-300"
-            style={{ 
-              height: minimized ? "80px" : "600px",
-              maxHeight: "calc(100vh - 120px)"
+            className="fixed bottom-24 right-6 w-[22rem] sm:w-[24rem] bg-white dark:bg-zinc-950 rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] flex flex-col border border-border/80 z-40 transition-all duration-300"
+            style={{
+              height: minimized ? "80px" : "550px",
+              maxHeight: "70vh"
             }}
           >
             <div className="absolute top-0 right-0 w-48 h-48 bg-primary/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-32 h-32 bg-accent/5 rounded-full blur-2xl -ml-16 -mb-16 pointer-events-none" />
 
             {/* Header */}
-            <div className="px-6 py-5 flex items-center justify-between flex-shrink-0 border-b border-border bg-muted/20 relative z-10 transition-colors">
-              <div className="flex items-center gap-3.5">
-                <div className="w-11 h-11 rounded-2xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
-                  <Bot size={22} className="text-white" />
+            <div className="px-5 py-4 flex items-center justify-between flex-shrink-0 border-b border-border bg-muted/20 relative z-10 transition-colors gap-2">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-10 h-10 rounded-2xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20 flex-shrink-0">
+                  <Bot size={20} className="text-white" />
                 </div>
-                <div>
-                  <p className="text-base font-bold text-foreground leading-tight">AIMS Assistant</p>
-                  <p className="text-[10px] font-bold tracking-widest uppercase text-primary">Infrastructure Support</p>
+                <div className="min-w-0 flex flex-col">
+                  <p className="text-[15px] font-bold text-foreground leading-tight truncate">AIMS Assistant</p>
+                  <p className="text-[9px] font-bold tracking-widest uppercase text-primary truncate">Infrastructure Support</p>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 flex-shrink-0">
                 {/* NEW CHAT BUTTON */}
                 <button
                   onClick={resetChat}
-                  className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all duration-300 font-bold text-[11px] uppercase tracking-wider"
+                  className="w-8 h-8 rounded-xl bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all duration-300 font-bold flex items-center justify-center"
+                  title="Restart Chat"
                 >
                   <RefreshCcw size={14} />
-                  <span>Restart</span>
                 </button>
                 {/* Minimize toggle */}
                 <button
                   onClick={() => setMinimized(!minimized)}
-                  className="w-10 h-10 rounded-xl hover:bg-muted font-bold flex items-center justify-center transition-colors border border-border/50"
+                  className="w-8 h-8 rounded-xl hover:bg-muted font-bold flex items-center justify-center transition-colors border border-border/50"
                   title={minimized ? "Expand" : "Minimize"}
                 >
                   <ChevronDown
-                    size={20}
+                    size={18}
                     className={`text-foreground transition-transform ${minimized ? "rotate-180" : ""}`}
                   />
                 </button>
                 <button
                   onClick={() => setOpen(false)}
                   className="w-8 h-8 rounded-[10px] hover:bg-muted/40 aims-glass-card border-none shadow-none flex items-center justify-center transition-colors"
+                  title="Close Chat"
                 >
                   <X size={14} className="text-muted-foreground" />
                 </button>
@@ -374,7 +378,7 @@ export function ChatbotWidget() {
             {!minimized && (
               <div className="flex-1 min-h-0 flex flex-col">
                 {/* Messages Container */}
-                <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-5 space-y-4 relative z-10 scrollbar-thin scrollbar-thumb-primary/10 hover:scrollbar-thumb-primary/20">
+                <div ref={scrollRef} className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-5 space-y-4 relative z-10 scrollbar-thin scrollbar-thumb-primary/10 hover:scrollbar-thumb-primary/20">
                   {messages.map((msg) => (
                     <div
                       key={msg.id}
@@ -421,7 +425,6 @@ export function ChatbotWidget() {
                       </div>
                     </div>
                   )}
-                  <div ref={bottomRef} />
                 </div>
 
                 {/* Suggestion chips */}
@@ -474,9 +477,9 @@ export function ChatbotWidget() {
               </p>
               {/* Triangle pointer */}
               <div className="absolute -bottom-2 right-6 w-4 h-4 bg-card/60 border-r border-b border-border/50 rotate-45 backdrop-blur-2xl" />
-              
+
               {/* Pulse effect on bubble */}
-              <motion.div 
+              <motion.div
                 animate={{ opacity: [0.1, 0.2, 0.1], scale: [1, 1.02, 1] }}
                 transition={{ repeat: Infinity, duration: 3 }}
                 className="absolute inset-0 rounded-[1.5rem] bg-primary pointer-events-none"
@@ -489,7 +492,7 @@ export function ChatbotWidget() {
       {/* FAB Button */}
       <motion.button
         onClick={() => { setOpen(!open); setMinimized(false); }}
-        className="w-16 h-16 rounded-[1.25rem] bg-foreground text-background shadow-2xl shadow-black/30 dark:shadow-white/10 flex items-center justify-center hover:scale-105 transition-all relative border border-white/10 dark:border-white/5 z-50 group"
+        className="w-16 h-16 rounded-[1.25rem] bg-foreground text-background shadow-2xl shadow-black/30 dark:shadow-white/10 flex items-center justify-center hover:scale-105 transition-all relative border border-white/10 dark:border-white/5 z-40 group"
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.94 }}
       >

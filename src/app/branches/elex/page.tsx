@@ -39,13 +39,13 @@ const elexData = {
     // TODO: Replace with /assets/faculty/patel.jpg
     photoPath: "/assets/faculty/manoj.jpg",
     cabin: "From the entrance, take the left staircase and reach in front of the cabin, 1st Floor, Academic IT Block.",
-    officeHours: "Mon-Sat, 9:00 AM - 4:00 PM",
+    officeHours: "Mon-Sat, 10:00 AM - 05:00 PM",
   },
   faculty: [
-     {
+    {
       name: "Manoj Rikhari",
       designation: "Lecturer & Head of Department — ELEX",
-      subjects: [" Mobile Communication", "PLC", "NFTL"],
+      subjects: [" Mobile Communication", "PLC & Its Application", "Network Filters and Transmission Lines"],
       experience: "15 years",
       initials: "MR",
       photoPath: "/assets/faculty/manoj.jpg",
@@ -55,7 +55,7 @@ const elexData = {
     {
       name: "Pankaj Kumar",
       designation: "Lecturer",
-      subjects: ["Microprocessor and App", "Microcontroller and embedded systems", "Electronic Circuits"],
+      subjects: ["Microprocessor and Its Applications", "Microcontroller and embedded systems", "Electronic Circuits"],
       experience: "10 years",
       initials: "PK",
       photoPath: "/assets/faculty/kumar.JPG",
@@ -64,7 +64,7 @@ const elexData = {
     {
       name: "Rashid",
       designation: "Lecturer",
-      subjects: ["Optical Fibre Communication", "Electronic Measurement", "Signal Sensing"],
+      subjects: ["Optical Fibre Communication", "Electronic Measuring Instruments", "Signal Sensing and Conditioning"],
       experience: "10 years",
       initials: "R",
       photoPath: "/assets/faculty/rashid.jpg",
@@ -75,7 +75,7 @@ const elexData = {
   labs: [
     { name: "Electronics Lab", capacity: 25, description: "Oscilloscopes, function generators, multimeters, component kits", available: true },
 
-   
+
     { name: "Drone Lab", capacity: 20, description: "Spectrum analyzers, RF transceivers, signal modules,8086 Microprocessor", available: true },
   ],
   achievements: [
