@@ -622,7 +622,7 @@ export default function HomePage() {
               viewport={{ once: true }}
               className="relative"
             >
-              <motion.div 
+              <motion.div
                 animate={{ y: [0, -15, 0] }}
                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                 className="aspect-video lg:aspect-[4/5] rounded-[2.5rem] bg-white dark:bg-zinc-950 border border-border overflow-hidden relative group p-2 shadow-2xl"
@@ -757,13 +757,13 @@ export default function HomePage() {
                 <span className="text-primary italic">Champions of Tomorrow</span>
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-10">
-                Our students do more than learn; they compete and win. 
-                From college and district-level events to state-level hackathons, the IT Block 
+                Our students do more than learn; they compete and win.
+                From college and district-level events to state-level hackathons, the IT Block
                 provides the mentorship and technical resources needed to excel anywhere.
               </p>
-              
+
               <div className="h-px w-full bg-border/60 mb-8" />
-              
+
               <div className="space-y-4">
                 {[
                   { title: "Technical Excellence", desc: "Mastering complex algorithms and real-world system design." },
@@ -796,7 +796,7 @@ export default function HomePage() {
                 World-class Infrastructure <br />for Modern Learning.
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                From high-speed connectivity to digitally enabled libraries, we provide the environment 
+                From high-speed connectivity to digitally enabled libraries, we provide the environment
                 you need to excel in your technical journey.
               </p>
             </div>
@@ -817,7 +817,7 @@ export default function HomePage() {
                 </div>
                 <h4 className="text-xl font-bold text-foreground mb-2 tracking-tight group-hover:text-primary transition-colors">{f.label}</h4>
                 <p className="text-xs font-bold text-primary/60 uppercase tracking-widest">{f.count}</p>
-                
+
                 {/* Decorative depth element */}
                 <div className="absolute inset-0 rounded-[2.5rem] border-2 border-primary/0 group-hover:border-primary/10 transition-all duration-500 pointer-events-none" />
               </motion.div>
@@ -836,7 +836,7 @@ export default function HomePage() {
                 Specialized <br /><span className="text-primary">Engineering Centers</span>
               </h2>
               <p className="text-base text-muted-foreground leading-relaxed mb-10">
-                From high-compute servers for data modeling to hands-on hardware prototyping kits, 
+                From high-compute servers for data modeling to hands-on hardware prototyping kits,
                 our labs give you exactly what you need to take concepts into production.
               </p>
               <div className="flex flex-col gap-4 pl-1">
@@ -872,18 +872,17 @@ export default function HomePage() {
                       <FlaskConical size={20} className="text-primary" />
                     </div>
                     <span
-                      className={`text-[9px] font-semibold uppercase tracking-[0.2em] px-3 py-1 rounded-full border ${
-                        lab.available
-                          ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
-                          : "bg-slate-500/10 text-slate-500 border-slate-500/20"
-                      }`}
+                      className={`text-[9px] font-semibold uppercase tracking-[0.2em] px-3 py-1 rounded-full border ${lab.available
+                        ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
+                        : "bg-slate-500/10 text-slate-500 border-slate-500/20"
+                        }`}
                     >
                       {lab.available ? "Ready" : "In Use"}
                     </span>
                   </div>
 
                   <h4 className="font-bold text-foreground text-lg mb-2 tracking-tight group-hover:text-primary transition-colors">{lab.name}</h4>
-                  
+
                   {/* Format equipment visually cleanly */}
                   <p className="text-xs text-muted-foreground leading-relaxed mb-8 flex-1">
                     {lab.equipment.split(',').join(' • ')}
@@ -935,7 +934,7 @@ export default function HomePage() {
                 <h4 className="font-semibold text-foreground text-lg mb-1 tracking-tight">{f.name}</h4>
                 <div className="mb-4">
                   <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
-                    {f.designation} 
+                    {f.designation}
                   </span>
                 </div>
                 <p className="text-sm text-foreground/70 leading-relaxed mb-6 group-hover:text-primary/90 transition-colors line-clamp-2">
@@ -998,12 +997,12 @@ export default function HomePage() {
                 <div className="flex-1 space-y-2">
                   <div className="flex flex-wrap items-center gap-3 mb-1">
                     <span className={`text-[9px] font-bold px-3 py-1 rounded-md uppercase tracking-widest ${notice.urgent
-                        ? "bg-amber-500/10 text-amber-600"
-                        : "bg-primary/10 text-primary"
+                      ? "bg-amber-500/10 text-amber-600"
+                      : "bg-primary/10 text-primary"
                       }`}>
                       {notice.tag}
                     </span>
-                    {notice.urgent && <span className="text-[10px] font-bold text-red-500 flex items-center gap-1 uppercase tracking-wider"><Bell size={10}/> Urgent</span>}
+                    {notice.urgent && <span className="text-[10px] font-bold text-red-500 flex items-center gap-1 uppercase tracking-wider"><Bell size={10} /> Urgent</span>}
                   </div>
                   <h4 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors">{notice.title}</h4>
                   <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2 max-w-4xl">{notice.desc}</p>
@@ -1041,7 +1040,7 @@ export default function HomePage() {
                 Experience the AIMS Platform
               </h2>
               <p className="text-lg text-slate-400 mb-10 leading-relaxed max-w-2xl mx-auto font-medium">
-                A unified digital space designed exclusively for the students and faculty 
+                A unified digital space designed exclusively for the students and faculty
                 of the IT Block, UGIP Kashipur.
               </p>
               <div className="flex flex-wrap gap-4 justify-center">
@@ -1116,7 +1115,7 @@ export default function HomePage() {
                 <span className="text-lg font-bold tracking-tight text-white">AIMS Portal</span>
               </div>
               <p className="text-sm leading-relaxed max-w-xs text-slate-400 font-medium">
-                Academic Operations & Management System for UMID Government ITI Polytechnic Kashipur.
+                Academic Operations & Management System for UGIP Kashipur.
               </p>
             </div>
             <div>
@@ -1130,8 +1129,8 @@ export default function HomePage() {
             <div>
               <h5 className="font-semibold text-xs text-white mb-5 uppercase tracking-widest">Support</h5>
               <ul className="space-y-3">
-                <li><a href="mailto:ompandey2341@gmail.com" className="text-sm hover:text-primary transition-colors flex items-center gap-2"><ArrowRight size={12}/> Contact Administrator</a></li>
-                <li><a href="mailto:supabasetup@gmail.com" className="text-sm hover:text-primary transition-colors flex items-center gap-2"><ArrowRight size={12}/> Report Technical Issue</a></li>
+                <li><a href="mailto:ompandey2341@gmail.com" className="text-sm hover:text-primary transition-colors flex items-center gap-2"><ArrowRight size={12} /> Contact Administrator</a></li>
+                <li><a href="mailto:supabasetup@gmail.com" className="text-sm hover:text-primary transition-colors flex items-center gap-2"><ArrowRight size={12} /> Report Technical Issue</a></li>
               </ul>
             </div>
           </div>
