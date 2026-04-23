@@ -125,7 +125,8 @@
         "head of elex",
         "hod elex",
         "electronics hod name",
-        "elex hod cabin"
+        "elex hod cabin",
+        "Where do i get my ID CARD"
       ],
       "question": "Who is the Head of the ELEX Department?",
       "answer": "The Head of Department for Electronics Engineering is Mr. Manoj Rikhari. His cabin is situated on the 1st Floor of the Academic IT Block. From the main entrance, take the left staircase and proceed straight ahead; the cabin will be directly in front of you.",
@@ -211,7 +212,9 @@
         "2nd year classroom",
         "3rd year classroom",
         "class room",
-        "room"
+        "room",
+        "first year classroom",
+        "1 year classroom"
       ],
       "question": "Where are the classrooms located?",
       "answer": "Classrooms are arranged by department and academic year. IT 2nd Year: Ground Floor, Room 1. CSE 2nd Year: Ground Floor, Room 1. ELEX 2nd Year: 1st Floor, Drone Lab. IT 3rd Year: Ground Floor, Room 4. CSE 3rd Year: Ground Floor, Room 4. ELEX 3rd Year: 1st Floor, Room 6."
@@ -223,10 +226,11 @@
         "total labs",
         "number of labs",
         "labs count",
-        "all labs"
+        "all labs",
+        "labs"
       ],
       "question": "How many laboratories are there?",
-      "answer": "There are 12 laboratories within the Academic IT Block, including Computer Lab A and B for CSE, a Networking Lab, an AI and ML Research Lab, two Electronics Labs, an IoT Lab, a Robotics Lab, a Communication Lab, and 2 Project Labs. All laboratories are accessible on weekdays from 8:00 AM to 6:00 PM."
+      "answer": "There are 6 laboratories within the Academic IT Block, including CSE LAB, IT LAB 1, IT LAB 2, Two Electronics Labs, an IoT Lab."
     },
     {
       "id": "timetable",

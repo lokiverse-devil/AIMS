@@ -1115,7 +1115,7 @@ export default function HomePage() {
                 <span className="text-lg font-bold tracking-tight text-white">AIMS Portal</span>
               </div>
               <p className="text-sm leading-relaxed max-w-xs text-slate-400 font-medium">
-                Academic Operations & Management System for UGIP Kashipur.
+                IT Block Guide & Management System for UGIP Kashipur.
               </p>
             </div>
             <div>

@@ -26,8 +26,8 @@ const itData = {
   programs: ["Diploma in IT"],
 
   syllabusLinks: [
-    { semester: "Semester 1", url: "https://www.irdtuttarakhand.org.in/ubter/Course.aspx?code=05" },
-    { semester: "Semester 2", url: "https://www.irdtuttarakhand.org.in/ubter/Course.aspx?code=05" },
+    { semester: "Semester 1", url: "https://www.irdtuttarakhand.org.in/ubter/Course.aspx?code=12" },
+    { semester: "Semester 2", url: "https://www.irdtuttarakhand.org.in/ubter/Course.aspx?code=12" },
     { semester: "Semester 3", url: "https://irdtuttarakhand.org.in/Upload/IT%20(Information%20Technology)%20%20-III%20Sem%20New%20Syllabus.pdf" },
     { semester: "Semester 4", url: "https://irdtuttarakhand.org.in/Upload/Information%20Technology%20(12)-IV%20SEM.pdf" },
     { semester: "Semester 5", url: "https://irdtuttarakhand.org.in/Upload/Information%20Technology%20-V%20Sem%20New%20Syllabus.pdf" },
