@@ -69,6 +69,7 @@ const itData = {
       experience: "18 years",
       initials: "NB",
       photoPath: "/assets/faculty/bora.jpg",
+      videoFile: "https://rvamuonqnsbnqdgpskir.supabase.co/storage/v1/object/public/faculty-videos/neha_intro.mp4"
     },
     {
       name: "Ashok Kumar",

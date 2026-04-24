@@ -50,7 +50,7 @@ const elexData = {
       initials: "MR",
       photoPath: "/assets/faculty/manoj.jpg",
       // TODO: Replace with Supabase Storage URL
-      // videoUrl: "https://PROJECT.supabase.co/storage/v1/object/public/faculty-videos/sharma_intro.mp4"
+      videoUrl: "https://PROJECT.supabase.co/storage/v1/object/public/faculty-videos/manoj_intro.mp4"
     },
     {
       name: "Pankaj Kumar",
