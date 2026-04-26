@@ -708,10 +708,10 @@ function IDCardSection({ student }: { student: StudentProfile }) {
           <div className="absolute bottom-0 left-0 w-32 h-32 bg-accent/10 rounded-full blur-2xl -ml-16 -mb-16 pointer-events-none" />
           
           {/* Header */}
-          <div className="bg-primary/90 backdrop-blur-md px-8 py-6 flex items-center gap-4 border-b border-white/10 relative z-10">
-            <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center border border-white/20 shadow-inner">
-              <img src="/assets/college/logo.png" alt="AIMS Logo" className="w-full h-full object-contain" />
-            </div>
+          <div className="flex items-center gap-2">
+          <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center overflow-hidden border border-primary/20 shadow-sm">
+            <img src="/assets/college/logo.png" alt="AIMS Logo" className="w-full h-full object-contain" />
+          </div>
             <div className="flex-1">
               <h3 className="text-white font-bold text-lg tracking-tight leading-none uppercase">UGIP</h3>
               <p className="text-white/60 text-[8px] font-bold tracking-[0.2em] mt-1 uppercase italic">Verification Secured</p>

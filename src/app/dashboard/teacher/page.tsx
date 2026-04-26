@@ -1512,9 +1512,9 @@ export default function TeacherDashboard() {
       {/* Sidebar */}
       <aside className={`fixed inset-y-0 left-0 z-50 w-72 bg-white dark:bg-black rounded-r-3xl my-4 ml-4 flex flex-col transition-all duration-300 border border-border/80 lg:translate-x-0 ${sidebarOpen?"translate-x-0 shadow-2xl":"-translate-x-full"}`}>
         {/* Logo */}
-        <div className="h-20 flex items-center gap-3 px-6 border-b border-border/20">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg shadow-primary/20">
-             <img width={16} height={16} src="/assets/college/logo.png" alt="AIMS Logo" />
+        <div className="flex items-center gap-2">
+          <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center overflow-hidden border border-primary/20 shadow-sm">
+            <img src="/assets/college/logo.png" alt="AIMS Logo" className="w-full h-full object-contain" />
           </div>
           <div className="flex flex-col">
             <span className="font-bold text-base tracking-tight text-foreground">AIMS TEACHER</span>

@@ -49,8 +49,7 @@ const elexData = {
       experience: "15 years",
       initials: "MR",
       photoPath: "/assets/faculty/manoj.jpg",
-      // TODO: Replace with Supabase Storage URL
-      videoUrl: "https://PROJECT.supabase.co/storage/v1/object/public/faculty-videos/rikhari_intro.mp4"
+       videoFile: "https://rvamuonqnsbnqdgpskir.supabase.co/storage/v1/object/public/faculty-videos/rikhari_intro.mp4"
     },
     {
       name: "Pankaj Kumar",
