@@ -39,12 +39,7 @@ const sidebarItems = [
   { id: "profile",       label: "Profile",           icon: User },
 ];
 
-const labs = [
-  { name: "Computer Lab A", available: true, floor: "Ground", seats: 30, currentClass: null },
-  { name: "Computer Lab B", available: false, floor: "1st", seats: 40, currentClass: "ML Lab — 10AM" },
-  { name: "AI/ML Research Lab", available: true, floor: "2nd", seats: 20, currentClass: null },
-  { name: "Networking Lab", available: true, floor: "Ground", seats: 20, currentClass: null },
-];
+
 
 // ── Helpers ────────────────────────────────────────────────────────
 function StatusBadge({ status }: { status: string }) {
@@ -375,7 +370,20 @@ function ResourcesSection({ branch, semester }: { branch: string; semester: stri
 }
 
 // ── Labs ───────────────────────────────────────────────────────────
-function LabsSection() {
+function LabsSection({ branch }: { branch: string }) {
+  const [labs, setLabs] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { fetchLabsByDepartment } = await import("@/api/labs");
+        setLabs(await fetchLabsByDepartment(getBranchKey(branch)) || []);
+      } catch(e) { console.error(e); }
+      finally { setLoading(false); }
+    })();
+  }, [branch]);
+
   return (
     <div className="space-y-6">
       <h2 className="text-3xl font-serif font-bold text-foreground tracking-tight flex items-center gap-4">
@@ -384,42 +392,37 @@ function LabsSection() {
         </span>
         Laboratory Status
       </h2>
-      <div className="grid sm:grid-cols-2 gap-4">
-        {labs.map((lab, idx) => (
-          <motion.div 
-            key={lab.name} 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: idx * 0.05 }}
-            className="p-6 aims-glass-card hover:aims-glass-card-hover rounded-[32px] transition-all group relative overflow-hidden shadow-sm"
-          >
-            <div className={`absolute top-0 right-0 w-2 h-full ${lab.available ? "bg-emerald-500/20" : "bg-rose-500/20"}`} />
-            
-            <div className="flex items-start justify-between mb-4">
-              <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform">
-                <FlaskConical size={22} className="text-primary" />
+      {loading ? <LoadingState text="Fetching laboratory status…" /> : labs.length === 0 ? <EmptyState text="No labs found for your department." /> : (
+        <div className="grid sm:grid-cols-2 gap-4">
+          {labs.map((lab, idx) => (
+            <motion.div 
+              key={lab.id || lab.name} 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.05 }}
+              className="p-6 aims-glass-card hover:aims-glass-card-hover rounded-[32px] transition-all group relative overflow-hidden shadow-sm"
+            >
+              <div className={`absolute top-0 right-0 w-2 h-full ${lab.available ? "bg-emerald-500/20" : "bg-rose-500/20"}`} />
+              
+              <div className="flex items-start justify-between mb-4">
+                <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform">
+                  <FlaskConical size={22} className="text-primary" />
+                </div>
+                <span className={`text-[10px] font-bold tracking-wider uppercase px-3 py-1 rounded-full border ${lab.available ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20" : "bg-rose-500/10 text-rose-500 border-rose-500/20"}`}>
+                  {lab.available ? "Ready" : "In Use"}
+                </span>
               </div>
-              <span className={`text-[10px] font-bold tracking-wider uppercase px-3 py-1 rounded-full border ${lab.available ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20" : "bg-rose-500/10 text-rose-500 border-rose-500/20"}`}>
-                {lab.available ? "Ready" : "In Use"}
-              </span>
-            </div>
-            
-            <h4 className="font-bold text-foreground text-base tracking-tight mb-1">{lab.name}</h4>
-            <div className="flex items-center gap-3 text-xs font-bold text-muted-foreground opacity-60">
-              <span className="flex items-center gap-1.5"><Table2 size={12}/> {lab.floor} Floor</span>
-              <span className="w-1 h-1 rounded-full bg-border" />
-              <span className="flex items-center gap-1.5"><UsersIcon size={12}/> {lab.seats} Units</span>
-            </div>
-
-            {!lab.available && lab.currentClass && (
-              <div className="mt-5 p-3 rounded-2xl bg-rose-500/5 border border-rose-500/10 flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
-                <p className="text-[10px] font-bold text-rose-500 uppercase tracking-wider">{lab.currentClass}</p>
+              
+              <h4 className="font-bold text-foreground text-base tracking-tight mb-1">{lab.name}</h4>
+              <div className="flex items-center gap-3 text-xs font-bold text-muted-foreground opacity-60">
+                <span className="flex items-center gap-1.5"><Table2 size={12}/> {lab.floor || "N/A"} Floor</span>
+                <span className="w-1 h-1 rounded-full bg-border" />
+                <span className="flex items-center gap-1.5"><UsersIcon size={12}/> {lab.seats || "N/A"} Units</span>
               </div>
-            )}
-          </motion.div>
-        ))}
-      </div>
+            </motion.div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -1103,7 +1106,7 @@ export default function StudentDashboard() {
     marks:         <MarksSection rollNumber={student.rollNumber}/>,
     results:       <SemesterResultsSection semester={student.semester}/>,
     resources:     <ResourcesSection branch={student.branch} semester={student.semester}/>,
-    labs:          <LabsSection/>,
+    labs:          <LabsSection branch={student.branch}/>,
     complaints:    <ComplaintsSection userId={student.id} rollNumber={student.rollNumber} onNewActivity={()=>setBadges(b=>({...b,complaints:(b.complaints||0)+1}))}/>,
     idcard:        <IDCardSection student={student}/>,
     notifications: <NotificationsSection branch={student.branch} semester={student.semester}/>,

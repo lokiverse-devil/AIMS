@@ -9,7 +9,7 @@ import {
   LogOut, Menu, X, Home, FileText, Check, AlertCircle,
   Plus, Search, Ticket, BookOpen, BarChart2, Table2,
   Loader2, Trash2, Download, Edit2, Hash, Mail, Phone,
-  MessageSquare, HelpCircle, LayoutDashboard,
+  MessageSquare, HelpCircle, LayoutDashboard, FlaskConical,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { supabase } from "@/lib/supabaseClient";
@@ -35,6 +35,7 @@ const sidebarItems = [
   { id:"timetable", label:"Timetable", icon:Calendar },
   { id:"upload", label:"Upload / CSV", icon:Upload },
   { id:"students", label:"Student List", icon:Users },
+  { id:"labs", label:"Labs", icon:FlaskConical },
   { id:"notices", label:"Notices", icon:Bell },
   { id:"tickets", label:"Tickets", icon:Ticket },
   { id:"profile", label:"Profile", icon:User },
@@ -1175,7 +1176,11 @@ function ProfileSection({ teacher, onUpdate }: { teacher: TeacherProfile, onUpda
       const { supabase } = await import("@/lib/supabaseClient");
       const path = `${teacher.id}-${Date.now()}.${file.name.split(".").pop()}`;
       const { error } = await supabase.storage.from("teacher-photos").upload(path, file, { upsert: true });
-      if (error) { console.error("Photo upload error:", error); return; }
+      if (error) { 
+        console.error("Photo upload error:", error); 
+        alert("Upload failed. Have you created the 'teacher-photos' bucket in Supabase? Error: " + error.message);
+        return; 
+      }
       const { data: urlData } = supabase.storage.from("teacher-photos").getPublicUrl(path);
       const publicUrl = urlData.publicUrl + "?t=" + Date.now();
       
@@ -1187,9 +1192,20 @@ function ProfileSection({ teacher, onUpdate }: { teacher: TeacherProfile, onUpda
 
       try {
         const { updateTeacherProfile } = await import("@/api/users");
-        await updateTeacherProfile(teacher.id, { photo_url: publicUrl });
-      } catch(_) {}
-    } catch(err) { console.error(err); } finally { setUploading(false); }
+        const res = await updateTeacherProfile(teacher.id, { photo_url: publicUrl });
+        if (res.error) {
+           alert("Failed to update profile in database. Did you run the SQL script to add photo_url to the teachers table? Error: " + res.error.message);
+        }
+      } catch(err: any) { 
+         console.error(err); 
+         alert("Error updating profile: " + err.message);
+      }
+    } catch(err: any) { 
+      console.error(err); 
+      alert("Error: " + err.message);
+    } finally { 
+      setUploading(false); 
+    }
   };
 
   const handlePrint = () => {
@@ -1432,6 +1448,84 @@ function ProfileSection({ teacher, onUpdate }: { teacher: TeacherProfile, onUpda
   );
 }
 
+// ── Labs Section ──────────────────────────────────────────────────
+function LabsSection({ department }: { department: string }) {
+  const [labs, setLabs] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { fetchLabsByDepartment } = await import("@/api/labs");
+        setLabs(await fetchLabsByDepartment(getBranchKey(department)) || []);
+      } catch(e) { console.error(e); }
+      finally { setLoading(false); }
+    })();
+  }, [department]);
+
+  const handleToggle = async (labId: string, currentStatus: boolean) => {
+    try {
+      const { toggleLabStatus } = await import("@/api/labs");
+      const result = await toggleLabStatus(labId, !currentStatus);
+      if (result.success) {
+        setLabs(prev => prev.map(l => l.id === labId ? { ...l, available: !currentStatus } : l));
+      } else {
+        alert("Failed to update lab status");
+      }
+    } catch (e) {
+      console.error(e);
+      alert("Error updating lab status");
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <h2 className="text-3xl font-serif font-bold text-foreground tracking-tight flex items-center gap-4">
+        <span className="w-12 h-12 rounded-[14px] aims-glass-card flex items-center justify-center text-primary shadow-inner bg-primary/5">
+          <FlaskConical size={20} className="drop-shadow-sm" />
+        </span>
+        Laboratory Management
+      </h2>
+      <p className="text-sm text-muted-foreground mt-1 ml-11 font-medium">Manage availability of laboratories for {department}.</p>
+      
+      {loading ? <LoadingState text="Fetching laboratories…" /> : labs.length === 0 ? <EmptyState text="No labs registered for your department." /> : (
+        <div className="grid sm:grid-cols-2 gap-4">
+          {labs.map((lab, idx) => (
+            <motion.div 
+              key={lab.id || lab.name} 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.05 }}
+              className="p-6 aims-glass-card hover:aims-glass-card-hover rounded-[32px] transition-all group relative overflow-hidden shadow-sm"
+            >
+              <div className={`absolute top-0 right-0 w-2 h-full ${lab.available ? "bg-emerald-500/20" : "bg-rose-500/20"}`} />
+              
+              <div className="flex items-start justify-between mb-4">
+                <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform">
+                  <FlaskConical size={22} className="text-primary" />
+                </div>
+                <button 
+                  onClick={() => handleToggle(lab.id, lab.available)}
+                  className={`text-xs font-bold tracking-wider uppercase px-4 py-2 rounded-xl transition-all shadow-sm flex items-center gap-2 ${lab.available ? "bg-emerald-500 text-white hover:bg-emerald-600 shadow-emerald-500/20" : "bg-rose-500 text-white hover:bg-rose-600 shadow-rose-500/20"}`}
+                >
+                  {lab.available ? "Available" : "In Use"}
+                </button>
+              </div>
+              
+              <h4 className="font-bold text-foreground text-base tracking-tight mb-1">{lab.name}</h4>
+              <div className="flex items-center gap-3 text-xs font-bold text-muted-foreground opacity-60">
+                <span className="flex items-center gap-1.5"><Table2 size={12}/> {lab.floor || "N/A"} Floor</span>
+                <span className="w-1 h-1 rounded-full bg-border" />
+                <span className="flex items-center gap-1.5"><Users size={12}/> {lab.seats || "N/A"} Units</span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Main Dashboard ────────────────────────────────────────────────
 export default function TeacherDashboard() {
   const router = useRouter();
@@ -1494,6 +1588,7 @@ export default function TeacherDashboard() {
     timetable: <TimetableSection teacher={teacher} />,
     upload: <UploadSection teacher={teacher} />,
     students: <StudentsSection department={teacher.department} />,
+    labs: <LabsSection department={teacher.department} />,
     notices: <NoticesSection userId={teacher.id} department={teacher.department} />,
     tickets: <TicketsSection userId={teacher.id} department={teacher.department} />,
     profile: <ProfileSection teacher={teacher} onUpdate={(updates) => setTeacher(prev => prev ? { ...prev, ...updates } : prev)} />
