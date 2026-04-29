@@ -6,11 +6,7 @@ export interface LoginCredentials {
 }
 
 export interface SignupStudentData {
-  name: string
   rollNumber: string
-  branch: string
-  semester: string
-  email: string
   password: string
   role: 'student'
 }
@@ -40,11 +36,18 @@ export interface UserProfile {
 
 /**
  * Sign in with email + password via Supabase Auth.
- * Returns the user and their role from the `users` table.
+ * Also supports logging in with roll_no — auto-converts to synthetic email.
  */
 export async function loginUser(credentials: LoginCredentials) {
+  let email = credentials.email
+
+  // If the user entered a roll number instead of an email, convert to synthetic email
+  if (!email.includes('@')) {
+    email = `${email.toLowerCase()}@aims.student`
+  }
+
   const { data, error } = await supabase.auth.signInWithPassword({
-    email: credentials.email,
+    email,
     password: credentials.password,
   })
   if (error) return { data: null, error }
@@ -61,15 +64,49 @@ export async function loginUser(credentials: LoginCredentials) {
 }
 
 /**
- * Sign up a student: creates Supabase Auth user, then inserts into
- * `users` (role + roll_no + branch) and `students` tables.
+ * Sign up a student: validates roll_no exists in `pending_registrations`,
+ * creates Supabase Auth user with a synthetic email (rollno@aims.student),
+ * then inserts into `users` and `students` tables, and approves the registration.
  */
 export async function signupStudent(formData: SignupStudentData) {
+  const rollNo = formData.rollNumber.trim()
+
+  // 1. Look up the roll number in pending_registrations
+  const { data: registration, error: regError } = await supabase
+    .from('pending_registrations')
+    .select('*')
+    .eq('roll_no', rollNo)
+    .single()
+
+  if (regError || !registration) {
+    return {
+      data: null,
+      error: new Error('Roll number not found. Please contact your teacher to register you first.'),
+    }
+  }
+
+  if (registration.status === 'approved') {
+    return {
+      data: null,
+      error: new Error('This roll number has already been registered. Please login instead.'),
+    }
+  }
+
+  if (registration.status === 'rejected') {
+    return {
+      data: null,
+      error: new Error('This registration has been rejected. Please contact administration.'),
+    }
+  }
+
+  // 2. Create auth user with synthetic email
+  const syntheticEmail = `${rollNo.toLowerCase()}@aims.student`
+
   const { data, error } = await supabase.auth.signUp({
-    email: formData.email,
+    email: syntheticEmail,
     password: formData.password,
     options: {
-      data: { name: formData.name, role: 'student' },
+      data: { name: registration.name, role: 'student' },
     },
   })
   if (error) return { data: null, error }
@@ -77,25 +114,32 @@ export async function signupStudent(formData: SignupStudentData) {
 
   const userId = data.user.id
 
-  // Insert into users profile table
+  // 3. Insert into users profile table
   const { error: usersError } = await supabase.from('users').insert({
     id: userId,
     role: 'student',
-    roll_no: formData.rollNumber,
-    branch: formData.branch,
-    semester: formData.semester,
+    roll_no: rollNo,
+    branch: registration.branch,
+    semester: registration.semester,
+    name: registration.name,
   })
   if (usersError) return { data: null, error: usersError }
 
-  // Insert into students table
-  const { error: studentsError } = await supabase.from('students').insert({
+  // 4. Insert into students table
+  const { error: studentsError } = await supabase.from('students').upsert({
     id: userId,
-    roll_no: formData.rollNumber,
-    name: formData.name,
-    branch: formData.branch,
-    semester: formData.semester,
-  })
+    roll_no: rollNo,
+    name: registration.name,
+    branch: registration.branch,
+    semester: registration.semester,
+  }, { onConflict: 'roll_no' })
   if (studentsError) return { data: null, error: studentsError }
+
+  // 5. Mark pending registration as approved
+  await supabase
+    .from('pending_registrations')
+    .update({ status: 'approved' })
+    .eq('roll_no', rollNo)
 
   return { data, error: null }
 }

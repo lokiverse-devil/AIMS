@@ -145,35 +145,31 @@ export async function fetchStudentByRollNo(rollNo: string): Promise<Student | nu
 }
 
 /**
- * Upload a student enrollment CSV via the Python FastAPI backend.
+ * Upload a student enrollment CSV into the pending_registrations table.
+ * Students uploaded via CSV are placed in a "pending" state until approved.
  * 
  * CSV format: roll_no, name, semester, branch
  */
 export async function uploadStudentsCSV(
   file: File,
-  department: string
+  department: string,
+  uploadedBy?: string,
 ): Promise<{ success: boolean; message: string; rowsInserted?: number }> {
   try {
-    const { uploadStudentCSV } = await import('@/services/csvService')
-    const result = await uploadStudentCSV(file)
-
-    if (!result.success && result.inserted === 0 && result.errors.length > 0) {
-      return { success: false, message: result.errors[0] }
-    }
-
-    const message = result.failed > 0
-      ? `Synchronized ${result.inserted} student(s). ${result.failed} records skipped: ${result.errors.join('; ')}`
-      : `Successfully synchronized ${result.inserted} students for the ${department} department.`
+    const { uploadStudentCSVToPending } = await import('@/api/pendingRegistrations')
+    const result = await uploadStudentCSVToPending(file, uploadedBy)
 
     return {
-      success: result.inserted > 0,
-      message,
-      rowsInserted: result.inserted
+      success: result.success,
+      message: result.success
+        ? `${result.rowsInserted} student(s) added to pending registrations for ${department}. They will appear in the registry once approved.`
+        : result.message,
+      rowsInserted: result.rowsInserted,
     }
   } catch (err) {
     return {
       success: false,
-      message: 'Network error: Failed to reach the sync service.'
+      message: 'Failed to upload student data. Please try again.',
     }
   }
 }

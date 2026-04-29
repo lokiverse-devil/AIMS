@@ -711,21 +711,21 @@ function IDCardSection({ student }: { student: StudentProfile }) {
           <div className="absolute bottom-0 left-0 w-32 h-32 bg-accent/10 rounded-full blur-2xl -ml-16 -mb-16 pointer-events-none" />
           
           {/* Header */}
-          <div className="flex items-center gap-2">
-          <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center overflow-hidden border border-primary/20 shadow-sm">
-            <img src="/assets/college/logo.png" alt="AIMS Logo" className="w-full h-full object-contain" />
-          </div>
+          <div className="px-8 pt-8 pb-4 flex items-center gap-4 relative z-10">
+            <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center overflow-hidden border border-primary/20 shadow-lg flex-shrink-0">
+              <img src="/assets/college/logo.png" alt="AIMS Logo" className="w-9 h-9 object-contain" />
+            </div>
             <div className="flex-1">
-              <h3 className="text-white font-bold text-lg tracking-tight leading-none uppercase">UGIP</h3>
-              <p className="text-white/60 text-[8px] font-bold tracking-[0.2em] mt-1 uppercase italic">Verification Secured</p>
+              <h3 className="text-foreground font-black text-xl tracking-tighter leading-none uppercase">UGIP</h3>
+              <p className="text-muted-foreground text-[8px] font-bold tracking-[0.2em] mt-1 uppercase">Verification Secured</p>
             </div>
             <div className="text-right">
-              <p className="text-white font-bold text-[10px] uppercase opacity-40">Branch</p>
-              <p className="text-white font-bold text-[10px] uppercase">{getBranchLabel(student.branch)}</p>
+              <p className="text-[9px] font-bold uppercase text-muted-foreground opacity-40">Branch</p>
+              <p className="text-[10px] font-bold uppercase text-primary">{getBranchLabel(student.branch)}</p>
             </div>
           </div>
 
-          <div className="px-8 py-8 space-y-6 relative z-10">
+          <div className="px-8 pb-8 pt-2 space-y-6 relative z-10">
             <div className="flex items-center gap-6">
               <div className="relative">
                 <Avatar photoUrl={student.photoUrl} initials={student.initials} size={100} className="rounded-[28px] border-[3px] border-primary/20 shadow-lg shadow-primary/10 ring-4 ring-white/10" />

@@ -342,7 +342,7 @@ function UploadSection({ teacher }: { teacher: TeacherProfile }) {
   const tabs: {id:UploadTab;label:string;icon:React.ComponentType<{size?:number;className?:string}>;desc:string}[] = [
     {id:"resources",label:"Knowledge Assets",icon:BookOpen,desc:"Upload PDF notes, PPTs, or Research Papers."},
     {id:"marks",label:"Academic Performance",icon:BarChart2,desc:"Batch upload unit test marks via CSV."},
-    {id:"students",label:"Student List",icon:Table2,desc:"Update the student list for your branch."},
+    {id:"students",label:"Pending Registrations",icon:Table2,desc:"Upload student CSV for pending registration approval."},
   ];
 
   const showMsg = (type:"success"|"error", text:string) => {
@@ -400,7 +400,7 @@ function UploadSection({ teacher }: { teacher: TeacherProfile }) {
     setUploading(true);
     try {
       const { uploadStudentsCSV } = await import("@/api/users");
-      const result = await uploadStudentsCSV(studentsFile, teacher.department);
+      const result = await uploadStudentsCSV(studentsFile, teacher.department, teacher.id);
       if (result.success) {
         showMsg("success", result.message);
         setStudentsFile(null);
@@ -408,7 +408,7 @@ function UploadSection({ teacher }: { teacher: TeacherProfile }) {
         showMsg("error", result.message);
       }
     } catch (e) {
-      showMsg("error", "Failed to update student list.");
+      showMsg("error", "Failed to upload student registrations.");
     } finally {
       setUploading(false);
     }
@@ -583,7 +583,7 @@ function UploadSection({ teacher }: { teacher: TeacherProfile }) {
                   <div className="flex items-center gap-3">
                     <div className="p-3 rounded-2xl bg-accent/10 text-accent-foreground"><Users size={20}/></div>
                     <div>
-                      <p className="text-sm font-bold text-foreground">Student List Template</p>
+                      <p className="text-sm font-bold text-foreground">Pending Registration Template</p>
                       <p className="text-xs text-muted-foreground">roll_no, name, semester, branch</p>
                     </div>
                   </div>
@@ -592,10 +592,10 @@ function UploadSection({ teacher }: { teacher: TeacherProfile }) {
                     <Download size={14}/> Get Template
                   </button>
                 </div>
-                <DropZone selectedFile={studentsFile} onFileSelect={setStudentsFile} accept="text/csv,.csv" label="Upload Enrollment Sheet"/>
+                <DropZone selectedFile={studentsFile} onFileSelect={setStudentsFile} accept="text/csv,.csv" label="Upload Pending Registrations CSV"/>
                 <button onClick={handleStudentsUpload} disabled={uploading}
                   className="w-full sm:w-auto px-10 py-4 rounded-2xl bg-primary text-primary-foreground font-bold text-sm hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-1 active:translate-y-0 transition-all shadow-lg disabled:opacity-50">
-                  {uploading ? "Uploading..." : "Upload Student List"}
+                  {uploading ? "Uploading..." : "Submit for Pending Registration"}
                 </button>
               </div>
             )}

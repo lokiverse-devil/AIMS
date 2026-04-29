@@ -110,6 +110,7 @@ export async function getResourceDownloadUrl(filename: string): Promise<string |
 
 /**
  * Upload student list CSV via backend; also store the file in Supabase Storage.
+ * Students are placed in pending_registrations table until approved.
  */
 export async function uploadStudentCSV(
   file: File,
@@ -121,7 +122,7 @@ export async function uploadStudentCSV(
     .from(STORAGE_BUCKETS.RESOURCES)
     .upload(archivePath, file, { upsert: false })
 
-  // Parse CSV client-side and upsert into students table
+  // Parse CSV client-side and upsert into pending_registrations table
   const text = await file.text()
   const lines = text.trim().split('\n')
   const headers = lines[0].split(',').map((h) => h.trim().toLowerCase())
@@ -152,14 +153,23 @@ export async function uploadStudentCSV(
     return { success: false, message: 'No valid rows found in CSV' }
   }
 
-  const { error } = await supabase.from('students').upsert(validRows, {
+  // Insert into pending_registrations instead of students
+  const rowsToInsert = validRows.map((r) => ({
+    roll_no: r.roll_no,
+    name: r.name,
+    semester: r.semester,
+    branch: r.branch,
+    status: 'pending',
+  }))
+
+  const { error } = await supabase.from('pending_registrations').upsert(rowsToInsert, {
     onConflict: 'roll_no',
   })
 
   if (error) return { success: false, message: error.message }
   return {
     success: true,
-    message: `Inserted/updated ${validRows.length} student record(s)`,
+    message: `${validRows.length} student(s) added to pending registrations.`,
     rowsInserted: validRows.length,
   }
 }
