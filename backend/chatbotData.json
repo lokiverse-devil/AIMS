@@ -228,10 +228,21 @@
         "class room",
         "room",
         "first year classroom",
-        "1 year classroom"
+        "1 year classroom",
+        "1st year classroom",
+        "2 year classroom",
+        "2nd year class",
+        "3 year classroom",
+        "3rd year class",
+        "first year class",
+        "second year class",
+        "third year class",
+        "1 year class",
+        "2 year class",
+        "3 year class"
       ],
       "question": "Where are the classrooms located?",
-      "answer": "Classrooms are arranged by department and academic year. IT 2nd Year: Ground Floor, Room 1. CSE 2nd Year: Ground Floor, Room 1. ELEX 2nd Year: 1st Floor, Drone Lab. IT 3rd Year: Ground Floor, Room 4. CSE 3rd Year: Ground Floor, Room 4. ELEX 3rd Year: 1st Floor, Room 6."
+      "answer": "Classrooms are distributed by department and year. Contact your HOD and department teachers for more information. First year Classes are held in the Academic Block 1 , Please visit the Academic Block 1 to know more."
     },
     {
       "id": "lab_count",
@@ -250,8 +261,7 @@
       "id": "timetable",
       "keywords": [
         "timetable",
-        "schedule",
-        "class",
+        "schedule", 
         "timing",
         "class timing"
       ],
