@@ -16,6 +16,20 @@
       "answer": "Welcome to the AIMS Campus Assistant. I am here to help you navigate the Academic IT Block, locate faculty cabins, find laboratories, and access student services. How may I assist you today?"
     },
     {
+      "id": "id_card",
+      "keywords": [
+        "id card",
+        "id card issue",
+        "id card lost",
+        "id card replace",
+        "id card photo",
+        "id card verification",
+        "where do i get my id card"
+      ],
+      "question": "Where do I get my ID card?",
+      "answer": "You can get your ID card from the Digital ID CARD Section in the student dashboard by uploading your photo."
+    },
+    {
       "id": "cse_lab",
       "keywords": [
         "cse lab",
