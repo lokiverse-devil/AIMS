@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { Navbar } from "@/components/navbar";
 import { ChatbotWidget } from "@/components/chatbot-widget";
+import { ITAchievers } from "@/components/it-achievers";
 
 // ── Types ──────────────────────────────────────────────────────────────
 
@@ -73,6 +74,7 @@ interface BranchPageProps {
   achievements: (string | Achievement)[];
   heroBg?: string;
   syllabusLinks?: { semester: string; url: string }[];
+  showITAchievers?: boolean;
 }
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
@@ -104,6 +106,7 @@ export function BranchPageTemplate({
   achievements,
   heroBg = "/assets/college/it_block.jpeg",
   syllabusLinks,
+  showITAchievers,
 }: BranchPageProps) {
   return (
     <div className="min-h-screen bg-background">
@@ -509,6 +512,8 @@ export function BranchPageTemplate({
               </div>
             </div>
           </div>
+          
+          {showITAchievers && <ITAchievers />}
         </div>
       </section>
 

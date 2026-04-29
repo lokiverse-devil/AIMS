@@ -106,6 +106,7 @@ const itData = {
   achievements: [
     { title: "100% placement over the past few years", featured: false }
   ],
+  showITAchievers: true,
 };
 
 export default function ITPage() {

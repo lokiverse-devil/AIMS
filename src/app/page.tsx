@@ -35,6 +35,7 @@ import {
 import type { LucideIcon } from "lucide-react";
 import { Navbar } from "@/components/navbar";
 import { ChatbotWidget } from "@/components/chatbot-widget";
+import { ITAchievers } from "@/components/it-achievers";
 
 // ── Mock data ──────────────────────────────────────────────────
 
@@ -782,6 +783,7 @@ export default function HomePage() {
               </div>
             </motion.div>
           </div>
+          <ITAchievers />
         </div>
       </section>
 

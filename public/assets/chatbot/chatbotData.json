@@ -16,6 +16,20 @@
       "answer": "Welcome to the AIMS Campus Assistant. I am here to help you navigate the Academic IT Block, locate faculty cabins, find laboratories, and access student services. How may I assist you today?"
     },
     {
+      "id": "id_card",
+      "keywords": [
+        "id card",
+        "id card issue",
+        "id card lost",
+        "id card replace",
+        "id card photo",
+        "id card verification",
+        "where do i get my id card"
+      ],
+      "question": "Where do I get my ID card?",
+      "answer": "You can get your ID card from the Digital ID CARD Section in the student dashboard by uploading your photo."
+    },
+    {
       "id": "cse_lab",
       "keywords": [
         "cse lab",
@@ -214,10 +228,21 @@
         "class room",
         "room",
         "first year classroom",
-        "1 year classroom"
+        "1 year classroom",
+        "1st year classroom",
+        "2 year classroom",
+        "2nd year class",
+        "3 year classroom",
+        "3rd year class",
+        "first year class",
+        "second year class",
+        "third year class",
+        "1 year class",
+        "2 year class",
+        "3 year class"
       ],
       "question": "Where are the classrooms located?",
-      "answer": "Classrooms are arranged by department and academic year. IT 2nd Year: Ground Floor, Room 1. CSE 2nd Year: Ground Floor, Room 1. ELEX 2nd Year: 1st Floor, Drone Lab. IT 3rd Year: Ground Floor, Room 4. CSE 3rd Year: Ground Floor, Room 4. ELEX 3rd Year: 1st Floor, Room 6."
+      "answer": "Classrooms are distributed by department and year. Contact your HOD and department teachers for more information. First year Classes are held in the Academic Block 1 , Please visit the Academic Block 1 to know more."
     },
     {
       "id": "lab_count",
@@ -236,8 +261,7 @@
       "id": "timetable",
       "keywords": [
         "timetable",
-        "schedule",
-        "class",
+        "schedule", 
         "timing",
         "class timing"
       ],

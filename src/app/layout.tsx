@@ -24,6 +24,7 @@ export const metadata: Metadata = {
   description:
     "A centralized platform for managing academic block infrastructure, faculty, student services, labs, scheduling, and more.",
   keywords: ["AIMS X IT BLOCK", "Academic", "Infrastructure", "Management", "University"],
+  
 };
 
 export default function RootLayout({
