@@ -7,6 +7,7 @@ export interface LoginCredentials {
 
 export interface SignupStudentData {
   rollNumber: string
+  email: string
   password: string
   role: 'student'
 }
@@ -36,14 +37,20 @@ export interface UserProfile {
 
 /**
  * Sign in with email + password via Supabase Auth.
- * Also supports logging in with roll_no — auto-converts to synthetic email.
+ * Also supports logging in with roll_no — looks up the student's real email.
  */
 export async function loginUser(credentials: LoginCredentials) {
   let email = credentials.email
 
-  // If the user entered a roll number instead of an email, convert to synthetic email
+  // If the user entered a roll number instead of an email, look up their real email
   if (!email.includes('@')) {
-    email = `${email.toLowerCase()}@aims.student`
+    const { data: studentEmail, error: lookupErr } = await supabase
+      .rpc('get_student_email_by_roll', { p_roll_no: email.trim() })
+
+    if (lookupErr || !studentEmail) {
+      return { data: null, error: new Error('No account found for this roll number.') }
+    }
+    email = studentEmail
   }
 
   const { data, error } = await supabase.auth.signInWithPassword({
@@ -99,11 +106,11 @@ export async function signupStudent(formData: SignupStudentData) {
     }
   }
 
-  // 2. Create auth user with synthetic email
-  const syntheticEmail = `${rollNo.toLowerCase()}@aims.student`
+  // 2. Create auth user with student's real email
+  const studentEmail = formData.email.trim().toLowerCase()
 
   const { data, error } = await supabase.auth.signUp({
-    email: syntheticEmail,
+    email: studentEmail,
     password: formData.password,
     options: {
       data: { name: registration.name, role: 'student' },
@@ -132,6 +139,7 @@ export async function signupStudent(formData: SignupStudentData) {
     name: registration.name,
     branch: registration.branch,
     semester: registration.semester,
+    email: studentEmail,
   }, { onConflict: 'roll_no' })
   if (studentsError) return { data: null, error: studentsError }
 

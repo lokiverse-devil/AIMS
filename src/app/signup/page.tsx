@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { Eye, EyeOff, UserPlus, ArrowLeft, GraduationCap as StudentIcon, BookOpen, Hash, Lock, ShieldCheck } from "lucide-react";
+import { Eye, EyeOff, UserPlus, ArrowLeft, GraduationCap as StudentIcon, BookOpen, Hash, Lock, ShieldCheck, Mail } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { signupStudent, signupTeacher } from "@/api/auth";
 import { useRouter } from "next/navigation";
@@ -29,7 +29,7 @@ export default function SignupPage() {
   const [error, setError] = useState<string | null>(null);
 
   const [studentForm, setStudentForm] = useState({
-    rollNumber: "", password: "", confirmPassword: ""
+    rollNumber: "", email: "", password: "", confirmPassword: ""
   });
 
   const [teacherForm, setTeacherForm] = useState({
@@ -56,6 +56,7 @@ export default function SignupPage() {
 
       const { data, error: err } = await signupStudent({
         rollNumber: studentForm.rollNumber,
+        email: studentForm.email,
         password: studentForm.password,
         role: "student",
       });
@@ -162,6 +163,25 @@ export default function SignupPage() {
                         placeholder="e.g. 23009050024"
                         className={inputCls}
                       />
+                    </div>
+
+                    {/* Email */}
+                    <div className="space-y-1.5">
+                      <label className="text-sm font-medium text-foreground flex items-center gap-1.5">
+                        <Mail size={14} className="text-primary" />
+                        Email Address *
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        value={studentForm.email}
+                        onChange={(e) => setStudentForm({ ...studentForm, email: e.target.value })}
+                        placeholder="youremail@example.com"
+                        className={inputCls}
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Used for account recovery and notifications.
+                      </p>
                     </div>
 
                     {/* Password */}
