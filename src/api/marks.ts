@@ -1,5 +1,4 @@
 import { supabase } from '@/lib/supabaseClient'
-import { uploadUnitTestCSV } from '@/services/csvService'
 
 export interface Mark {
   id: string
@@ -31,8 +30,8 @@ export async function fetchStudentMarks(rollNo: string): Promise<Mark[]> {
 }
 
 /**
- * Upload marks from a CSV file via the Python FastAPI backend.
- * The backend validates+parses the CSV and inserts rows into Supabase.
+ * Upload marks from a CSV file directly via Supabase (bypassing backend).
+ * Parses the CSV on the client side and inserts valid rows.
  *
  * CSV format: roll_no,subject,marks,semester
  */
@@ -44,30 +43,86 @@ export async function uploadMarksCSV(
     test_name: string
   },
 ): Promise<{ success: boolean; message: string; rowsInserted?: number }> {
-  const { teacher_id, subject, test_name } = config
-  const result = await uploadUnitTestCSV(file)
+  try {
+    const text = await file.text()
+    // Handle both Windows \r\n and Unix \n newlines
+    const lines = text.split(/\r?\n/)
+    if (lines.length < 2) {
+      return { success: false, message: 'CSV file is empty or missing headers.' }
+    }
 
-  if (!result.success && result.inserted === 0 && result.errors.length > 0) {
-    return { success: false, message: result.errors[0] }
-  }
+    const headers = lines[0].split(',').map((h) => h.trim().toLowerCase())
+    const required = ['roll_no', 'subject', 'marks', 'semester']
+    const missing = required.filter((r) => !headers.includes(r))
+    
+    if (missing.length > 0) {
+      return { success: false, message: `Missing required columns: ${missing.join(', ')}` }
+    }
 
-  // After backend inserts rows, store the metadata via direct Supabase update
-  if (result.inserted > 0 && test_name && subject) {
-    await supabase
-      .from('unit_test_marks')
-      .update({ test_name, uploaded_by: teacher_id })
-      .is('test_name', null)
-  }
+    const rowsToInsert: Omit<Mark, 'id' | 'uploaded_at'>[] = []
+    const errors: string[] = []
+    let failed = 0
 
-  const message =
-    result.failed > 0
-      ? `Uploaded ${result.inserted} row(s). ${result.failed} records skipped: ${result.errors.join('; ')}`
-      : `Successfully uploaded ${result.inserted} row(s) for ${test_name}.`
+    for (let i = 1; i < lines.length; i++) {
+      if (!lines[i].trim()) continue
 
-  return {
-    success: result.inserted > 0,
-    message,
-    rowsInserted: result.inserted,
+      // Handle simple CSV splitting (doesn't handle commas within quotes, but fine for basic marks)
+      const values = lines[i].split(',').map((v) => v.trim())
+      const row: Record<string, string> = {}
+      headers.forEach((h, idx) => {
+        row[h] = values[idx] || ''
+      })
+
+      const roll_no = row['roll_no']
+      const subject = row['subject']
+      const marks_raw = row['marks']
+      const semester = row['semester']
+
+      if (!roll_no) { errors.push(`Row ${i + 1}: roll_no is empty`); failed++; continue }
+      if (!subject) { errors.push(`Row ${i + 1}: subject is empty`); failed++; continue }
+      if (!semester) { errors.push(`Row ${i + 1}: semester is empty`); failed++; continue }
+
+      const marks_value = parseInt(marks_raw, 10)
+      if (isNaN(marks_value) || marks_value < 0) {
+        errors.push(`Row ${i + 1}: marks must be a valid non-negative integer`); failed++; continue
+      }
+
+      rowsToInsert.push({
+        roll_no,
+        subject,
+        marks: marks_value,
+        semester,
+        test_name: config.test_name,
+        uploaded_by: config.teacher_id,
+        max_marks: 20 // Default max marks for unit tests if not specified in CSV
+      })
+    }
+
+    if (rowsToInsert.length === 0) {
+      return { 
+        success: false, 
+        message: errors.length > 0 ? errors[0] : 'No valid records found in the CSV.' 
+      }
+    }
+
+    // Insert directly using the Supabase client
+    const { error } = await supabase.from('unit_test_marks').insert(rowsToInsert)
+
+    if (error) {
+      return { success: false, message: `Database error: ${error.message}` }
+    }
+
+    const inserted = rowsToInsert.length
+    const message = failed > 0
+      ? `Uploaded ${inserted} row(s). ${failed} records skipped: ${errors.join('; ')}`
+      : `Successfully uploaded ${inserted} row(s) for ${config.test_name}.`
+
+    return { success: true, message, rowsInserted: inserted }
+  } catch (err) {
+    return {
+      success: false,
+      message: `Failed to process CSV: ${err instanceof Error ? err.message : String(err)}`
+    }
   }
 }
 

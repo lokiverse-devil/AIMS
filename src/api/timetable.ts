@@ -59,9 +59,9 @@ export async function postNotice(notice: Omit<Notice, 'id' | 'created_at' | 'aud
   const fallbackAudience = `${notice.target_branch} - ${notice.target_type}: ${notice.target_value}`
   
   const { data, error } = await supabase
-    .from('notices').insert({ ...notice, audience: fallbackAudience, priority: notice.priority ?? 'Normal' }).select().single()
+    .from('notices').insert({ ...notice, audience: fallbackAudience, priority: notice.priority ?? 'Normal' }).select()
   if (error) return { data: null, error }
-  return { data, error: null }
+  return { data: data?.[0] || null, error: null }
 }
 
 export async function updateNotice(
@@ -69,9 +69,9 @@ export async function updateNotice(
   updates: Partial<Pick<Notice, 'title' | 'content' | 'target_branch' | 'target_type' | 'target_value' | 'priority' | 'file_url'>>,
 ): Promise<{ data: Notice | null; error: Error | null }> {
   const { data, error } = await supabase
-    .from('notices').update(updates).eq('id', id).select().single()
+    .from('notices').update(updates).eq('id', id).select()
   if (error) return { data: null, error }
-  return { data, error: null }
+  return { data: data?.[0] || null, error: null }
 }
 
 export async function deleteNotice(noticeId: string): Promise<void> {
